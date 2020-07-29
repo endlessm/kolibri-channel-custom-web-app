@@ -31,10 +31,9 @@ yarn serve
 ### Compiles and minifies for production
 ```
 yarn build
-./scripts/bundle_zip.py
 ```
 
-Then upload the ZIP to kolibri studio.
+Then upload the ZIP fie created to kolibri studio.
 
 ### Lints and fixes files
 ```
