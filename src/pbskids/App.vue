@@ -90,7 +90,7 @@ export default {
       this.sounds[slug].play();
     },
   },
-  mounted() {
+  created() {
     // this.gotChannelInformation(mockData);
     askChannelInformation(this.gotChannelInformation);
   },

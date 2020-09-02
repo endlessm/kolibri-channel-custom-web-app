@@ -24,14 +24,11 @@
     >
   <b-link
     v-on:click="goToContent(node)"
+    @mouseenter="onMouseEnter"
+    @mouseleave="onMouseLeave"
   >
-    <b-card
-      :img-src="node.thumbnail"
-      img-alt="Image"
-      class="p-2"
-      no-body
-      @mouseenter="onMouseEnter"
-      @mouseleave="onMouseLeave"
+    <Card
+      :node="node"
     />
   </b-link>
     </b-col>
@@ -46,10 +43,14 @@ import {
   gsap, Back, Elastic, Power2,
 } from 'gsap';
 import { goToContent } from '@/pbskids/pbskids';
+import Card from '@/pbskids/components/Card.vue';
 import swooshSound from '@/pbskids/components/swoosh.wav';
 import popSound from '@/pbskids/components/pop.flac';
 
 export default {
+  components: {
+    Card,
+  },
   data() {
     return {
       sounds: {
@@ -130,10 +131,10 @@ export default {
       });
     },
     onMouseEnter(event) {
-      this.hover(true, event.target);
+      this.hover(true, event.target.firstChild);
     },
     onMouseLeave(event) {
-      this.hover(false, event.target);
+      this.hover(false, event.target.firstChild);
     },
     goToContent,
   },
