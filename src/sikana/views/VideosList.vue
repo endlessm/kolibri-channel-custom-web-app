@@ -4,38 +4,7 @@
     <b-row>
       <SectionTitle :section="currentSection" />
     </b-row>
-    <b-card
-      no-body
-      :style="style"
-      class="mt-4 header-card bg-secondary text-light"
-    >
-      <b-container class="my-auto">
-        <b-row>
-          <b-col class="m-4">
-            <b-card-title>{{ currentSubsection.title }}</b-card-title>
-            <b-card-text class="description">
-              <v-clamp
-                ref="c"
-                autoresize
-                :max-lines="9"
-                :expanded.sync="expanded"
-              >
-                {{ currentSubsection.description }}
-  <template v-slot:after="slotProps">
-        <b-button
-          class="more-text"
-          variant="dark"
-          v-if="slotProps.clamped"
-          v-on:click="toggleExpanded">(more) {{ clamped }}</b-button>
-  </template>
-              </v-clamp>
-            </b-card-text>
-          </b-col>
-          <b-col>
-          </b-col>
-        </b-row>
-      </b-container>
-    </b-card>
+      <VideosListHeader :node="currentSubsection" />
   </b-container>
 
   <b-container
@@ -60,13 +29,7 @@
               v-on:click="goToContent(v)"
               class="m-0 text-reset text-decoration-none"
               >
-            <img
-              v-if="v.thumbnail"
-              :alt=v.title
-              :src=v.thumbnail
-              class="w-100"
-            >
-            <p v-else>{{ v.title }}</p>
+            <Card :node="v" />
             </b-link>
           </div>
         </b-col>
@@ -86,13 +49,7 @@
               v-on:click="goToContent(v)"
               class="m-0 text-reset text-decoration-none"
               >
-            <img
-              v-if="v.thumbnail"
-              :alt=v.title
-              :src=v.thumbnail
-              class="w-100"
-            >
-            <p v-else>{{ v.title }}</p>
+            <Card :node="v" />
             </b-link>
           </div>
         </b-col>
@@ -114,19 +71,20 @@
 </template>
 
 <script>
-import VClamp from 'vue-clamp';
 import SectionTitle from '@/sikana/components/SectionTitle.vue';
+import Card from '@/sikana/components/Card.vue';
+import VideosListHeader from '@/sikana/components/VideosListHeader.vue';
 import { goToContent } from '@/sikana/sikana';
 
 export default {
   name: 'VideosList',
   components: {
     SectionTitle,
-    VClamp,
+    Card,
+    VideosListHeader,
   },
   data() {
     return {
-      expanded: false,
     };
   },
   computed: {
@@ -136,14 +94,8 @@ export default {
     currentSubsection() {
       return this.$root.$children[0].currentSubsection;
     },
-    style() {
-      return `background-image: linear-gradient(.25turn, rgba(0, 0, 0, .8), rgba(0, 0, 0, .8), rgba(0, 0, 0, .1)), url(${this.currentSubsection.thumbnail}) !important;`;
-    },
   },
   methods: {
-    toggleExpanded() {
-      this.expanded = !this.expanded;
-    },
     goToContent,
   },
 };
@@ -152,16 +104,6 @@ export default {
 <style lang="scss" scoped>
 @import '@/sikana/styles.scss';
 
-.header-card {
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
-  border-style: none;;
-  text-shadow: 0 1px 0 black;
-  font-weight: 400;
-  min-height: 20rem;
-
-}
 .subsection {
   font-weight: 600;
   transition: all ease .4s;
@@ -187,8 +129,4 @@ button:hover {
   color: $primary;
 }
 
-.more-text {
-  background: none;
-  border: none;
-}
 </style>

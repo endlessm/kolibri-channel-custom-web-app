@@ -129,7 +129,7 @@ export default {
     },
     goToContent,
   },
-  mounted() {
+  created() {
     // this.gotChannelInformation(mockData);
     askChannelInformation(this.gotChannelInformation);
   },
