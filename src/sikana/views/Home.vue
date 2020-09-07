@@ -19,12 +19,7 @@
         >
           <div class="rounded overflow-hidden mb-2 mt-4">
             <b-link :to="getSubsectionUrl(section, subsection)" class="m-0">
-            <img
-              v-if="subsection.thumbnail"
-              :alt=subsection.title
-              :src=subsection.thumbnail
-              class="w-100"
-            >
+            <Card :node="subsection" />
             </b-link>
           </div>
           <b-link
@@ -43,26 +38,7 @@
 </b-container>
 <b-container class="mt-4">
 <div class="bg-primary">
-<b-container  id="carousel">
-  <b-carousel
-    v-model="slide"
-    :interval="4000"
-    controls
-    indicators
-    background="#ababab"
-    img-width="100"
-    img-height="180"
-    style="text-shadow: 1px 1px 2px #333;"
-  >
-    <b-carousel-slide
-      v-for="info in carouselVideos"
-      :key="'video-' + info.section.id"
-      :caption="info.section.title"
-      :text="info.video.title"
-      :img-src="info.video.thumbnail"
-    />
-  </b-carousel>
-</b-container>
+  <Carousel :carouselInfo=carouselInfo />
 </div>
 </b-container>
   </div>
@@ -70,16 +46,19 @@
 
 <script>
 import SectionTitle from '@/sikana/components/SectionTitle.vue';
+import Card from '@/sikana/components/Card.vue';
+import Carousel from '@/sikana/components/Carousel.vue';
 import { getSlug, goToContent } from '@/sikana/sikana';
 
 export default {
   name: 'Home',
   components: {
     SectionTitle,
+    Card,
+    Carousel,
   },
   data() {
     return {
-      slide: 0,
     };
   },
   computed: {
@@ -92,9 +71,10 @@ export default {
     mainSections() {
       return this.$root.$children[0].mainSections;
     },
-    carouselVideos() {
+    carouselInfo() {
       return this.mainSections.map((s) => ({
         video: s.children[0],
+        // FIXME, use video.parent?
         section: s,
       }));
     },
@@ -119,9 +99,6 @@ export default {
 <style lang="scss" scoped>
 @import '@/sikana/styles.scss';
 
-#carousel {
-  max-width: 50vw;
-}
 .subsection {
   font-weight: 600;
   transition: all ease .4s;

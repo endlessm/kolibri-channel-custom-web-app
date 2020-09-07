@@ -1,2 +1,2 @@
-import './sikana/main';
-// import './pbs-kids/main';
+// import './sikana/main';
+import './pbskids/main';
