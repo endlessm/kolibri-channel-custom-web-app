@@ -6,7 +6,7 @@
       <b-button-toolbar>
         <b-button-group class="top">
           <b-button variant="light" to="/">
-            <img :src="logo" alt="Sikana" />
+            <img :src="logo" :alt="appName" />
           </b-button>
           <b-button
             v-for="section in mainSections"
@@ -57,8 +57,7 @@
 import arrayToTree from 'array-to-tree';
 import VueBootstrapTypeahead from 'vue-bootstrap-typeahead';
 import { getSlug, goToContent, askChannelInformation } from '@/kolibri-api';
-// FIXME logo
-import logo from '@/template/sikana-logo.png';
+import logo from '@/template/logo.png';
 
 let mockData;
 if (process.env.VUE_APP_USE_MOCK_DATA === 'true') {
@@ -73,6 +72,7 @@ export default {
   },
   data() {
     return {
+      appName: process.env.VUE_APP_NAME,
       channel: {},
       nodes: [],
       currentSection: {},
@@ -199,7 +199,7 @@ export default {
 
 #footer {
   text-shadow: 1px 1px 2px #333;
-  background-image: url("./sikana-footer.jpg");
+  background-image: url("./footer.jpg");
   background-repeat: repeat;
 }
 </style>
