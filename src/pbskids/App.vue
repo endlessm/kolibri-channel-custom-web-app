@@ -27,7 +27,6 @@
 <script>
 import arrayToTree from 'array-to-tree';
 import { getSlug, askChannelInformation } from '@/pbskids/pbskids';
-// import mockData from '@/pbskids/nodes.json';
 import Background from '@/pbskids/components/Background.vue';
 import Logo from '@/pbskids/components/Logo.vue';
 import navLeft from '@/pbskids/nav-line-bkgrnd_left.svg';
@@ -36,6 +35,12 @@ import newSound from '@/pbskids/sounds/newGames.mp3';
 import popularSound from '@/pbskids/sounds/popularGames.mp3';
 import hardSound from '@/pbskids/sounds/hardGames.mp3';
 import allSound from '@/pbskids/sounds/allGames.mp3';
+
+let mockData;
+if (process.env.VUE_APP_USE_MOCK_DATA === 'true') {
+  // eslint-disable-next-line global-require
+  mockData = require('@/pbskids/nodes.json');
+}
 
 export default {
   name: 'App',
@@ -91,8 +96,11 @@ export default {
     },
   },
   created() {
-    // this.gotChannelInformation(mockData);
-    askChannelInformation(this.gotChannelInformation);
+    if (process.env.VUE_APP_USE_MOCK_DATA === 'true') {
+      this.gotChannelInformation(mockData);
+    } else {
+      askChannelInformation(this.gotChannelInformation);
+    }
   },
 };
 </script>

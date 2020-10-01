@@ -57,8 +57,13 @@
 import arrayToTree from 'array-to-tree';
 import VueBootstrapTypeahead from 'vue-bootstrap-typeahead';
 import { getSlug, goToContent, askChannelInformation } from '@/sikana/sikana';
-// import mockData from '@/sikana/nodes.json';
 import logo from '@/sikana/sikana-logo.png';
+
+let mockData;
+if (process.env.VUE_APP_USE_MOCK_DATA === 'true') {
+  // eslint-disable-next-line global-require
+  mockData = require('@/sikana/nodes.json');
+}
 
 export default {
   name: 'App',
@@ -130,8 +135,11 @@ export default {
     goToContent,
   },
   created() {
-    // this.gotChannelInformation(mockData);
-    askChannelInformation(this.gotChannelInformation);
+    if (process.env.VUE_APP_USE_MOCK_DATA === 'true') {
+      this.gotChannelInformation(mockData);
+    } else {
+      askChannelInformation(this.gotChannelInformation);
+    }
   },
 };
 </script>
