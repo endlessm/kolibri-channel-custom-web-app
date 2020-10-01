@@ -148,33 +148,6 @@ export default {
 <style lang="scss">
 @import './styles.scss';
 
-@font-face {
-  font-family: "sikana-icons";
-  src: url("./sikana-icons2.woff") format("woff");
-}
-
-.si {
-  font: normal normal normal 40px/1 "sikana-icons";
-  &.si-cooking::before {
-    content: "\22";
-  }
-  &.si-art::before {
-    content: "\32";
-  }
-  &.si-diy::before {
-    content: "\28";
-  }
-  &.si-nature::before {
-    content: "\5e";
-  }
-  &.si-health::before {
-    content: "\29";
-  }
-  &.si-sports::before {
-    content: "\5f";
-  }
-}
-
 .btn-group {
   display: initial !important;
 }
