@@ -48,7 +48,7 @@
 import SectionTitle from '@/sikana/components/SectionTitle.vue';
 import Card from '@/sikana/components/Card.vue';
 import Carousel from '@/sikana/components/Carousel.vue';
-import { getSlug, goToContent } from '@/sikana/sikana';
+import { getSlug, goToContent } from '@/kolibri-api';
 
 export default {
   name: 'Home',

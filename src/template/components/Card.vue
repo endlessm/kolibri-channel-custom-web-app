@@ -7,8 +7,7 @@
 </template>
 
 <script>
-// FIXME
-import { getThumbnail } from '@/template/sikana';
+import { getThumbnail } from '@/kolibri-api';
 
 export default {
   props: ['node'],

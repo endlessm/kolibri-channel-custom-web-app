@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import { getSlug } from '@/sikana/sikana';
+import { getSlug } from '@/kolibri-api';
 
 export default {
   name: 'SectionTitle',

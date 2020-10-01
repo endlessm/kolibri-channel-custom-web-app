@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import { getThumbnail } from '@/pbskids/pbskids';
+import { getThumbnail } from '@/kolibri-api';
 
 export default {
   props: ['node'],

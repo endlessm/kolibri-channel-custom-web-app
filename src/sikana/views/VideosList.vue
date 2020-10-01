@@ -74,7 +74,7 @@
 import SectionTitle from '@/sikana/components/SectionTitle.vue';
 import Card from '@/sikana/components/Card.vue';
 import VideosListHeader from '@/sikana/components/VideosListHeader.vue';
-import { goToContent } from '@/sikana/sikana';
+import { goToContent } from '@/kolibri-api';
 
 export default {
   name: 'VideosList',

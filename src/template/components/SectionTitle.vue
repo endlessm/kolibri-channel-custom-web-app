@@ -6,8 +6,7 @@
 </template>
 
 <script>
-// FIXME
-import { getSlug } from '@/template/sikana';
+import { getSlug } from '@/kolibri-api';
 
 export default {
   name: 'SectionTitle',

@@ -56,15 +56,14 @@
 <script>
 import arrayToTree from 'array-to-tree';
 import VueBootstrapTypeahead from 'vue-bootstrap-typeahead';
-// FIXME refactor
-import { getSlug, goToContent, askChannelInformation } from '@/template/sikana';
+import { getSlug, goToContent, askChannelInformation } from '@/kolibri-api';
 // FIXME logo
 import logo from '@/template/sikana-logo.png';
 
 let mockData;
 if (process.env.VUE_APP_USE_MOCK_DATA === 'true') {
   // eslint-disable-next-line global-require
-  mockData = require('@/sikana/nodes.json');
+  mockData = require('@/nodes.json');
 }
 
 export default {

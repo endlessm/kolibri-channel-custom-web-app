@@ -35,7 +35,7 @@
 
 <script>
 import VClamp from 'vue-clamp';
-import { getThumbnail } from '@/template/sikana';
+import { getThumbnail } from '@/kolibri-api';
 
 export default {
   name: 'VideosListHeader',

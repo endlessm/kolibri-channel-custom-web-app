@@ -56,13 +56,13 @@
 <script>
 import arrayToTree from 'array-to-tree';
 import VueBootstrapTypeahead from 'vue-bootstrap-typeahead';
-import { getSlug, goToContent, askChannelInformation } from '@/sikana/sikana';
+import { getSlug, goToContent, askChannelInformation } from '@/kolibri-api';
 import logo from '@/sikana/sikana-logo.png';
 
 let mockData;
 if (process.env.VUE_APP_USE_MOCK_DATA === 'true') {
   // eslint-disable-next-line global-require
-  mockData = require('@/sikana/nodes.json');
+  mockData = require('@/nodes.json');
 }
 
 export default {

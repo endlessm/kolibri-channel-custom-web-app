@@ -42,7 +42,7 @@
 import {
   gsap, Back, Elastic, Power2,
 } from 'gsap';
-import { goToContent } from '@/pbskids/pbskids';
+import { goToContent } from '@/kolibri-api';
 import Card from '@/pbskids/components/Card.vue';
 import swooshSound from '@/pbskids/components/swoosh.wav';
 import popSound from '@/pbskids/components/pop.flac';

@@ -26,7 +26,7 @@
 
 <script>
 import arrayToTree from 'array-to-tree';
-import { getSlug, askChannelInformation } from '@/pbskids/pbskids';
+import { getSlug, askChannelInformation } from '@/kolibri-api';
 import Background from '@/pbskids/components/Background.vue';
 import Logo from '@/pbskids/components/Logo.vue';
 import navLeft from '@/pbskids/nav-line-bkgrnd_left.svg';

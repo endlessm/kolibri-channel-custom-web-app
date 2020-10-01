@@ -48,8 +48,7 @@
 import SectionTitle from '@/template/components/SectionTitle.vue';
 import Card from '@/template/components/Card.vue';
 import Carousel from '@/template/components/Carousel.vue';
-// FIXME
-import { getSlug, goToContent } from '@/template/sikana';
+import { getSlug, goToContent } from '@/kolibri-api';
 
 export default {
   name: 'Home',

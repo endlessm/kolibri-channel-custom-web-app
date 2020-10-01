@@ -74,8 +74,7 @@
 import SectionTitle from '@/template/components/SectionTitle.vue';
 import Card from '@/template/components/Card.vue';
 import VideosListHeader from '@/template/components/VideosListHeader.vue';
-// FIXME
-import { goToContent } from '@/template/sikana';
+import { goToContent } from '@/kolibri-api';
 
 export default {
   name: 'VideosList',
