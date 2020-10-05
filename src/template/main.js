@@ -4,6 +4,7 @@ import App from './App.vue';
 
 import './styles.scss';
 import router from './router';
+import store from './store';
 
 Vue.use(BootstrapVue);
 Vue.use(IconsPlugin);
@@ -12,5 +13,6 @@ Vue.config.productionTip = false;
 
 window.app = new Vue({
   router,
+  store,
   render: (h) => h(App),
 }).$mount('#app');

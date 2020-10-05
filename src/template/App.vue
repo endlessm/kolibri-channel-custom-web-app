@@ -57,7 +57,6 @@
 import arrayToTree from 'array-to-tree';
 import VueBootstrapTypeahead from 'vue-bootstrap-typeahead';
 import { getSlug, goToContent, askChannelInformation } from '@/kolibri-api';
-import logo from '@/template/logo.png';
 
 let mockData;
 if (process.env.VUE_APP_USE_MOCK_DATA === 'true') {
@@ -72,13 +71,11 @@ export default {
   },
   data() {
     return {
-      appName: process.env.VUE_APP_NAME,
       channel: {},
       nodes: [],
       currentSection: {},
       currentSubsection: {},
       query: '',
-      logo,
     };
   },
   watch: {
@@ -105,6 +102,12 @@ export default {
     },
   },
   computed: {
+    appName() {
+      return this.$store.state.appName;
+    },
+    logo() {
+      return `${process.env.BASE_URL}/assets/${this.$store.state.logoAsset}`;
+    },
     contentNodes() {
       return this.nodes.filter((n) => n.kind !== 'topic');
     },
