@@ -1,6 +1,4 @@
-$primary: #42b983;
-$secondary: #eec34c;
-
+@import '@/template/overrides/variables.scss';
 @import 'node_modules/bootstrap/scss/bootstrap';
 @import 'node_modules/bootstrap-vue/src/index.scss';
 
