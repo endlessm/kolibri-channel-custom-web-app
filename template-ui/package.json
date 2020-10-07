@@ -1,0 +1,38 @@
+{
+  "name": "template-ui",
+  "version": "0.1.0",
+  "license": "AGPL-3.0",
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build && yarn run zip",
+    "lint": "vue-cli-service lint",
+    "zip": "../scripts/bundle_zip.py"
+  },
+  "dependencies": {
+    "kolibri-api": "0.1.0",
+    "array-to-tree": "^3.3.2",
+    "bootstrap": "^4.5.1",
+    "bootstrap-vue": "^2.16.0",
+    "core-js": "^3.6.5",
+    "slugify": "^1.4.5",
+    "vue": "^2.6.11",
+    "vue-bootstrap-typeahead": "^0.2.6",
+    "vue-clamp": "^0.3.1",
+    "vue-router": "^3.2.0",
+    "vuex": "^3.5.1"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "~4.4.0",
+    "@vue/cli-plugin-eslint": "~4.4.0",
+    "@vue/cli-plugin-router": "~4.4.0",
+    "@vue/cli-service": "~4.4.0",
+    "@vue/eslint-config-airbnb": "^5.0.2",
+    "babel-eslint": "^10.1.0",
+    "eslint": "^6.7.2",
+    "eslint-plugin-import": "^2.20.2",
+    "eslint-plugin-vue": "^6.2.2",
+    "sass": "^1.26.10",
+    "sass-loader": "^9.0.3",
+    "vue-template-compiler": "^2.6.11"
+  }
+}

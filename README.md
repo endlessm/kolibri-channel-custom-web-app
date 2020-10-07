@@ -23,6 +23,14 @@ yarn install
 
 All the commands below assume that you are standing in a pipenv shell.
 
+We use yarn workspaces to have multiple projects in the same git
+repository. You should stand in a project directory before running the
+commands below. Example:
+
+```
+cd sikana-ui
+```
+
 ### Compiles and hot-reloads for development
 ```
 yarn serve

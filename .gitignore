@@ -1,10 +1,10 @@
 .DS_Store
 node_modules
-/dist
+/*/dist
 
 # local env files
-.env.local
-.env.*.local
+/*/.env.local
+/*/.env.*.local
 
 # Log files
 npm-debug.log*
@@ -22,4 +22,4 @@ pnpm-debug.log*
 *.sw?
 
 # Built files
-/custom-channel-ui.zip
+/*/custom-channel-ui.zip
