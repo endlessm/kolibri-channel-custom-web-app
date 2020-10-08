@@ -2,9 +2,19 @@
   "name": "kolibri-custom-channel-ui",
   "version": "0.1.0",
   "private": true,
-  "workspaces": ["kolibri-api", "sikana-ui", "pbskids-ui", "template-ui"],
+  "workspaces": [
+    "kolibri-api",
+    "sikana-ui",
+    "pbskids-ui",
+    "template-ui"
+  ],
   "scripts": {
+    "postinstall": "patch-package",
     "build": "yarn workspaces run build",
     "lint": "yarn workspaces run lint"
+  },
+  "devDependencies": {
+    "patch-package": "^6.2.2",
+    "postinstall-postinstall": "^2.1.0"
   }
 }
