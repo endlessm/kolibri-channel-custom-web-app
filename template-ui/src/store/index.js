@@ -7,6 +7,7 @@ Vue.use(Vuex);
 const initialState = {
   appName: '',
   logoAsset: 'logo.png',
+  defaultThumbnailAsset: 'default-thumb.svg',
 };
 
 const store = new Vuex.Store({

@@ -17,6 +17,9 @@ export default {
     };
   },
   computed: {
+    defaultThumbnail() {
+      return `${process.env.BASE_URL}/assets/${this.$store.state.defaultThumbnailAsset}`;
+    },
   },
   methods: {
     async getThumbnail() {
@@ -25,7 +28,11 @@ export default {
         return;
       }
       const thumbnail = await getThumbnail(this.node);
-      this.thumbnail = thumbnail;
+      if (thumbnail) {
+        this.thumbnail = thumbnail;
+      } else {
+        this.thumbnail = this.defaultThumbnail;
+      }
     },
   },
   created() {
