@@ -48,6 +48,15 @@ Then upload the ZIP fie created to kolibri studio.
 yarn lint
 ```
 
+### Create mock nodes
+
+There is a script to create a randomized `nodes.json` file, for
+development:
+
+```
+./scripts/create_mock_nodes.py > template-ui/src/nodes.json
+```
+
 ### Upgrading the vue CLI
 ```
 yarn global upgrade --latest @vue/cli
