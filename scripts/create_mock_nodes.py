@@ -24,8 +24,10 @@ nodes_config = [
     },
 ]
 
+
 def random_hash():
     return '%032x' % random.randrange(16**32)
+
 
 def topic_title(level, number):
     if level == 0:
@@ -35,8 +37,10 @@ def topic_title(level, number):
     else:
         return f'Topic #{level}-{number+1}'
 
+
 def title(kind, level, number):
     return f'{kind.title()} #{level}-{number+1}'
+
 
 channel_title = "Test Channel"
 channel_hash = random_hash()
@@ -83,60 +87,73 @@ root_node = {
     "files": [],
 }
 
-license_description = "The Attribution-ShareAlike License lets others remix, tweak, and build upon your work even for commercial purposes, as long as they credit you and license their new creations under the identical terms. This license is often compared to \"copyleft\" free and open source software licenses. All new works based on yours will carry the same license, so any derivatives will also allow commercial use. This is the license used by Wikipedia, and is recommended for materials that would benefit from incorporating content from Wikipedia and similarly licensed projects".
+license_description = \
+    "The Attribution-ShareAlike License lets others remix, tweak, and build"\
+    " upon your work even for commercial purposes, as long as they credit you"\
+    " and license their new creations under the identical terms. This license"\
+    " is often compared to \"copyleft\" free and open source software"\
+    " licenses. All new works based on yours will carry the same license, so"\
+    " any derivatives will also allow commercial use. This is the license"\
+    " used by Wikipedia, and is recommended for materials that would benefit"\
+    " from incorporating content from Wikipedia and similarly licensed"\
+    " projects."
 
 license_name = "CC BY-SA"
 
 license_owner = "Endless Foundation LLC"
 
+
 def create_topic_node(level, number, parent=channel_hash):
     return {
-    "id": random_hash(),
-    "author": "",
-    "available": True,
-    "channel_id": channel_hash,
-    "coach_content": False,
-    "content_id": random_hash(),
-    "description": "",
-    "kind": "topic",
-    "license_description": license_description,
-    "license_name": license_name,
-    "license_owner": license_owner,
-    "num_coach_contents": 0,
-    "options": {},
-    "parent": parent,
-    "sort_order": number,
-    "title": topic_title(level, number),
-    "lang": lang,
-    "assessmentmetadata": None,
-    "files": [],
-}
+        "id": random_hash(),
+        "author": "",
+        "available": True,
+        "channel_id": channel_hash,
+        "coach_content": False,
+        "content_id": random_hash(),
+        "description": "",
+        "kind": "topic",
+        "license_description": license_description,
+        "license_name": license_name,
+        "license_owner": license_owner,
+        "num_coach_contents": 0,
+        "options": {},
+        "parent": parent,
+        "sort_order": number,
+        "title": topic_title(level, number),
+        "lang": lang,
+        "assessmentmetadata": None,
+        "files": [],
+    }
+
 
 def create_leaf_node(level, number, parent=channel_hash, kind="video"):
     return {
-    "id": random_hash(),
-    "author": "",
-    "available": True,
-    "channel_id": channel_hash,
-    "coach_content": False,
-    "content_id": random_hash(),
-    "description": "",
-    "kind": kind,
-    "license_description": license_description,
-    "license_name": license_name,
-    "license_owner": license_owner,
-    "num_coach_contents": 0,
-    "options": {},
-    "parent": parent,
-    "sort_order": number,
-    "title": title(kind, level, number),
-    "lang": lang,
-    "assessmentmetadata": None,
-    "files": [],
-    # "thumbnail": ...
-}
+        "id": random_hash(),
+        "author": "",
+        "available": True,
+        "channel_id": channel_hash,
+        "coach_content": False,
+        "content_id": random_hash(),
+        "description": "",
+        "kind": kind,
+        "license_description": license_description,
+        "license_name": license_name,
+        "license_owner": license_owner,
+        "num_coach_contents": 0,
+        "options": {},
+        "parent": parent,
+        "sort_order": number,
+        "title": title(kind, level, number),
+        "lang": lang,
+        "assessmentmetadata": None,
+        "files": [],
+        # "thumbnail": ...
+    }
+
 
 all_nodes = [root_node]
+
 
 def create_nodes(parent_nodes, level=0):
     if level >= len(nodes_config):
@@ -148,10 +165,12 @@ def create_nodes(parent_nodes, level=0):
                 fn = create_topic_node
             else:
                 fn = functools.partial(create_leaf_node, kind=kind)
-            nodes = [fn(level, number, parent['id']) for number in range(total)]
+            nodes = [fn(level, number, parent['id'])
+                     for number in range(total)]
             all_nodes.extend(nodes)
             if kind == 'topic' and nodes:
                 create_nodes(nodes, level + 1)
+
 
 create_nodes([root_node])
 

@@ -45,6 +45,7 @@ Then upload the ZIP fie created to kolibri studio.
 ### Lints and fixes files
 ```
 yarn lint
+flake8 scripts/
 ```
 
 ### Create mock nodes
