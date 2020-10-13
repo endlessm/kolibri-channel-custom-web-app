@@ -23,6 +23,10 @@ export default {
   },
   methods: {
     async getThumbnail() {
+      if (!this.node.thumbnail && process.env.VUE_APP_USE_MOCK_DATA === 'true') {
+        this.thumbnail = this.defaultThumbnail;
+        return;
+      }
       if (this.node.thumbnail) {
         this.thumbnail = this.node.thumbnail;
         return;
