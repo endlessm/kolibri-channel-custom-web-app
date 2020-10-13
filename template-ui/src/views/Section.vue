@@ -124,7 +124,7 @@ export default {
 }
 
 button:hover {
-  color: $primary;
+  color: $primary !important;
 }
 
 </style>
