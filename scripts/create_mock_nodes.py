@@ -87,16 +87,34 @@ root_node = {
     "files": [],
 }
 
+description = \
+    '''
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed cursus
+quis justo in semper. Nunc nulla nisl, semper vitae est at, faucibus
+dictum dui. Sed faucibus volutpat congue. Donec auctor tellus nunc, id
+tristique nisi porta ut. Nulla id convallis leo. Class aptent taciti
+sociosqu ad litora torquent per conubia nostra, per inceptos
+himenaeos. Duis cursus ligula vehicula rutrum euismod. Nam commodo
+auctor velit, id varius tellus vestibulum eget. Praesent sit amet
+facilisis arcu. Donec magna lectus, finibus nec arcu sed, iaculis
+vulputate orci. Ut nisl leo, dictum ac risus sit amet, dapibus auctor
+lorem. Nulla sed magna vel quam bibendum eleifend in eget lorem. Etiam
+dapibus pharetra ex, et commodo mi elementum in. Nam imperdiet laoreet
+nisi nec laoreet.
+'''.strip()
+
 license_description = \
-    "The Attribution-ShareAlike License lets others remix, tweak, and build"\
-    " upon your work even for commercial purposes, as long as they credit you"\
-    " and license their new creations under the identical terms. This license"\
-    " is often compared to \"copyleft\" free and open source software"\
-    " licenses. All new works based on yours will carry the same license, so"\
-    " any derivatives will also allow commercial use. This is the license"\
-    " used by Wikipedia, and is recommended for materials that would benefit"\
-    " from incorporating content from Wikipedia and similarly licensed"\
-    " projects."
+    '''
+The Attribution-ShareAlike License lets others remix, tweak, and build
+upon your work even for commercial purposes, as long as they credit
+you and license their new creations under the identical terms. This
+license is often compared to \"copyleft\" free and open source
+software licenses. All new works based on yours will carry the same
+license, so any derivatives will also allow commercial use. This is
+the license used by Wikipedia, and is recommended for materials that
+would benefit from incorporating content from Wikipedia and similarly
+licensed projects.
+'''.strip()
 
 license_name = "CC BY-SA"
 
@@ -111,7 +129,7 @@ def create_topic_node(level, number, parent=channel_hash):
         "channel_id": channel_hash,
         "coach_content": False,
         "content_id": random_hash(),
-        "description": "",
+        "description": description,
         "kind": "topic",
         "license_description": license_description,
         "license_name": license_name,
@@ -135,7 +153,7 @@ def create_leaf_node(level, number, parent=channel_hash, kind="video"):
         "channel_id": channel_hash,
         "coach_content": False,
         "content_id": random_hash(),
-        "description": "",
+        "description": description,
         "kind": kind,
         "license_description": license_description,
         "license_name": license_name,
