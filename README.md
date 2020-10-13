@@ -7,14 +7,13 @@ Just like kolibri, we'll use a Python virtual environment along with
 Node to obtain the exact same dependencies.
 
 ```
-pipenv --python 3
+pipenv install
 pipenv shell
 ```
 
 Inside the pipenv shell:
 
 ```
-pip install -r requirements.txt --upgrade
 nodeenv -p --node=10.15.3
 npm install -g yarn
 yarn global add @vue/cli
