@@ -12,10 +12,10 @@
   >
     <b-carousel-slide
       v-for="info in carouselInfo"
-      :key="'video-' + info.section.id"
+      :key="'item-' + info.section.id"
       :caption="info.section.title"
-      :text="info.video.title"
-      :img-src="thumbnails[info.video.id]"
+      :text="info.item.title"
+      :img-src="thumbnails[info.item.id]"
     />
   </b-carousel>
 </b-container>
@@ -33,16 +33,29 @@ export default {
       slide: 0,
     };
   },
+  computed: {
+    defaultThumbnail() {
+      return `${process.env.BASE_URL}/assets/${this.$store.state.defaultThumbnailAsset}`;
+    },
+  },
   methods: {
     async getThumbnails() {
       await Promise.all(
-        this.carouselInfo.map(async ({ video }) => {
-          if (video.thumbnail) {
-            this.thumbnails[video.id] = video.thumbnail;
+        this.carouselInfo.map(async ({ item }) => {
+          if (!item.thumbnail && process.env.VUE_APP_USE_MOCK_DATA === 'true') {
+            this.thumbnails[item.id] = this.defaultThumbnail;
             return;
           }
-          const thumbnail = await getThumbnail(video);
-          this.thumbnails[video.id] = thumbnail;
+          if (item.thumbnail) {
+            this.thumbnails[item.id] = item.thumbnail;
+            return;
+          }
+          const thumbnail = await getThumbnail(item);
+          if (thumbnail) {
+            this.thumbnails[item.id] = thumbnail;
+          } else {
+            this.thumbnails[item.id] = this.defaultThumbnail;
+          }
         }),
       );
     },
@@ -58,5 +71,8 @@ export default {
 
 #carousel {
   max-width: 50vw;
+}
+.carousel-item {
+  background: $secondary !important;
 }
 </style>

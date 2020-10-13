@@ -38,7 +38,7 @@ import VClamp from 'vue-clamp';
 import { getThumbnail } from 'kolibri-api';
 
 export default {
-  name: 'VideosListHeader',
+  name: 'SectionHeader',
   props: {
     node: Object,
   },

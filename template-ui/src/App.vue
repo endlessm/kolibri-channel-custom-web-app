@@ -81,7 +81,7 @@ export default {
   },
   watch: {
     $route(to) {
-      if (to.name !== 'VideosList') {
+      if (to.name !== 'Section') {
         this.currentSection = {};
         this.currentSubsection = {};
         return;

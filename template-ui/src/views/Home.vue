@@ -27,7 +27,7 @@
             class="text-reset text-decoration-none"
           >
             <span>{{ subsection.title }}</span>
-            <span> - {{ getVideosCount(subsection) }} videos</span>
+            <span> - {{ getLeavesCount(subsection) }} items</span>
           </b-link>
         </b-col>
       </b-row>
@@ -74,19 +74,19 @@ export default {
     },
     carouselInfo() {
       return this.mainSections.map((s) => ({
-        video: s.children[0],
-        // FIXME, use video.parent?
+        item: s.children[0],
+        // FIXME, use item.parent?
         section: s,
       }));
     },
   },
   methods: {
-    getVideosCount(node) {
+    getLeavesCount(node) {
       if (!node.children) {
         return 1;
       }
       return node.children
-        .map(this.getVideosCount)
+        .map(this.getLeavesCount)
         .reduce((a, b) => a + b, 0);
     },
     getSubsectionUrl(section, subsection) {

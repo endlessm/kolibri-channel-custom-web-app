@@ -1,9 +1,11 @@
 <template>
+<div class="content-image">
 <img
     :alt="node.title"
     :src="thumbnail"
     class="w-100"
 >
+</div>
 </template>
 
 <script>
@@ -44,3 +46,11 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+@import '@/styles.scss';
+
+.content-image {
+  background: $secondary !important;
+}
+</style>

@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import Home from '../views/Home.vue';
-import VideosList from '../views/VideosList.vue';
+import Section from '../views/Section.vue';
 
 Vue.use(VueRouter);
 
@@ -13,8 +13,8 @@ const routes = [
   },
   {
     path: '/:section/:subsection',
-    name: 'VideosList',
-    component: VideosList,
+    name: 'Section',
+    component: Section,
   },
 ];
 

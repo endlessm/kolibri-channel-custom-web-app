@@ -1,10 +1,10 @@
 <template>
-  <div id="videos-list">
+  <div>
   <b-container class="my-5">
     <b-row>
       <SectionTitle :section="currentSection" />
     </b-row>
-      <VideosListHeader :node="currentSubsection" />
+      <SectionHeader :node="currentSubsection" />
   </b-container>
 
   <b-container
@@ -21,8 +21,7 @@
           md="4"
           class="subsection"
           v-for="v in s.children.slice(0, 6)"
-          xxx-v-for="v in s.children"
-          :key="'video-' + v.id"
+          :key="'item-' + v.id"
         >
           <div class="rounded overflow-hidden mb-2 mt-4">
             <b-link
@@ -41,8 +40,7 @@
           md="4"
           class="subsection"
           v-for="v in s.children.slice(6)"
-          xxx-v-for="v in s.children"
-          :key="'video-' + v.id"
+          :key="'item-' + v.id"
         >
           <div class="rounded overflow-hidden mb-2 mt-4">
             <b-link
@@ -73,15 +71,15 @@
 <script>
 import SectionTitle from '@/components/SectionTitle.vue';
 import Card from '@/components/Card.vue';
-import VideosListHeader from '@/components/VideosListHeader.vue';
+import SectionHeader from '@/components/SectionHeader.vue';
 import { goToContent } from 'kolibri-api';
 
 export default {
-  name: 'VideosList',
+  name: 'Section',
   components: {
     SectionTitle,
     Card,
-    VideosListHeader,
+    SectionHeader,
   },
   data() {
     return {
