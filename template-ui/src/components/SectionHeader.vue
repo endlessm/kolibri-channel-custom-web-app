@@ -18,10 +18,10 @@
                 {{ node.description }}
   <template v-slot:after="slotProps">
         <b-button
-          class="more-text"
+          class="bg-transparent"
           variant="dark"
           v-if="slotProps.clamped"
-          v-on:click="toggleExpanded">(more) {{ clamped }}</b-button>
+          v-on:click="toggleExpanded">(more)</b-button>
   </template>
               </v-clamp>
             </b-card-text>
@@ -90,11 +90,7 @@ export default {
 }
 
 button:hover {
-  color: $primary;
+  color: $primary !important;
 }
 
-.more-text {
-  background: none;
-  border: none;
-}
 </style>

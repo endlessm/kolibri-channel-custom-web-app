@@ -3,7 +3,7 @@
   <div class="rounded overflow-hidden mb-2 mt-4">
     <b-link
       v-on:click="isLeaf? goToContent(node) : false"
-      :to="isLeaf? false : getTopicUrl(node)"
+      :to="isLeaf? '' : getTopicUrl(node)"
       class="m-0 text-reset text-decoration-none"
     >
       <div class="content-image">
@@ -17,7 +17,7 @@
   </div>
   <b-link
     v-on:click="isLeaf? goToContent(node) : false"
-    :to="isLeaf? false : getTopicUrl(node)"
+    :to="isLeaf? '' : getTopicUrl(node)"
     class="text-reset text-decoration-none"
   >
     <span>{{ title }}</span>
