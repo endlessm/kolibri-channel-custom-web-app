@@ -4,7 +4,7 @@
     <b-container
       class="section-container my-5"
       v-for="section in mainSections"
-      :key="'section-' + section.id"
+      :key="section.id"
     >
       <b-row>
         <SectionTitle :section="section" />
@@ -14,21 +14,10 @@
           cols="6"
           md="4"
           class="subsection"
-          v-for="subsection in section.children"
-          :key="'subsection-' + section.id + '-' + subsection.id"
+          v-for="node in section.children"
+          :key="node.id"
         >
-          <div class="rounded overflow-hidden mb-2 mt-4">
-            <b-link :to="getSubsectionUrl(section, subsection)" class="m-0">
-            <Card :node="subsection" />
-            </b-link>
-          </div>
-          <b-link
-            :to="getSubsectionUrl(section, subsection)"
-            class="text-reset text-decoration-none"
-          >
-            <span>{{ subsection.title }}</span>
-            <span> - {{ getLeavesCount(subsection) }} items</span>
-          </b-link>
+          <Card :node="node" />
         </b-col>
       </b-row>
     </b-container>
@@ -48,8 +37,6 @@
 import SectionTitle from '@/components/SectionTitle.vue';
 import Card from '@/components/Card.vue';
 import Carousel from '@/components/Carousel.vue';
-import getSlug from '@/utils';
-import { goToContent } from 'kolibri-api';
 
 export default {
   name: 'Home',
@@ -75,24 +62,9 @@ export default {
     carouselInfo() {
       return this.mainSections.map((s) => ({
         item: s.children[0],
-        // FIXME, use item.parent?
         section: s,
       }));
     },
-  },
-  methods: {
-    getLeavesCount(node) {
-      if (!node.children) {
-        return 1;
-      }
-      return node.children
-        .map(this.getLeavesCount)
-        .reduce((a, b) => a + b, 0);
-    },
-    getSubsectionUrl(section, subsection) {
-      return `/${getSlug(section.title)}/${getSlug(subsection.title)}`;
-    },
-    goToContent,
   },
 };
 </script>

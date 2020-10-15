@@ -58,6 +58,7 @@ import arrayToTree from 'array-to-tree';
 import VueBootstrapTypeahead from 'vue-bootstrap-typeahead';
 import getSlug from '@/utils';
 import { goToContent, askChannelInformation } from 'kolibri-api';
+import _ from 'underscore';
 
 let mockData;
 if (process.env.VUE_APP_USE_MOCK_DATA === 'true') {
@@ -86,20 +87,41 @@ export default {
         this.currentSubsection = {};
         return;
       }
-      console.log(to.params.section, to.params.subsection);
-      const section = this.mainSections.find((n) => getSlug(n.title) === to.params.section);
-      if (!section || !section.children) {
+
+      let path;
+      function hasPath(node, matchId) {
+        path.push(node);
+
+        // match!
+        if (node.id === matchId) {
+          return true;
+        }
+
+        // is a leaf?
+        if (!node.children) {
+          path.pop();
+          return false;
+        }
+
+        // what about children? do recursion:
+        const f = _.partial(hasPath, _, matchId);
+        if (node.children.some(f)) {
+          return true;
+        }
+
+        // not found in children:
+        path.pop();
+        return false;
+      }
+
+      path = [];
+      if (hasPath(this.nodesTree[0], to.params.topicId)) {
+        this.currentSection = path[path.length - 2];
+        this.currentSubsection = path[path.length - 1];
+      } else {
         this.currentSection = {};
         this.currentSubsection = {};
-        return;
       }
-      this.currentSection = section;
-      const subsection = section.children.find((n) => getSlug(n.title) === to.params.subsection);
-      if (!subsection) {
-        this.currentSubsection = {};
-        return;
-      }
-      this.currentSubsection = subsection;
     },
   },
   computed: {

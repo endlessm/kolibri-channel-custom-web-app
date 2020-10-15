@@ -12,7 +12,7 @@ const routes = [
     component: Home,
   },
   {
-    path: '/:section/:subsection',
+    path: '/:topicId',
     name: 'Section',
     component: Section,
   },

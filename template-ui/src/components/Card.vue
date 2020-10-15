@@ -1,15 +1,32 @@
 <template>
-<div class="content-image">
-<img
-    :alt="node.title"
-    :src="thumbnail"
-    class="w-100"
->
+<div>
+  <div class="rounded overflow-hidden mb-2 mt-4">
+    <b-link
+      v-on:click="isLeaf? goToContent(node) : false"
+      :to="isLeaf? false : getTopicUrl(node)"
+      class="m-0 text-reset text-decoration-none"
+    >
+      <div class="content-image">
+      <img
+          :alt="node.title"
+          :src="thumbnail"
+          class="w-100"
+      >
+      </div>
+    </b-link>
+  </div>
+  <b-link
+    v-on:click="isLeaf? goToContent(node) : false"
+    :to="isLeaf? false : getTopicUrl(node)"
+    class="text-reset text-decoration-none"
+  >
+    <span>{{ title }}</span>
+  </b-link>
 </div>
 </template>
 
 <script>
-import { getThumbnail } from 'kolibri-api';
+import { getThumbnail, goToContent } from 'kolibri-api';
 
 export default {
   props: ['node'],
@@ -22,8 +39,29 @@ export default {
     defaultThumbnail() {
       return `${process.env.BASE_URL}/assets/${this.$store.state.defaultThumbnailAsset}`;
     },
+    title() {
+      if (this.node.kind === 'topic') {
+        return `${this.node.title} - ${this.getLeavesCount(this.node)} items`;
+      }
+      return this.node.title;
+    },
+    isLeaf() {
+      return this.node.kind !== 'topic';
+    },
   },
   methods: {
+    goToContent,
+    getTopicUrl(node) {
+      return `/${node.id}`;
+    },
+    getLeavesCount(node) {
+      if (!node.children) {
+        return 1;
+      }
+      return node.children
+        .map(this.getLeavesCount)
+        .reduce((a, b) => a + b, 0);
+    },
     async getThumbnail() {
       if (!this.node.thumbnail && process.env.VUE_APP_USE_MOCK_DATA === 'true') {
         this.thumbnail = this.defaultThumbnail;

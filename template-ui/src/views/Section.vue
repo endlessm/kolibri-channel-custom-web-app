@@ -20,17 +20,10 @@
           cols="6"
           md="4"
           class="subsection"
-          v-for="v in s.children.slice(0, 6)"
-          :key="'item-' + v.id"
+          v-for="node in s.children.slice(0, 6)"
+          :key="'item-' + node.id"
         >
-          <div class="rounded overflow-hidden mb-2 mt-4">
-            <b-link
-              v-on:click="goToContent(v)"
-              class="m-0 text-reset text-decoration-none"
-              >
-            <Card :node="v" />
-            </b-link>
-          </div>
+          <Card :node="node" />
         </b-col>
   </b-row>
   <b-collapse :id="'collapse-'+ s.id" class="mt-2">
@@ -39,17 +32,10 @@
           cols="6"
           md="4"
           class="subsection"
-          v-for="v in s.children.slice(6)"
-          :key="'item-' + v.id"
+          v-for="node in s.children.slice(6)"
+          :key="'item-' + node.id"
         >
-          <div class="rounded overflow-hidden mb-2 mt-4">
-            <b-link
-              v-on:click="goToContent(v)"
-              class="m-0 text-reset text-decoration-none"
-              >
-            <Card :node="v" />
-            </b-link>
-          </div>
+          <Card :node="node" />
         </b-col>
   </b-row>
   </b-collapse>
