@@ -73,8 +73,6 @@ export default {
   },
   data() {
     return {
-      channel: {},
-      nodes: [],
       query: '',
     };
   },
@@ -130,11 +128,20 @@ export default {
     logo() {
       return `${process.env.BASE_URL}/assets/${this.$store.state.logoAsset}`;
     },
+    section() {
+      return this.$store.state.section;
+    },
+    parentSection() {
+      return this.$store.state.parentSection;
+    },
+    channel() {
+      return this.$store.state.channel;
+    },
     contentNodes() {
-      return this.nodes.filter((n) => n.kind !== 'topic');
+      return this.$store.state.nodes.filter((n) => n.kind !== 'topic');
     },
     nodesTree() {
-      return arrayToTree(this.nodes, { parentProperty: 'parent' });
+      return arrayToTree(this.$store.state.nodes, { parentProperty: 'parent' });
     },
     mainSections() {
       if (this.nodesTree && this.nodesTree[0]) {
@@ -145,12 +152,7 @@ export default {
   },
   methods: {
     gotChannelInformation(data) {
-      if (data.channel) {
-        this.channel = data.channel;
-      }
-      if (data.nodes) {
-        this.nodes = data.nodes;
-      }
+      this.$store.commit('setChannelInformation', data);
     },
     getSectionUrl(section) {
       return `/#${getSlug(section.title)}`;

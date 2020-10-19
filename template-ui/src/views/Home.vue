@@ -51,10 +51,10 @@ export default {
   },
   computed: {
     channel() {
-      return this.$root.$children[0].channel;
+      return this.$store.state.channel;
     },
     nodes() {
-      return this.$root.$children[0].nodes;
+      return this.$store.state.nodes;
     },
     mainSections() {
       return this.$root.$children[0].mainSections;
