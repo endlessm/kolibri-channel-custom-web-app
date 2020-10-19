@@ -34,6 +34,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
 import SectionTitle from '@/components/SectionTitle.vue';
 import Card from '@/components/Card.vue';
 import Carousel from '@/components/Carousel.vue';
@@ -45,17 +46,8 @@ export default {
     Card,
     Carousel,
   },
-  data() {
-    return {
-    };
-  },
   computed: {
-    channel() {
-      return this.$store.state.channel;
-    },
-    nodes() {
-      return this.$store.state.nodes;
-    },
+    ...mapState(['channel', 'nodes']),
     mainSections() {
       return this.$root.$children[0].mainSections;
     },

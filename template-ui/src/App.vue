@@ -56,6 +56,7 @@
 <script>
 import arrayToTree from 'array-to-tree';
 import VueBootstrapTypeahead from 'vue-bootstrap-typeahead';
+import { mapState } from 'vuex';
 import getSlug from '@/utils';
 import { goToContent, askChannelInformation } from 'kolibri-api';
 import _ from 'underscore';
@@ -122,26 +123,15 @@ export default {
     },
   },
   computed: {
-    appName() {
-      return this.$store.state.appName;
-    },
+    ...mapState(['channel', 'nodes', 'section', 'parentSection', 'appName', 'logoAsset']),
     logo() {
-      return `${process.env.BASE_URL}/assets/${this.$store.state.logoAsset}`;
-    },
-    section() {
-      return this.$store.state.section;
-    },
-    parentSection() {
-      return this.$store.state.parentSection;
-    },
-    channel() {
-      return this.$store.state.channel;
+      return `${process.env.BASE_URL}/assets/${this.logoAsset}`;
     },
     contentNodes() {
-      return this.$store.state.nodes.filter((n) => n.kind !== 'topic');
+      return this.nodes.filter((n) => n.kind !== 'topic');
     },
     nodesTree() {
-      return arrayToTree(this.$store.state.nodes, { parentProperty: 'parent' });
+      return arrayToTree(this.nodes, { parentProperty: 'parent' });
     },
     mainSections() {
       if (this.nodesTree && this.nodesTree[0]) {

@@ -55,6 +55,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
 import SectionTitle from '@/components/SectionTitle.vue';
 import Card from '@/components/Card.vue';
 import SectionHeader from '@/components/SectionHeader.vue';
@@ -67,17 +68,8 @@ export default {
     Card,
     SectionHeader,
   },
-  data() {
-    return {
-    };
-  },
   computed: {
-    parentSection() {
-      return this.$store.state.parentSection;
-    },
-    section() {
-      return this.$store.state.section;
-    },
+    ...mapState(['section', 'parentSection']),
   },
   methods: {
     goToContent,
