@@ -5,6 +5,8 @@ import storeData from '@/overrides/store.json';
 Vue.use(Vuex);
 
 const initialState = {
+  section: {},
+  parentSection: {},
   appName: '',
   logoAsset: 'logo.png',
   defaultThumbnailAsset: 'default-thumb.svg',
@@ -12,6 +14,14 @@ const initialState = {
 
 const store = new Vuex.Store({
   state: { ...initialState, ...storeData },
+  mutations: {
+    setSection(state, payload) {
+      state.section = payload.section;
+      if ('parentSection' in payload) {
+        state.parentSection = payload.parentSection;
+      }
+    },
+  },
   // state: initialState,
   // mutations: {
   //   setAppName(state, appName) {

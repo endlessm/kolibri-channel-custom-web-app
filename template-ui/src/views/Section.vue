@@ -2,14 +2,14 @@
   <div>
   <b-container class="my-5">
     <b-row>
-      <SectionTitle :section="currentSection" />
+      <SectionTitle :section="parentSection" />
     </b-row>
-      <SectionHeader :node="currentSubsection" />
+      <SectionHeader :node="section" />
   </b-container>
 
   <b-container
       class="subsection-container my-5"
-      v-for="s in currentSubsection.children"
+      v-for="s in section.children"
       :key="'subsection-' + s.id"
   >
   <b-row>
@@ -72,11 +72,11 @@ export default {
     };
   },
   computed: {
-    currentSection() {
-      return this.$root.$children[0].currentSection;
+    parentSection() {
+      return this.$store.state.parentSection;
     },
-    currentSubsection() {
-      return this.$root.$children[0].currentSubsection;
+    section() {
+      return this.$store.state.section;
     },
   },
   methods: {

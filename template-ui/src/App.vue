@@ -13,7 +13,7 @@
             variant="light"
             :to="getSectionUrl(section)"
             :key="'menu-' + section.id"
-            :class="{ current: section === currentSection }"
+            :class="{ current: section === parentSection }"
           >
             <span>{{ section.title }}</span>
           </b-button>
@@ -75,16 +75,13 @@ export default {
     return {
       channel: {},
       nodes: [],
-      currentSection: {},
-      currentSubsection: {},
       query: '',
     };
   },
   watch: {
     $route(to) {
       if (to.name !== 'Section') {
-        this.currentSection = {};
-        this.currentSubsection = {};
+        this.$store.commit('setSection', { section: {}, parentSection: {} });
         return;
       }
 
@@ -116,11 +113,13 @@ export default {
 
       path = [];
       if (hasPath(this.nodesTree[0], to.params.topicId)) {
-        this.currentSection = path[path.length - 2];
-        this.currentSubsection = path[path.length - 1];
+        this.$store.commit('setSection',
+          {
+            section: path[path.length - 1],
+            parentSection: path[path.length - 2],
+          });
       } else {
-        this.currentSection = {};
-        this.currentSubsection = {};
+        this.$store.commit('setSection', { section: {}, parentSection: {} });
       }
     },
   },
