@@ -14,7 +14,7 @@ pipenv shell
 Inside the pipenv shell:
 
 ```
-nodeenv -p --node=10.15.3
+nodeenv -p --node=10.17.0
 npm install -g yarn
 yarn global add @vue/cli
 yarn install
