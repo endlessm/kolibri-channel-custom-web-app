@@ -17,24 +17,34 @@ pipenv shell
 ```
 
 We use yarn workspaces to have multiple projects in the same git
-repository. You should stand in a project directory before running the
-commands below. Example:
+repository. You should stand in a workspace directory to run commands
+specific to it. Example:
 
 ```
 cd sikana-ui
+yarn serve
 ```
 
 ### Compiles and hot-reloads for development
 ```
+cd WORKSPACE
 yarn serve
 ```
 
 ### Compiles and minifies for production
+
+To build all projects:
+
 ```
 yarn build
 ```
 
-Then upload the ZIP fie created to kolibri studio.
+To build one project:
+
+```
+cd WORKSPACE
+yarn build
+```
 
 ### Lints and fixes files
 ```
