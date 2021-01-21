@@ -7,20 +7,14 @@ Just like kolibri, we'll use a Python virtual environment along with
 Node to obtain the exact same dependencies.
 
 ```
-pipenv install
+./scripts/bootstrap.sh
+```
+
+All the commands below assume that you are standing in a pipenv shell:
+
+```
 pipenv shell
 ```
-
-Inside the pipenv shell:
-
-```
-nodeenv -p --node=10.17.0
-npm install -g yarn
-yarn global add @vue/cli
-yarn install
-```
-
-All the commands below assume that you are standing in a pipenv shell.
 
 We use yarn workspaces to have multiple projects in the same git
 repository. You should stand in a project directory before running the
