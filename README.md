@@ -46,6 +46,14 @@ cd WORKSPACE
 yarn build
 ```
 
+### Copy all bundled zip files to a destination
+
+Use `yarn deploy DEST_PATH`, for example:
+
+```
+yarn deploy ../kolibri-explore-plugin/kolibri_explore_plugin/apps
+```
+
 ### Lints and fixes files
 ```
 yarn lint
