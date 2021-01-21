@@ -12,7 +12,8 @@
     "postinstall": "patch-package",
     "build": "yarn workspaces run build",
     "lint": "yarn workspaces run lint",
-    "zip": "yarn workspaces run zip"
+    "zip": "yarn workspaces run zip",
+    "deploy": "./scripts/copy_bundles.py"
   },
   "devDependencies": {
     "patch-package": "^6.2.2",
