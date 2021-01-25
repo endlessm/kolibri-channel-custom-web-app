@@ -7,40 +7,52 @@ Just like kolibri, we'll use a Python virtual environment along with
 Node to obtain the exact same dependencies.
 
 ```
-pipenv install
+./scripts/bootstrap.sh
+```
+
+All the commands below assume that you are standing in a pipenv shell:
+
+```
 pipenv shell
 ```
 
-Inside the pipenv shell:
-
-```
-nodeenv -p --node=10.15.3
-npm install -g yarn
-yarn global add @vue/cli
-yarn install
-```
-
-All the commands below assume that you are standing in a pipenv shell.
-
 We use yarn workspaces to have multiple projects in the same git
-repository. You should stand in a project directory before running the
-commands below. Example:
+repository. You should stand in a workspace directory to run commands
+specific to it. Example:
 
 ```
 cd sikana-ui
+yarn serve
 ```
 
 ### Compiles and hot-reloads for development
 ```
+cd WORKSPACE
 yarn serve
 ```
 
 ### Compiles and minifies for production
+
+To build all projects:
+
 ```
 yarn build
 ```
 
-Then upload the ZIP fie created to kolibri studio.
+To build one project:
+
+```
+cd WORKSPACE
+yarn build
+```
+
+### Copy all bundled zip files to a destination
+
+Use `yarn deploy DEST_PATH`, for example:
+
+```
+yarn deploy ../kolibri-explore-plugin/kolibri_explore_plugin/apps
+```
 
 ### Lints and fixes files
 ```
