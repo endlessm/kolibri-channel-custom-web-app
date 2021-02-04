@@ -6,7 +6,8 @@ import subprocess
 import json
 
 ZIP_FILENAME = 'custom-channel-ui.zip'
-SKIP_WORKSPACES = ['kolibri-api', 'template-ui']
+TEMPLATE_WORKSPACE = 'template-ui'
+SKIP_WORKSPACES = ['kolibri-api', TEMPLATE_WORKSPACE]
 
 
 def validate_dir_path(path):
@@ -33,13 +34,15 @@ def workspace_to_appname(workspace):
     return '-'.join(workspace.split('-')[:-1])
 
 
-def copy_bundle_zip(workspace, dest_path):
+def copy_bundle_zip(workspace, dest_path, app_name=None):
     bundle_zip_path = os.path.join(workspace, ZIP_FILENAME)
     if not os.path.exists(bundle_zip_path):
         print(f'Skipping {workspace}, zip not found.')
         return
     print(f'Copying {workspace}...')
-    dest_zip_path = os.path.join(dest_path, workspace_to_appname(workspace))
+    if app_name is None:
+        app_name = workspace_to_appname(workspace)
+    dest_zip_path = os.path.join(dest_path, app_name)
     if not os.path.exists(dest_zip_path):
         os.mkdir(dest_zip_path)
     shutil.copy(bundle_zip_path, dest_zip_path)
@@ -51,3 +54,5 @@ args = parser.parse_args()
 
 for workspace in get_workspaces():
     copy_bundle_zip(workspace, args.dest_path)
+
+copy_bundle_zip(TEMPLATE_WORKSPACE, args.dest_path, 'default')
