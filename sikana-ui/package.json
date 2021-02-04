@@ -9,11 +9,11 @@
     "zip": "../scripts/bundle_zip.py"
   },
   "dependencies": {
-    "kolibri-api": "0.1.0",
     "array-to-tree": "^3.3.2",
-    "bootstrap": "^4.5.1",
-    "bootstrap-vue": "^2.16.0",
+    "bootstrap": "^4.5.3",
+    "bootstrap-vue": "^2.21.2",
     "core-js": "^3.6.5",
+    "kolibri-api": "0.1.0",
     "slugify": "^1.4.5",
     "vue": "^2.6.11",
     "vue-bootstrap-typeahead": "^0.2.6",
