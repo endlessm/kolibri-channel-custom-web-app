@@ -6,7 +6,7 @@
       <b-button-toolbar>
         <b-button-group class="top">
           <b-button variant="light" to="/">
-            <img :src="logo" :alt="appName" />
+            <img :src="channel.thumbnail" :alt="channel.title" />
           </b-button>
           <b-button
             v-for="section in mainSections"
@@ -123,10 +123,7 @@ export default {
     },
   },
   computed: {
-    ...mapState(['channel', 'nodes', 'section', 'parentSection', 'appName', 'logoAsset']),
-    logo() {
-      return `${process.env.BASE_URL}/assets/${this.logoAsset}`;
-    },
+    ...mapState(['channel', 'nodes', 'section', 'parentSection']),
     contentNodes() {
       return this.nodes.filter((n) => n.kind !== 'topic');
     },
