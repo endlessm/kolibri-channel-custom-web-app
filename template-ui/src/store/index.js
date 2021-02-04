@@ -9,7 +9,6 @@ const initialState = {
   nodes: [],
   section: {},
   parentSection: {},
-  defaultThumbnailAsset: 'default-thumb.svg',
 };
 
 const store = new Vuex.Store({

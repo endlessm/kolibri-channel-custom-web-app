@@ -27,6 +27,7 @@
 
 <script>
 import { getThumbnail, goToContent } from 'kolibri-api';
+import defaultThumbnail from '@/components/default-thumb.svg';
 
 export default {
   props: ['node'],
@@ -36,9 +37,6 @@ export default {
     };
   },
   computed: {
-    defaultThumbnail() {
-      return `${process.env.BASE_URL}/assets/${this.$store.state.defaultThumbnailAsset}`;
-    },
     title() {
       if (this.node.kind === 'topic') {
         return `${this.node.title} - ${this.getLeavesCount(this.node)} items`;
@@ -64,7 +62,7 @@ export default {
     },
     async getThumbnail() {
       if (!this.node.thumbnail && process.env.VUE_APP_USE_MOCK_DATA === 'true') {
-        this.thumbnail = this.defaultThumbnail;
+        this.thumbnail = defaultThumbnail;
         return;
       }
       if (this.node.thumbnail) {
@@ -75,7 +73,7 @@ export default {
       if (thumbnail) {
         this.thumbnail = thumbnail;
       } else {
-        this.thumbnail = this.defaultThumbnail;
+        this.thumbnail = defaultThumbnail;
       }
     },
   },
