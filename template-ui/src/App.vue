@@ -54,10 +54,9 @@
 </template>
 
 <script>
-import arrayToTree from 'array-to-tree';
 import VueBootstrapTypeahead from 'vue-bootstrap-typeahead';
-import { mapState } from 'vuex';
-import getSlug from '@/utils';
+import { mapState, mapGetters } from 'vuex';
+import { getSlug } from '@/utils';
 import { goToContent, askChannelInformation } from 'kolibri-api';
 import _ from 'underscore';
 
@@ -111,7 +110,7 @@ export default {
       }
 
       path = [];
-      if (hasPath(this.nodesTree[0], to.params.topicId)) {
+      if (hasPath(this.tree[0], to.params.topicId)) {
         this.$store.commit('setSection',
           {
             section: path[path.length - 1],
@@ -124,18 +123,7 @@ export default {
   },
   computed: {
     ...mapState(['channel', 'nodes', 'section', 'parentSection']),
-    contentNodes() {
-      return this.nodes.filter((n) => n.kind !== 'topic');
-    },
-    nodesTree() {
-      return arrayToTree(this.nodes, { parentProperty: 'parent' });
-    },
-    mainSections() {
-      if (this.nodesTree && this.nodesTree[0]) {
-        return this.nodesTree[0].children;
-      }
-      return [];
-    },
+    ...mapGetters(['tree', 'mainSections', 'contentNodes']),
   },
   methods: {
     gotChannelInformation(data) {

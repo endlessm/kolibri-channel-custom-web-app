@@ -1,12 +1,16 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import storeData from '@/overrides/store.json';
+import { getNodesTree } from '@/utils';
 
 Vue.use(Vuex);
 
 const initialState = {
+  // Channel and nodes, as they come from kolibri:
   channel: {},
   nodes: [],
+
+  // Navigation state:
   section: {},
   parentSection: {},
 };
@@ -24,6 +28,16 @@ const store = new Vuex.Store({
         state.parentSection = payload.parentSection;
       }
     },
+  },
+  getters: {
+    tree: (state) => getNodesTree(state.nodes),
+    mainSections: (_, getters) => {
+      if (getters.tree && getters.tree[0]) {
+        return getters.tree[0].children.filter((n) => n.kind === 'topic');
+      }
+      return [];
+    },
+    contentNodes: (state) => state.nodes.filter((n) => n.kind !== 'topic'),
   },
 });
 
