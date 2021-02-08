@@ -3,6 +3,23 @@
 
     <b-container
       class="section-container my-5"
+      v-if="contentNodes"
+    >
+      <b-row>
+        <b-col
+          cols="6"
+          md="4"
+          class="subsection"
+          v-for="node in contentNodes"
+          :key="node.id"
+        >
+          <Card :node="node" />
+        </b-col>
+      </b-row>
+    </b-container>
+
+    <b-container
+      class="section-container my-5"
       v-for="section in mainSections"
       :key="section.id"
     >
@@ -47,13 +64,16 @@ export default {
     Carousel,
   },
   computed: {
-    ...mapState(['channel', 'nodes']),
+    ...mapState(['channel', 'nodes', 'section']),
     ...mapGetters(['mainSections']),
     carouselInfo() {
       return this.mainSections.map((s) => ({
         item: s.children[0],
         section: s,
       }));
+    },
+    contentNodes() {
+      return this.section.children.filter((n) => n.kind !== 'topic') || null;
     },
   },
 };
