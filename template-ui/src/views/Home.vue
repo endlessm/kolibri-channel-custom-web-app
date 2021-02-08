@@ -1,43 +1,22 @@
 <template>
   <div id="home">
 
-    <b-container
-      class="section-container my-5"
+    <CardGrid
+      :nodes="contentNodes"
+      id="content-nodes"
       v-if="contentNodes"
-    >
-      <b-row>
-        <b-col
-          cols="6"
-          md="4"
-          class="subsection"
-          v-for="node in contentNodes"
-          :key="node.id"
-        >
-          <Card :node="node" />
-        </b-col>
-      </b-row>
-    </b-container>
+    />
 
-    <b-container
-      class="section-container my-5"
+    <CardGrid
       v-for="section in mainSections"
       :key="section.id"
+      :nodes="section.children"
+      :id="section.id"
     >
       <b-row>
         <SectionTitle :section="section" />
       </b-row>
-      <b-row>
-        <b-col
-          cols="6"
-          md="4"
-          class="subsection"
-          v-for="node in section.children"
-          :key="node.id"
-        >
-          <Card :node="node" />
-        </b-col>
-      </b-row>
-    </b-container>
+    </CardGrid>
 
 <b-container>
   <h3>Discover</h3>
@@ -53,14 +32,14 @@
 <script>
 import { mapState, mapGetters } from 'vuex';
 import SectionTitle from '@/components/SectionTitle.vue';
-import Card from '@/components/Card.vue';
+import CardGrid from '@/components/CardGrid.vue';
 import Carousel from '@/components/Carousel.vue';
 
 export default {
   name: 'Home',
   components: {
     SectionTitle,
-    Card,
+    CardGrid,
     Carousel,
   },
   computed: {
