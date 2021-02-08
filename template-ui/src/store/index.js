@@ -32,7 +32,7 @@ const store = new Vuex.Store({
   getters: {
     tree: (state) => getNodesTree(state.nodes),
     mainSections: (_, getters) => {
-      if (getters.tree && getters.tree[0]) {
+      if (getters.tree[0]) {
         return getters.tree[0].children.filter((n) => n.kind === 'topic');
       }
       return [];

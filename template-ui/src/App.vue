@@ -79,7 +79,7 @@ export default {
   watch: {
     $route(to) {
       if (to.name !== 'Section') {
-        this.$store.commit('setSection', { section: {}, parentSection: {} });
+        this.$store.commit('setSection', { section: this.tree[0], parentSection: {} });
         return;
       }
 
@@ -117,7 +117,7 @@ export default {
             parentSection: path[path.length - 2],
           });
       } else {
-        this.$store.commit('setSection', { section: {}, parentSection: {} });
+        this.$store.commit('setSection', { section: this.tree[0], parentSection: {} });
       }
     },
   },
@@ -128,6 +128,7 @@ export default {
   methods: {
     gotChannelInformation(data) {
       this.$store.commit('setChannelInformation', data);
+      this.$store.commit('setSection', { section: this.tree[0], parentSection: {} });
     },
     getSectionUrl(section) {
       return `/#${getSlug(section.title)}`;
