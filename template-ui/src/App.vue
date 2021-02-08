@@ -114,7 +114,7 @@ export default {
         this.$store.commit('setSection',
           {
             section: path[path.length - 1],
-            parentSection: path[path.length - 2],
+            parentSection: path[1],
           });
       } else {
         this.$store.commit('setSection', { section: this.tree[0], parentSection: {} });
