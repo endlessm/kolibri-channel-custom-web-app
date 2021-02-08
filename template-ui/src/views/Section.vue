@@ -1,9 +1,6 @@
 <template>
   <div>
   <b-container class="my-5">
-    <b-row>
-      <SectionTitle :section="parentSection" />
-    </b-row>
       <SectionHeader :node="section" />
   </b-container>
 
@@ -56,7 +53,6 @@
 
 <script>
 import { mapState } from 'vuex';
-import SectionTitle from '@/components/SectionTitle.vue';
 import Card from '@/components/Card.vue';
 import SectionHeader from '@/components/SectionHeader.vue';
 import { goToContent } from 'kolibri-api';
@@ -64,7 +60,6 @@ import { goToContent } from 'kolibri-api';
 export default {
   name: 'Section',
   components: {
-    SectionTitle,
     Card,
     SectionHeader,
   },
