@@ -31,7 +31,7 @@
       v-model="query"
       placeholder="Search"
       :serializer="searchLabel"
-      :data="contentNodes"
+      :data="nodesToSearch"
       v-on:hit="goToContent"
     />
   </b-col>
@@ -123,7 +123,7 @@ export default {
   },
   computed: {
     ...mapState(['channel', 'nodes', 'section', 'parentSection']),
-    ...mapGetters(['tree', 'mainSections', 'contentNodes']),
+    ...mapGetters(['tree', 'mainSections', 'nodesToSearch']),
   },
   methods: {
     gotChannelInformation(data) {
