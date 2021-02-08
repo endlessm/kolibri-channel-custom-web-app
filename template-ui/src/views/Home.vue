@@ -18,14 +18,6 @@
       </b-row>
     </CardGrid>
 
-<b-container>
-  <h3>Discover</h3>
-</b-container>
-<b-container class="mt-4">
-<div class="bg-primary">
-  <Carousel :carouselInfo=carouselInfo />
-</div>
-</b-container>
   </div>
 </template>
 
@@ -33,24 +25,16 @@
 import { mapState, mapGetters } from 'vuex';
 import SectionTitle from '@/components/SectionTitle.vue';
 import CardGrid from '@/components/CardGrid.vue';
-import Carousel from '@/components/Carousel.vue';
 
 export default {
   name: 'Home',
   components: {
     SectionTitle,
     CardGrid,
-    Carousel,
   },
   computed: {
     ...mapState(['channel', 'nodes', 'section']),
     ...mapGetters(['mainSections']),
-    carouselInfo() {
-      return this.mainSections.map((s) => ({
-        item: s.children[0],
-        section: s,
-      }));
-    },
     contentNodes() {
       return this.section.children.filter((n) => n.kind !== 'topic') || null;
     },
