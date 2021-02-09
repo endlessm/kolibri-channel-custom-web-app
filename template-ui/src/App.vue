@@ -6,7 +6,12 @@
       <b-button-toolbar>
         <b-button-group class="top">
           <b-button variant="light" to="/">
-            <img :src="channel.thumbnail" :alt="channel.title" />
+            <img
+              v-if="channel.thumbnail"
+              :src="channel.thumbnail"
+              :alt="channel.title"
+            />
+            <span v-else>{{ channel.title }}</span>
           </b-button>
           <b-button
             v-for="section in mainSections"
