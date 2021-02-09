@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import getSlug from '@/utils';
+import { getSlug } from '@/utils';
 
 export default {
   name: 'SectionTitle',

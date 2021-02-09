@@ -1,61 +1,45 @@
 <template>
   <div id="home">
 
-    <b-container
-      class="section-container my-5"
+    <CardGrid
+      :nodes="contentNodes"
+      id="content-nodes"
+      v-if="contentNodes"
+    />
+
+    <CardGrid
       v-for="section in mainSections"
       :key="section.id"
+      :nodes="section.children"
+      :id="section.id"
     >
       <b-row>
         <SectionTitle :section="section" />
       </b-row>
-      <b-row>
-        <b-col
-          cols="6"
-          md="4"
-          class="subsection"
-          v-for="node in section.children"
-          :key="node.id"
-        >
-          <Card :node="node" />
-        </b-col>
-      </b-row>
-    </b-container>
+    </CardGrid>
 
-<b-container>
-  <h3>Discover</h3>
-</b-container>
-<b-container class="mt-4">
-<div class="bg-primary">
-  <Carousel :carouselInfo=carouselInfo />
-</div>
-</b-container>
   </div>
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { mapState, mapGetters } from 'vuex';
 import SectionTitle from '@/components/SectionTitle.vue';
-import Card from '@/components/Card.vue';
-import Carousel from '@/components/Carousel.vue';
+import CardGrid from '@/components/CardGrid.vue';
 
 export default {
   name: 'Home',
   components: {
     SectionTitle,
-    Card,
-    Carousel,
+    CardGrid,
   },
   computed: {
-    ...mapState(['channel', 'nodes']),
-    mainSections() {
-      return this.$root.$children[0].mainSections;
-    },
-    carouselInfo() {
-      return this.mainSections.map((s) => ({
-        item: s.children[0],
-        section: s,
-      }));
+    ...mapState(['channel', 'nodes', 'section']),
+    ...mapGetters(['mainSections']),
+    contentNodes() {
+      if (!this.section || !this.section.children) {
+        return null;
+      }
+      return this.section.children.filter((n) => n.kind !== 'topic') || null;
     },
   },
 };

@@ -23,6 +23,7 @@
 
 <script>
 import { getThumbnail } from 'kolibri-api';
+import defaultThumbnail from '@/components/default-thumb.svg';
 
 export default {
   name: 'Carousel',
@@ -34,16 +35,13 @@ export default {
     };
   },
   computed: {
-    defaultThumbnail() {
-      return `${process.env.BASE_URL}/assets/${this.$store.state.defaultThumbnailAsset}`;
-    },
   },
   methods: {
     async getThumbnails() {
       await Promise.all(
         this.carouselInfo.map(async ({ item }) => {
           if (!item.thumbnail && process.env.VUE_APP_USE_MOCK_DATA === 'true') {
-            this.thumbnails[item.id] = this.defaultThumbnail;
+            this.thumbnails[item.id] = defaultThumbnail;
             return;
           }
           if (item.thumbnail) {
@@ -54,7 +52,7 @@ export default {
           if (thumbnail) {
             this.thumbnails[item.id] = thumbnail;
           } else {
-            this.thumbnails[item.id] = this.defaultThumbnail;
+            this.thumbnails[item.id] = defaultThumbnail;
           }
         }),
       );

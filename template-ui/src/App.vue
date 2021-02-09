@@ -6,7 +6,12 @@
       <b-button-toolbar>
         <b-button-group class="top">
           <b-button variant="light" to="/">
-            <img :src="logo" :alt="appName" />
+            <img
+              v-if="channel.thumbnail"
+              :src="channel.thumbnail"
+              :alt="channel.title"
+            />
+            <span v-else>{{ channel.title }}</span>
           </b-button>
           <b-button
             v-for="section in mainSections"
@@ -31,7 +36,7 @@
       v-model="query"
       placeholder="Search"
       :serializer="searchLabel"
-      :data="contentNodes"
+      :data="nodesToSearch"
       v-on:hit="goToContent"
     />
   </b-col>
@@ -54,10 +59,9 @@
 </template>
 
 <script>
-import arrayToTree from 'array-to-tree';
 import VueBootstrapTypeahead from 'vue-bootstrap-typeahead';
-import { mapState } from 'vuex';
-import getSlug from '@/utils';
+import { mapState, mapGetters } from 'vuex';
+import { getSlug } from '@/utils';
 import { goToContent, askChannelInformation } from 'kolibri-api';
 import _ from 'underscore';
 
@@ -80,7 +84,7 @@ export default {
   watch: {
     $route(to) {
       if (to.name !== 'Section') {
-        this.$store.commit('setSection', { section: {}, parentSection: {} });
+        this.$store.commit('setSection', { section: this.tree[0], parentSection: {} });
         return;
       }
 
@@ -111,38 +115,25 @@ export default {
       }
 
       path = [];
-      if (hasPath(this.nodesTree[0], to.params.topicId)) {
+      if (hasPath(this.tree[0], to.params.topicId)) {
         this.$store.commit('setSection',
           {
             section: path[path.length - 1],
-            parentSection: path[path.length - 2],
+            parentSection: path[1],
           });
       } else {
-        this.$store.commit('setSection', { section: {}, parentSection: {} });
+        this.$store.commit('setSection', { section: this.tree[0], parentSection: {} });
       }
     },
   },
   computed: {
-    ...mapState(['channel', 'nodes', 'section', 'parentSection', 'appName', 'logoAsset']),
-    logo() {
-      return `${process.env.BASE_URL}/assets/${this.logoAsset}`;
-    },
-    contentNodes() {
-      return this.nodes.filter((n) => n.kind !== 'topic');
-    },
-    nodesTree() {
-      return arrayToTree(this.nodes, { parentProperty: 'parent' });
-    },
-    mainSections() {
-      if (this.nodesTree && this.nodesTree[0]) {
-        return this.nodesTree[0].children;
-      }
-      return [];
-    },
+    ...mapState(['channel', 'nodes', 'section', 'parentSection']),
+    ...mapGetters(['tree', 'mainSections', 'nodesToSearch']),
   },
   methods: {
     gotChannelInformation(data) {
       this.$store.commit('setChannelInformation', data);
+      this.$store.commit('setSection', { section: this.tree[0], parentSection: {} });
     },
     getSectionUrl(section) {
       return `/#${getSlug(section.title)}`;
@@ -193,7 +184,5 @@ export default {
 
 #footer {
   text-shadow: 1px 1px 2px #333;
-  background-image: url("./footer.jpg");
-  background-repeat: repeat;
 }
 </style>
