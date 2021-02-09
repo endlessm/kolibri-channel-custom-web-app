@@ -36,6 +36,9 @@ export default {
     ...mapState(['channel', 'nodes', 'section']),
     ...mapGetters(['mainSections']),
     contentNodes() {
+      if (!this.section || !this.section.children) {
+        return null;
+      }
       return this.section.children.filter((n) => n.kind !== 'topic') || null;
     },
   },
