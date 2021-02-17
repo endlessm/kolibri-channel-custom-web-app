@@ -36,7 +36,7 @@
       v-model="query"
       placeholder="Search"
       :serializer="searchLabel"
-      :data="nodesToSearch"
+      :data="nodes"
       v-on:hit="goToContent"
     />
   </b-col>
@@ -128,7 +128,7 @@ export default {
   },
   computed: {
     ...mapState(['channel', 'nodes', 'section', 'parentSection']),
-    ...mapGetters(['tree', 'mainSections', 'nodesToSearch']),
+    ...mapGetters(['tree', 'mainSections']),
   },
   methods: {
     gotChannelInformation(data) {
@@ -141,7 +141,13 @@ export default {
     searchLabel(node) {
       return node.title;
     },
-    goToContent,
+    goToContent(node) {
+      if (node.kind === 'topic') {
+        this.$router.push(`/${node.id}`);
+      } else {
+        goToContent(node);
+      }
+    },
   },
   created() {
     if (process.env.VUE_APP_USE_MOCK_DATA === 'true') {
