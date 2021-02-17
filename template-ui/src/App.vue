@@ -33,6 +33,7 @@
 <b-row>
   <b-col md="12">
     <vue-bootstrap-typeahead
+      ref="search"
       v-model="query"
       placeholder="Search"
       :serializer="searchLabel"
@@ -155,6 +156,15 @@ export default {
     } else {
       askChannelInformation(this.gotChannelInformation);
     }
+  },
+  mounted() {
+    this.$root.$on('bv::collapse::state', (collapseId, isJustShown) => {
+      if (collapseId === 'collapse-search' && isJustShown) {
+        this.$nextTick(() => {
+          this.$refs.search.$refs.input.focus();
+        });
+      }
+    });
   },
 };
 </script>
