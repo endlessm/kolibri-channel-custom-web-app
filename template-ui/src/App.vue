@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" class="d-flex flex-column h-100">
     <b-container id="nav">
 <b-row>
   <b-col md="auto">
@@ -47,7 +47,7 @@
 
     <router-view/>
 
-    <div id="footer" class="mt-5 bg-secondary">
+    <div id="footer" class="mt-auto bg-secondary">
       <b-container>
         <b-card class="border-0 bg-transparent text-light text-center">
           <h3>About {{ channel.title }}</h3>
@@ -155,6 +155,11 @@ export default {
 
 <style lang="scss">
 @import './styles.scss';
+
+html,
+body {
+  height: 100%;
+}
 
 .btn-group {
   display: initial !important;
