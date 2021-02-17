@@ -133,17 +133,8 @@ export default {
         this.$store.commit('setSection', { section: this.tree[0], parentSection: {} });
       }
     },
-    query(q) {
-      const re = new RegExp(q, 'i');
-      this.searchNodes = this.nodes.map((node) => {
-        const n = { ...node, searchText: node.title };
-        if (n.description && n.description.match(re)) {
-          n.searchText = `${n.title}: ${n.description}`;
-        }
-
-        return n;
-      });
-    },
+    // eslint-disable-next-line func-names
+    query: _.debounce(function (q) { this.search(q); }, 500),
   },
   computed: {
     ...mapState(['channel', 'nodes', 'section', 'parentSection']),
@@ -178,6 +169,24 @@ export default {
     searchHidden() {
       // Empty search input on hide
       this.$refs.search.inputValue = '';
+    },
+    search(q) {
+      const re = new RegExp(`(.{1,10})?${q}(.{1,10})?`, 'ig');
+      this.searchNodes = this.nodes.map((node) => {
+        const n = { ...node, searchText: node.title };
+        if (n.description) {
+          let matches = '';
+          const match = [...n.description.matchAll(re)];
+          if (match.length) {
+            match.forEach(([m]) => {
+              matches += ` ...${m}... `;
+            });
+            n.searchText = `${n.title}: ${matches}`;
+          }
+        }
+
+        return n;
+      });
     },
   },
   created() {
