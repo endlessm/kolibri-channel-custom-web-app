@@ -29,7 +29,12 @@
       </b-button-toolbar>
   </b-col>
 </b-row>
-<b-collapse id="collapse-search">
+<b-collapse
+  id="collapse-search"
+  v-model="searchVisible"
+  @shown="searchShown"
+  @hidden="searchHidden"
+>
 <b-row>
   <b-col md="12">
     <vue-bootstrap-typeahead
@@ -80,6 +85,7 @@ export default {
   data() {
     return {
       query: '',
+      searchVisible: false,
     };
   },
   watch: {
@@ -143,11 +149,23 @@ export default {
       return node.title;
     },
     goToContent(node) {
+      // Hide search on click on content
+      this.searchVisible = false;
+
       if (node.kind === 'topic') {
         this.$router.push(`/${node.id}`);
       } else {
         goToContent(node);
       }
+    },
+    searchShown() {
+      this.$nextTick(() => {
+        this.$refs.search.$refs.input.focus();
+      });
+    },
+    searchHidden() {
+      // Empty search input on hide
+      this.$refs.search.inputValue = '';
     },
   },
   created() {
@@ -156,15 +174,6 @@ export default {
     } else {
       askChannelInformation(this.gotChannelInformation);
     }
-  },
-  mounted() {
-    this.$root.$on('bv::collapse::state', (collapseId, isJustShown) => {
-      if (collapseId === 'collapse-search' && isJustShown) {
-        this.$nextTick(() => {
-          this.$refs.search.$refs.input.focus();
-        });
-      }
-    });
   },
 };
 </script>
