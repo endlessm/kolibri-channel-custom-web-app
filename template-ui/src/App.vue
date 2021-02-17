@@ -42,7 +42,7 @@
       v-model="query"
       placeholder="Search"
       :serializer="searchLabel"
-      :data="nodes"
+      :data="searchNodes"
       v-on:hit="goToContent"
     />
   </b-col>
@@ -86,6 +86,7 @@ export default {
     return {
       query: '',
       searchVisible: false,
+      searchNodes: [],
     };
   },
   watch: {
@@ -132,6 +133,17 @@ export default {
         this.$store.commit('setSection', { section: this.tree[0], parentSection: {} });
       }
     },
+    query(q) {
+      const re = new RegExp(q, 'i');
+      this.searchNodes = this.nodes.map((node) => {
+        const n = { ...node, searchText: node.title };
+        if (n.description && n.description.match(re)) {
+          n.searchText = `${n.title}: ${n.description}`;
+        }
+
+        return n;
+      });
+    },
   },
   computed: {
     ...mapState(['channel', 'nodes', 'section', 'parentSection']),
@@ -146,7 +158,7 @@ export default {
       return `/#${getSlug(section.title)}`;
     },
     searchLabel(node) {
-      return node.title;
+      return node.searchText;
     },
     goToContent(node) {
       // Hide search on click on content
