@@ -29,14 +29,20 @@
       </b-button-toolbar>
   </b-col>
 </b-row>
-<b-collapse id="collapse-search">
+<b-collapse
+  id="collapse-search"
+  v-model="searchVisible"
+  @shown="searchShown"
+  @hidden="searchHidden"
+>
 <b-row>
   <b-col md="12">
     <vue-bootstrap-typeahead
+      ref="search"
       v-model="query"
       placeholder="Search"
       :serializer="searchLabel"
-      :data="nodesToSearch"
+      :data="searchNodes"
       v-on:hit="goToContent"
     />
   </b-col>
@@ -79,6 +85,8 @@ export default {
   data() {
     return {
       query: '',
+      searchVisible: false,
+      searchNodes: [],
     };
   },
   watch: {
@@ -125,10 +133,12 @@ export default {
         this.$store.commit('setSection', { section: this.tree[0], parentSection: {} });
       }
     },
+    // eslint-disable-next-line func-names
+    query: _.debounce(function (q) { this.search(q); }, 500),
   },
   computed: {
     ...mapState(['channel', 'nodes', 'section', 'parentSection']),
-    ...mapGetters(['tree', 'mainSections', 'nodesToSearch']),
+    ...mapGetters(['tree', 'mainSections']),
   },
   methods: {
     gotChannelInformation(data) {
@@ -139,9 +149,45 @@ export default {
       return `/#${getSlug(section.title)}`;
     },
     searchLabel(node) {
-      return node.title;
+      return node.searchText;
     },
-    goToContent,
+    goToContent(node) {
+      // Hide search on click on content
+      this.searchVisible = false;
+
+      if (node.kind === 'topic') {
+        this.$router.push(`/${node.id}`);
+      } else {
+        goToContent(node);
+      }
+    },
+    searchShown() {
+      this.$nextTick(() => {
+        this.$refs.search.$refs.input.focus();
+      });
+    },
+    searchHidden() {
+      // Empty search input on hide
+      this.$refs.search.inputValue = '';
+    },
+    search(q) {
+      const re = new RegExp(`(.{1,10})?${q}(.{1,10})?`, 'ig');
+      this.searchNodes = this.nodes.map((node) => {
+        const n = { ...node, searchText: node.title };
+        if (n.description) {
+          let matches = '';
+          const match = [...n.description.matchAll(re)];
+          if (match.length) {
+            match.forEach(([m]) => {
+              matches += ` ...${m}... `;
+            });
+            n.searchText = `${n.title}: ${matches}`;
+          }
+        }
+
+        return n;
+      });
+    },
   },
   created() {
     if (process.env.VUE_APP_USE_MOCK_DATA === 'true') {

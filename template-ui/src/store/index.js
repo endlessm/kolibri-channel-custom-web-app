@@ -37,7 +37,6 @@ const store = new Vuex.Store({
       }
       return [];
     },
-    nodesToSearch: (state) => state.nodes.filter((n) => n.kind !== 'topic'),
   },
 });
 
