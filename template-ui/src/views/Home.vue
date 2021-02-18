@@ -7,16 +7,11 @@
       v-if="contentNodes"
     />
 
-    <CardGrid
+    <SectionContent
       v-for="section in mainSections"
       :key="section.id"
-      :nodes="section.children"
-      :id="section.id"
-    >
-      <b-row>
-        <SectionTitle :section="section" />
-      </b-row>
-    </CardGrid>
+      :section="section"
+    />
 
   </div>
 </template>
