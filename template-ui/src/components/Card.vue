@@ -27,7 +27,7 @@
 
 <script>
 import { getThumbnail, goToContent } from 'kolibri-api';
-import defaultThumbnail from '@/components/default-thumb.svg';
+import defaultThumbnail from '@/assets/default-card-thumbnail.svg';
 
 export default {
   props: ['node'],
