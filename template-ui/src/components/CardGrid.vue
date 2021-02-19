@@ -37,14 +37,10 @@
 </template>
 
 <script>
-import Card from '@/components/Card.vue';
 
 export default {
   name: 'CardGrid',
   props: ['nodes', 'id'],
-  components: {
-    Card,
-  },
   computed: {},
 };
 </script>
