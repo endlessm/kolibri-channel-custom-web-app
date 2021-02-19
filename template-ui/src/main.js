@@ -4,11 +4,14 @@ import App from './App.vue';
 
 import router from './router';
 import store from './store';
+import dynamicLoadComponents from './dynamicLoadComponents';
 
 Vue.use(BootstrapVue);
 Vue.use(IconsPlugin);
 
 Vue.config.productionTip = false;
+
+dynamicLoadComponents();
 
 window.app = new Vue({
   router,
