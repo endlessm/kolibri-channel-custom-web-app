@@ -1,5 +1,8 @@
 <template>
-  <div id="home">
+  <div
+    id="home"
+    :style="{ backgroundImage: backgroundImageURL }"
+  >
 
     <CardGrid
       :nodes="contentNodes"
@@ -23,9 +26,17 @@
 
 <script>
 import { mapState, mapGetters } from 'vuex';
+import dynamicRequireAsset from '@/dynamicRequireAsset';
+
+const backgroundImage = dynamicRequireAsset('home-background.jpg');
 
 export default {
   name: 'Home',
+  data() {
+    return {
+      backgroundImageURL: backgroundImage ? `url(${backgroundImage})` : null,
+    };
+  },
   computed: {
     ...mapState(['channel', 'nodes', 'section']),
     ...mapGetters(['mainSections']),

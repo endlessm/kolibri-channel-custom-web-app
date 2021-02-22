@@ -53,7 +53,11 @@
 
     <router-view/>
 
-    <div id="footer" class="mt-auto bg-secondary">
+    <div
+      id="footer"
+      class="mt-auto bg-secondary"
+      :style="{ backgroundImage: footerImageURL }"
+    >
       <b-container>
         <b-card class="border-0 bg-transparent text-light text-center">
           <h3>About {{ channel.title }}</h3>
@@ -70,6 +74,9 @@ import { mapState, mapGetters } from 'vuex';
 import { getSlug } from '@/utils';
 import { goToContent, askChannelInformation } from 'kolibri-api';
 import _ from 'underscore';
+import dynamicRequireAsset from '@/dynamicRequireAsset';
+
+const footerImage = dynamicRequireAsset('footer-background.jpg');
 
 let mockData;
 if (process.env.VUE_APP_USE_MOCK_DATA === 'true') {
@@ -87,6 +94,7 @@ export default {
       query: '',
       searchVisible: false,
       searchNodes: [],
+      footerImageURL: footerImage ? `url(${footerImage})` : null,
     };
   },
   watch: {
