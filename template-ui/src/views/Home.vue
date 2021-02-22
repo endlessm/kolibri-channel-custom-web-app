@@ -23,15 +23,9 @@
 
 <script>
 import { mapState, mapGetters } from 'vuex';
-import SectionTitle from '@/components/SectionTitle.vue';
-import CardGrid from '@/components/CardGrid.vue';
 
 export default {
   name: 'Home',
-  components: {
-    SectionTitle,
-    CardGrid,
-  },
   computed: {
     ...mapState(['channel', 'nodes', 'section']),
     ...mapGetters(['mainSections']),

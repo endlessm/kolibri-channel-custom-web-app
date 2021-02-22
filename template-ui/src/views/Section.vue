@@ -14,16 +14,10 @@
 
 <script>
 import { mapState } from 'vuex';
-import CardGrid from '@/components/CardGrid.vue';
-import SectionHeader from '@/components/SectionHeader.vue';
 import { goToContent } from 'kolibri-api';
 
 export default {
   name: 'Section',
-  components: {
-    CardGrid,
-    SectionHeader,
-  },
   computed: {
     ...mapState(['section', 'parentSection']),
   },
