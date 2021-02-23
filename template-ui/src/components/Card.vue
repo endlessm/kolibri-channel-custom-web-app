@@ -27,7 +27,9 @@
 
 <script>
 import { getThumbnail, goToContent } from 'kolibri-api';
-import defaultThumbnail from '@/assets/default-card-thumbnail.svg';
+import dynamicRequireAsset from '@/dynamicRequireAsset';
+
+const defaultThumbnail = dynamicRequireAsset('default-card-thumbnail.svg');
 
 export default {
   props: ['node'],
