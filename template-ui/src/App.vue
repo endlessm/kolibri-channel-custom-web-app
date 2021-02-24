@@ -69,7 +69,6 @@
 </template>
 
 <script>
-import VueBootstrapTypeahead from 'vue-bootstrap-typeahead';
 import { mapState, mapGetters } from 'vuex';
 import { getSlug } from '@/utils';
 import { goToContent, askChannelInformation } from 'kolibri-api';
@@ -86,9 +85,6 @@ if (process.env.VUE_APP_USE_MOCK_DATA === 'true') {
 
 export default {
   name: 'App',
-  components: {
-    VueBootstrapTypeahead,
-  },
   data() {
     return {
       query: '',
