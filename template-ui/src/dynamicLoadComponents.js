@@ -15,7 +15,7 @@ const dynamicLoadComponents = (requireContext) => {
 export default function () {
   try {
     dynamicLoadComponents(require.context(
-      '../overrides/components', false, /.vue$/,
+      '@/overrides/components', false, /.vue$/,
     ));
   } catch {
     // There aren't component overrides. Nothing to do.
