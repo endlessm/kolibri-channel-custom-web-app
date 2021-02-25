@@ -2,10 +2,8 @@
 import argparse
 from _common import set_channel_override
 
-
 parser = argparse.ArgumentParser(
-    description='Check if there is a channel override. '
-    'Set to default if not.',
+    description='Set the channel override to default.',
 )
 parser.parse_args()
-set_channel_override(ensure=True)
+set_channel_override()
