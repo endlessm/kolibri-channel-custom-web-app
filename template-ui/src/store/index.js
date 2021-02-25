@@ -1,7 +1,14 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import storeData from '@/overrides/store.json';
 import { getNodesTree } from '@/utils';
+
+let storeData;
+try {
+  // eslint-disable-next-line global-require, import/no-unresolved
+  storeData = require('@/overrides/options.json');
+} catch {
+  storeData = {};
+}
 
 Vue.use(Vuex);
 
