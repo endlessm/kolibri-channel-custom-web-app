@@ -6,6 +6,13 @@ custom web app. This repository contains a sample of such
 presentations, and a template system that can be used to create the
 presentations easily.
 
+## Template System
+
+See the documentation dedicated to the template system:
+
+- [Specification for the Template System](./docs/template-spec.md)
+- [Technical information for the Template System](./docs/template-tech-info.md)
+
 ## Project setup
 
 Just like kolibri, we'll use a Python virtual environment along with
