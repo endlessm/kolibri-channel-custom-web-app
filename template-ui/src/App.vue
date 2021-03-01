@@ -14,7 +14,21 @@
         <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
         <b-collapse id="nav-collapse" is-nav>
-          <b-navbar-nav>
+
+          <b-navbar-nav v-if="mainSectionsInDropdown">
+            <b-nav-item-dropdown text="Topics" right>
+              <b-dropdown-item
+                v-for="section in mainSections"
+                :to="getSectionUrl(section)"
+                :key="'menu-' + section.id"
+                :active="section === parentSection"
+              >
+                <span>{{ section.title }}</span>
+              </b-dropdown-item>
+            </b-nav-item-dropdown>
+          </b-navbar-nav>
+
+          <b-navbar-nav v-else>
             <b-nav-item
               v-for="section in mainSections"
               :to="getSectionUrl(section)"
@@ -146,6 +160,9 @@ export default {
   computed: {
     ...mapState(['channel', 'nodes', 'section', 'parentSection']),
     ...mapGetters(['tree', 'mainSections']),
+    mainSectionsInDropdown() {
+      return this.mainSections.length >= 5;
+    },
   },
   methods: {
     gotChannelInformation(data) {
