@@ -5,6 +5,25 @@ import { getNodesTree } from '@/utils';
 
 Vue.use(Vuex);
 
+function getLeaves(node) {
+  if (!node.children) {
+    return [node];
+  }
+  return node.children
+    .map(getLeaves)
+    .reduce((accumulator, currentValue) => accumulator.concat(currentValue), []);
+}
+
+const defaultKindLabel = 'items';
+
+// See https://github.com/learningequality/le-utils/blob/master/le_utils/constants/content_kinds.py
+const labelPerKind = {
+  video: 'videos',
+  audio: 'audios',
+  document: 'documents',
+  html5: 'applications',
+};
+
 const initialState = {
   // Channel and nodes, as they come from kolibri:
   channel: {},
@@ -36,6 +55,19 @@ const store = new Vuex.Store({
         return getters.tree[0].children.filter((n) => n.kind === 'topic');
       }
       return [];
+    },
+    getCardLabel: () => (node) => {
+      const leaves = getLeaves(node);
+      const leavesKinds = leaves.map((leaf) => leaf.kind);
+      const uniqueLeavesKinds = new Set(leavesKinds);
+      let kindsLabel;
+      if (uniqueLeavesKinds.size > 1) {
+        kindsLabel = defaultKindLabel;
+      } else {
+        const kind = uniqueLeavesKinds.values().next().value;
+        kindsLabel = labelPerKind[kind] || defaultKindLabel;
+      }
+      return `${node.title} - ${leaves.length} ${kindsLabel}`;
     },
   },
 });
