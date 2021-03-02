@@ -1,57 +1,74 @@
 <template>
   <div id="app" class="d-flex flex-column h-100">
-    <b-container id="nav">
-<b-row>
-  <b-col md="auto">
-      <b-button-toolbar>
-        <b-button-group class="top">
-          <b-button variant="light" to="/">
-            <img
-              v-if="channel.thumbnail"
-              :src="channel.thumbnail"
-              :alt="channel.title"
-            />
-            <span v-else>{{ channel.title }}</span>
-          </b-button>
-          <b-button
-            v-for="section in mainSections"
-            variant="light"
-            :to="getSectionUrl(section)"
-            :key="'menu-' + section.id"
-            :class="{ current: section === parentSection }"
-          >
-            <span>{{ section.title }}</span>
-          </b-button>
-          <b-button  variant="light" v-b-toggle:collapse-search>
-            <b-icon-search></b-icon-search>
-          </b-button>
-        </b-button-group>
-      </b-button-toolbar>
-  </b-col>
-</b-row>
-<b-collapse
-  id="collapse-search"
-  v-model="searchVisible"
-  @shown="searchShown"
-  @hidden="searchHidden"
->
-<b-row>
-  <b-col md="12">
-    <vue-bootstrap-typeahead
-      ref="search"
-      v-model="query"
-      placeholder="Search"
-      :serializer="searchLabel"
-      :data="searchNodes"
-      v-on:hit="goToContent"
-    />
-  </b-col>
-</b-row>
-</b-collapse>
+    <b-container>
+      <b-navbar toggleable="lg" type="dark" variant="primary">
+        <b-navbar-brand to="/">
+          <img
+            v-if="channel.thumbnail"
+            :src="channel.thumbnail"
+            :alt="channel.title"
+          />
+          <span v-else>{{ channel.title }}</span>
+        </b-navbar-brand>
 
+        <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
+
+        <b-collapse id="nav-collapse" is-nav>
+
+          <b-navbar-nav v-if="mainSectionsInDropdown">
+            <b-nav-item-dropdown text="Topics" right>
+              <b-dropdown-item
+                v-for="section in mainSections"
+                :to="getSectionUrl(section)"
+                :key="'menu-' + section.id"
+                :active="section === parentSection"
+              >
+                <span>{{ section.title }}</span>
+              </b-dropdown-item>
+            </b-nav-item-dropdown>
+          </b-navbar-nav>
+
+          <b-navbar-nav v-else>
+            <b-nav-item
+              v-for="section in mainSections"
+              :to="getSectionUrl(section)"
+              :key="'menu-' + section.id"
+              :active="section === parentSection"
+            >
+              <span>{{ section.title }}</span>
+            </b-nav-item>
+          </b-navbar-nav>
+
+          <!-- Right aligned nav items -->
+          <b-navbar-nav class="ml-auto">
+            <b-nav-item v-b-toggle:collapse-search>
+              <b-icon-search></b-icon-search>
+            </b-nav-item>
+          </b-navbar-nav>
+        </b-collapse>
+      </b-navbar>
+      <b-collapse
+        id="collapse-search"
+        v-model="searchVisible"
+        @shown="searchShown"
+        @hidden="searchHidden"
+      >
+        <b-row>
+          <b-col md="12">
+            <vue-bootstrap-typeahead
+              ref="search"
+              v-model="query"
+              placeholder="Search"
+              :serializer="searchLabel"
+              :data="searchNodes"
+              v-on:hit="goToContent"
+            />
+          </b-col>
+        </b-row>
+      </b-collapse>
     </b-container>
 
-    <router-view/>
+    <router-view />
 
     <div
       id="footer"
@@ -143,6 +160,9 @@ export default {
   computed: {
     ...mapState(['channel', 'nodes', 'section', 'parentSection']),
     ...mapGetters(['tree', 'mainSections']),
+    mainSectionsInDropdown() {
+      return this.mainSections.length >= 5;
+    },
   },
   methods: {
     gotChannelInformation(data) {
@@ -227,14 +247,6 @@ body {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
-
-#nav {
-  a {
-    &.current, &.router-link-exact-active {
-      color: $primary;
-    }
-  }
 }
 
 #footer {
