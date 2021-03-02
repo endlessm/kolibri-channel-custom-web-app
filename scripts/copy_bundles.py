@@ -5,8 +5,9 @@ import shutil
 import subprocess
 import json
 
+from _common import TEMPLATE_WORKSPACE
+
 ZIP_FILENAME = 'custom-channel-ui.zip'
-TEMPLATE_WORKSPACE = 'template-ui'
 SKIP_WORKSPACES = ['kolibri-api', TEMPLATE_WORKSPACE]
 
 

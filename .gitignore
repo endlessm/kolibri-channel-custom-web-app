@@ -24,3 +24,6 @@ pnpm-debug.log*
 # Built files
 /*/custom-channel-ui.zip
 /template-ui/src/nodes.json
+
+# Symlink to template overrides
+/template-ui/src/overrides
