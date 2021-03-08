@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 import os
+import shutil
 import subprocess
 
 
@@ -22,6 +23,13 @@ OVERRIDES_PATH = os.path.join(TEMPLATE_WORKSPACE_PATH, 'src', 'overrides')
 DEFAULT_OVERRIDE = 'default'
 
 DEFAULT_OVERRIDE_PATH = os.path.join(CHANNEL_OVERRIDES_DIR, DEFAULT_OVERRIDE)
+
+DEFAULT_ZIP_NAME = 'custom-channel-ui'
+
+
+def bundle_zip(zip_name):
+    shutil.make_archive(zip_name, 'zip', 'dist/')
+    print(f'File ./{zip_name}.zip created.')
 
 
 def get_available_overrides():

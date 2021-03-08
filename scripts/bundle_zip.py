@@ -1,5 +1,10 @@
 #!/usr/bin/env python
-import shutil
-zip_name = 'custom-channel-ui'
-shutil.make_archive(zip_name, 'zip', 'dist/')
-print(f'File ./{zip_name}.zip created.')
+import argparse
+from _common import DEFAULT_ZIP_NAME, bundle_zip
+
+parser = argparse.ArgumentParser(
+    description='Create a ZIP from a build in dist/.',
+)
+parser.add_argument('zip_name', nargs='?', default=DEFAULT_ZIP_NAME)
+args = vars(parser.parse_args())
+bundle_zip(**args)
