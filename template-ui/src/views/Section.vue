@@ -12,6 +12,8 @@
     :key="section.id"
     :nodes="section.children"
     :id="section.id"
+    variant="paginated"
+    :itemsPerPage="6"
   />
   </div>
 </template>
