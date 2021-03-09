@@ -19,7 +19,9 @@ def validate_dir_path(path):
 
 
 def get_workspaces_info():
+    environ = { **os.environ, 'YARN_WRAP_OUTPUT': 'false' }
     result = subprocess.run(['yarn', 'workspaces', 'info'],
+                            env=environ,
                             stdout=subprocess.PIPE)
     output = result.stdout.decode('utf-8')
     return json.loads(output)
