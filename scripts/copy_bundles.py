@@ -22,7 +22,8 @@ def get_workspaces_info():
     result = subprocess.run(['yarn', 'workspaces', '--json', 'info'],
                             stdout=subprocess.PIPE)
     output = result.stdout.decode('utf-8')
-    return json.loads(output)
+    data = json.loads(output)['data']
+    return json.loads(data)
 
 
 def get_workspaces():
