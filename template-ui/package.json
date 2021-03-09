@@ -4,7 +4,8 @@
   "license": "AGPL-3.0",
   "scripts": {
     "serve": "yarn ensure-override && vue-cli-service serve",
-    "build": "yarn ensure-override && vue-cli-service build && yarn zip",
+    "build": "../scripts/build_template_overrides.py",
+    "build-single": "yarn ensure-override && vue-cli-service build && yarn zip",
     "lint": "vue-cli-service lint",
     "zip": "../scripts/bundle_zip.py",
     "ensure-override": "../scripts/ensure_override.py"
