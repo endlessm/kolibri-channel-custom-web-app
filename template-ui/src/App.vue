@@ -1,31 +1,15 @@
 <template>
   <div id="app" class="d-flex flex-column h-100">
     <Header />
-
     <router-view />
-
-    <div
-      id="footer"
-      class="mt-auto bg-secondary"
-      :style="{ backgroundImage: footerImageURL }"
-    >
-      <b-container>
-        <b-card class="border-0 bg-transparent text-light text-center">
-          <h3>About {{ channel.title }}</h3>
-          <p class="font-weight-bold">{{ channel.description }}</p>
-        </b-card>
-      </b-container>
-    </div>
+    <Footer />
   </div>
 </template>
 
 <script>
-import { mapState, mapGetters } from 'vuex';
+import { mapGetters } from 'vuex';
 import { askChannelInformation } from 'kolibri-api';
 import _ from 'underscore';
-import dynamicRequireAsset from '@/dynamicRequireAsset';
-
-const footerImage = dynamicRequireAsset('footer-background.jpg');
 
 let mockData;
 if (process.env.VUE_APP_USE_MOCK_DATA === 'true') {
@@ -35,11 +19,6 @@ if (process.env.VUE_APP_USE_MOCK_DATA === 'true') {
 
 export default {
   name: 'App',
-  data() {
-    return {
-      footerImageURL: footerImage ? `url(${footerImage})` : null,
-    };
-  },
   watch: {
     $route(to) {
       if (to.name !== 'Section') {
@@ -86,7 +65,6 @@ export default {
     },
   },
   computed: {
-    ...mapState(['channel']),
     ...mapGetters(['tree']),
   },
   methods: {
@@ -129,9 +107,5 @@ body {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
-
-#footer {
-  text-shadow: 1px 1px 2px #333;
 }
 </style>
