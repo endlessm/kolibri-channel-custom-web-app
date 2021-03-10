@@ -8,6 +8,19 @@
       <SectionHeader :node="section" />
   </b-container>
 
+  <div v-if="isInlineLevel">
+  <CardGrid
+    v-for="subsection in section.children"
+    :key="subsection.id"
+    :nodes="subsection.children"
+    :id="subsection.id"
+  >
+    <b-row>
+      <SectionTitle :section="subsection" />
+    </b-row>
+  </CardGrid>
+  </div>
+  <div v-else>
   <CardGrid
     :key="section.id"
     :nodes="section.children"
@@ -16,10 +29,11 @@
     :itemsPerPage="6"
   />
   </div>
+  </div>
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { mapState, mapGetters } from 'vuex';
 import { goToContent } from 'kolibri-api';
 import dynamicRequireAsset from '@/dynamicRequireAsset';
 
@@ -34,6 +48,7 @@ export default {
   },
   computed: {
     ...mapState(['section', 'parentSection']),
+    ...mapGetters(['isInlineLevel']),
   },
   methods: {
     goToContent,

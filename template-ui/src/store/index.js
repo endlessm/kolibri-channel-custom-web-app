@@ -76,6 +76,7 @@ const store = new Vuex.Store({
       }
       return `${node.title} - ${leaves.length} ${kindsLabel}`;
     },
+    isInlineLevel: (state) => state.section.children.every((n) => n.kind === 'topic'),
   },
 });
 
