@@ -4,7 +4,6 @@
   "private": true,
   "workspaces": [
     "kolibri-api",
-    "sikana-ui",
     "pbskids-ui",
     "template-ui"
   ],
