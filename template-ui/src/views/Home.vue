@@ -49,22 +49,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss" scoped>
-@import '@/styles.scss';
-
-.subsection {
-  font-weight: 600;
-  transition: all ease .4s;
-  img {
-    transform: scale(1);
-    transition: all ease .8s;
-  }
-  &:hover {
-    color: $primary;
-    img {
-      transform: scale(1.1);
-    }
-  }
-}
-</style>
