@@ -1,5 +1,5 @@
 <template>
-  <b-navbar toggleable="lg" type="dark" variant="primary">
+  <b-navbar toggleable="lg" type="light" variant="light">
     <HeaderNavBarBrand />
 
     <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
