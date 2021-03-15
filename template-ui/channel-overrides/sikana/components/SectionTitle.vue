@@ -64,7 +64,7 @@ export default {
     &.si-health::before {
       content: "\29";
     }
-    &.si-sports::before {
+    &.si-sport::before {
       content: "\5f";
     }
   }
