@@ -28,9 +28,6 @@
 <script>
 import { getThumbnail, goToContent } from 'kolibri-api';
 import { mapGetters } from 'vuex';
-import dynamicRequireAsset from '@/dynamicRequireAsset';
-
-const defaultThumbnail = dynamicRequireAsset('default-card-thumbnail.svg');
 
 export default {
   props: ['node'],
@@ -40,7 +37,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(['getCardLabel']),
+    ...mapGetters(['getCardLabel', 'getAsset']),
     title() {
       if (this.node.kind === 'topic') {
         return this.getCardLabel(this.node);
@@ -58,7 +55,7 @@ export default {
     },
     async getThumbnail() {
       if (!this.node.thumbnail && process.env.VUE_APP_USE_MOCK_DATA === 'true') {
-        this.thumbnail = defaultThumbnail;
+        this.thumbnail = this.getAsset('defaultThumbnail');
         return;
       }
       if (this.node.thumbnail) {
@@ -69,7 +66,7 @@ export default {
       if (thumbnail) {
         this.thumbnail = thumbnail;
       } else {
-        this.thumbnail = defaultThumbnail;
+        this.thumbnail = this.getAsset('defaultThumbnail');
       }
     },
   },

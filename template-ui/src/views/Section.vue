@@ -35,20 +35,15 @@
 <script>
 import { mapState, mapGetters } from 'vuex';
 import { goToContent } from 'kolibri-api';
-import dynamicRequireAsset from '@/dynamicRequireAsset';
-
-const backgroundImage = dynamicRequireAsset('section-background.jpg');
 
 export default {
   name: 'Section',
-  data() {
-    return {
-      backgroundImageURL: backgroundImage ? `url(${backgroundImage})` : null,
-    };
-  },
   computed: {
     ...mapState(['section', 'parentSection']),
-    ...mapGetters(['isInlineLevel']),
+    ...mapGetters(['isInlineLevel', 'getAssetURL']),
+    backgroundImageURL() {
+      return this.getAssetURL('sectionBackgroundImage');
+    },
   },
   methods: {
     goToContent,
