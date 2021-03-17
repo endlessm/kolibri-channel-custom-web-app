@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import { getNodesTree } from '@/utils';
+import dynamicRequireAsset from '@/dynamicRequireAsset';
 
 let storeData;
 try {
@@ -39,6 +40,14 @@ const initialState = {
   // Navigation state:
   section: {},
   parentSection: {},
+
+  // Asset filenames that can be overriden:
+  assetFilenames: {
+    defaultThumbnail: 'default-card-thumbnail.svg',
+    homeBackgroundImage: 'home-background.jpg',
+    sectionBackgroundImage: 'section-background.jpg',
+    footerImage: 'footer-background.jpg',
+  },
 };
 
 const store = new Vuex.Store({
@@ -75,6 +84,11 @@ const store = new Vuex.Store({
         kindsLabel = labelPerKind[kind] || defaultKindLabel;
       }
       return `${node.title} - ${leaves.length} ${kindsLabel}`;
+    },
+    getAsset: (state) => (name) => dynamicRequireAsset(state.assetFilenames[name]),
+    getAssetURL: (_, getters) => (name) => {
+      const asset = getters.getAsset(name);
+      return asset ? `url(${asset})` : null;
     },
     isInlineLevel: (state) => state.section.children.every((n) => n.kind === 'topic'),
   },

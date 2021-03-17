@@ -37,10 +37,10 @@ The next level of customization is adding background images:
 The default card image is the thumbnail that will be used when the
 content doesn't have any thumbnail attached to it in Kolibri Studio.
 
-**Note:** At the moment the image format is more constrained than this
-spec shows, so your provided assets could be converted. Please refer
-to the [template technical information](./template-tech-info.md) for
-details.
+**Note:** There is a default file name and format for each image
+asset. Please refer to the [template technical
+information](./template-tech-info.md) for details on how to change
+these defaults.
 
 ### Overriding components
 
@@ -63,8 +63,8 @@ Soon you will be able to pass more options to the template to change
 the navigation in different ways like: pagination, collapsible cards,
 number of columns in the card grid.
 
-Also for appifying the channel on Endless OS, you will need at least a
-desktop icon.
+For app-ifying the channel on Endless OS, the channel thumbnail will
+be used to create the desktop icon.
 
 ## Exclusive to the Kolibri Explore mid-term solution
 

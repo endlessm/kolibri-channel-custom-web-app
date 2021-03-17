@@ -14,20 +14,16 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
-import dynamicRequireAsset from '@/dynamicRequireAsset';
-
-const footerImage = dynamicRequireAsset('footer-background.jpg');
+import { mapState, mapGetters } from 'vuex';
 
 export default {
   name: 'Footer',
-  data() {
-    return {
-      footerImageURL: footerImage ? `url(${footerImage})` : null,
-    };
-  },
   computed: {
     ...mapState(['channel']),
+    ...mapGetters(['getAssetURL']),
+    footerImageURL() {
+      return this.getAssetURL('footerImage');
+    },
   },
 };
 </script>
