@@ -1,28 +1,19 @@
 <template>
-<div class="card">
-  <div class="rounded overflow-hidden mb-2 mt-4">
-    <b-link
-      v-on:click="isLeaf? goToContent(node) : false"
-      :to="isLeaf? '' : getTopicUrl(node)"
-      class="m-0 text-reset text-decoration-none"
-    >
-      <div class="content-image">
-      <img
-          :alt="node.title"
-          :src="thumbnail"
-          class="w-100"
-      >
-      </div>
-    </b-link>
-  </div>
   <b-link
     v-on:click="isLeaf? goToContent(node) : false"
     :to="isLeaf? '' : getTopicUrl(node)"
     class="text-reset text-decoration-none"
+    v-b-hover="handleHover"
   >
-    <span>{{ title }}</span>
+    <b-card
+      :img-src="thumbnail"
+      :img-alt="node.title"
+      class="my-2"
+      :class="{shadow: isHovered}"
+    >
+      <span class="font-weight-bold">{{ title }}</span>
+    </b-card>
   </b-link>
-</div>
 </template>
 
 <script>
@@ -34,6 +25,7 @@ export default {
   data() {
     return {
       thumbnail: null,
+      isHovered: false,
     };
   },
   computed: {
@@ -69,6 +61,9 @@ export default {
         this.thumbnail = this.getAsset('defaultThumbnail');
       }
     },
+    handleHover(hovered) {
+      this.isHovered = hovered;
+    },
   },
   created() {
     this.getThumbnail();
@@ -80,22 +75,9 @@ export default {
 @import '@/styles.scss';
 
 .card {
-  font-weight: 600;
   transition: all ease .4s;
-  img {
-    transform: scale(1);
-    transition: all ease .8s;
-    border-style: none;
-  }
   &:hover {
     color: $primary;
-    img {
-      transform: scale(1.1);
-    }
   }
-}
-
-.content-image {
-  background: $secondary !important;
 }
 </style>
