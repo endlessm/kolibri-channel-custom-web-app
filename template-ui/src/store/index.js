@@ -91,6 +91,7 @@ const store = new Vuex.Store({
       return asset ? `url(${asset})` : null;
     },
     isInlineLevel: (state) => state.section.children.every((n) => n.kind === 'topic'),
+    getLevel: () => (node) => node.ancestors.length,
   },
 });
 
