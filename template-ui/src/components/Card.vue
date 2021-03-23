@@ -1,5 +1,5 @@
 <template>
-<div>
+<div class="card">
   <div class="rounded overflow-hidden mb-2 mt-4">
     <b-link
       v-on:click="isLeaf? goToContent(node) : false"
@@ -78,6 +78,22 @@ export default {
 
 <style lang="scss" scoped>
 @import '@/styles.scss';
+
+.card {
+  font-weight: 600;
+  transition: all ease .4s;
+  img {
+    transform: scale(1);
+    transition: all ease .8s;
+    border-style: none;
+  }
+  &:hover {
+    color: $primary;
+    img {
+      transform: scale(1.1);
+    }
+  }
+}
 
 .content-image {
   background: $secondary !important;
