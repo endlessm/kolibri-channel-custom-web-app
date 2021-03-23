@@ -42,7 +42,7 @@ export default {
     },
     hasTextInImage() {
       return this.getLevel(this.node) === 4;
-    }
+    },
   },
   methods: {
     goToContent,
