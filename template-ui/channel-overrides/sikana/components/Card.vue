@@ -6,12 +6,13 @@
     v-b-hover="handleHover"
   >
     <b-card
+      :overlay="hasTextInImage"
       :img-src="thumbnail"
       :img-alt="node.title"
       class="my-2"
       :class="{shadow: isHovered}"
     >
-      <span class="font-weight-bold">{{ title }}</span>
+      <span v-if="!hasTextInImage" class="font-weight-bold">{{ title }}</span>
     </b-card>
   </b-link>
 </template>
@@ -29,7 +30,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(['getCardLabel', 'getAsset']),
+    ...mapGetters(['getCardLabel', 'getAsset', 'getLevel']),
     title() {
       if (this.node.kind === 'topic') {
         return this.getCardLabel(this.node);
@@ -38,6 +39,9 @@ export default {
     },
     isLeaf() {
       return this.node.kind !== 'topic';
+    },
+    hasTextInImage() {
+      return this.getLevel(this.node) === 4;
     },
   },
   methods: {
