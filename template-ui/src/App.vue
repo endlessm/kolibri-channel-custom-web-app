@@ -71,6 +71,12 @@ export default {
     gotChannelInformation(data) {
       this.$store.commit('setChannelInformation', data);
       this.$store.commit('setSection', { section: this.tree[0], parentSection: {} });
+      const uri = window.location.search.substring(1);
+      const params = new URLSearchParams(uri);
+      const topicId = params.get('topicId');
+      if (topicId) {
+        this.$router.push(`/${topicId}`);
+      }
     },
   },
   created() {
