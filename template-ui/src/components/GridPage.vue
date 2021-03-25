@@ -1,8 +1,8 @@
 <template>
   <b-row>
     <b-col
-      cols="6"
-      md="4"
+      :cols="cardColumns.cols"
+      :md="cardColumns.md"
       v-for="node in nodes"
       :key="node.id"
     >
@@ -12,8 +12,13 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
+
 export default {
   name: 'GridPage',
   props: ['nodes'],
+  computed: {
+    ...mapState(['cardColumns']),
+  },
 };
 </script>
