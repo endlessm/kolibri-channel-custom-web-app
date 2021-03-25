@@ -1,6 +1,7 @@
 <template>
   <b-navbar-brand to="/">
-    <img
+    <b-img
+      width="44"
       v-if="channel.thumbnail"
       :src="channel.thumbnail"
       :alt="channel.title"
