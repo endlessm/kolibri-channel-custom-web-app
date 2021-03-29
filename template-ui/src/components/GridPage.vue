@@ -1,5 +1,5 @@
 <template>
-  <b-row>
+  <b-row :no-gutters="isHighQualityMedia">
     <b-col
       :cols="cardColumns.cols"
       :md="cardColumns.md"
@@ -18,7 +18,7 @@ export default {
   name: 'GridPage',
   props: ['nodes'],
   computed: {
-    ...mapState(['cardColumns']),
+    ...mapState(['cardColumns', 'isHighQualityMedia']),
   },
 };
 </script>
