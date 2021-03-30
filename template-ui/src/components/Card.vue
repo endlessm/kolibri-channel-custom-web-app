@@ -8,8 +8,12 @@
     <b-card
       :img-src="thumbnail"
       :img-alt="node.title"
-      class="my-2"
-      :class="{shadow: isHovered}"
+      :class="{
+        shadow: isHovered,
+        'my-2': !isHighQualityMedia,
+        'is-high-quality': isHighQualityMedia,
+      }"
+      :overlay="isHighQualityMedia"
     >
       <span class="font-weight-bold">{{ title }}</span>
     </b-card>
@@ -18,7 +22,7 @@
 
 <script>
 import { getThumbnail, goToContent } from 'kolibri-api';
-import { mapGetters } from 'vuex';
+import { mapState, mapGetters } from 'vuex';
 
 export default {
   props: ['node'],
@@ -29,6 +33,7 @@ export default {
     };
   },
   computed: {
+    ...mapState(['isHighQualityMedia']),
     ...mapGetters(['getCardLabel', 'getAsset']),
     title() {
       if (this.node.kind === 'topic') {
@@ -79,5 +84,25 @@ export default {
   &:hover {
     color: $primary;
   }
+  &.is-high-quality {
+    border: 0;
+  }
 }
+
+.card-img-overlay {
+  transition: all ease .4s;
+  color: $white;
+  display: flex;
+  align-items: flex-end;
+  padding: 0;
+  &:hover {
+    color: $primary;
+  }
+  span {
+    background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.7) 15%);
+    width: 100%;
+    padding: $card-img-overlay-padding;
+  }
+}
+
 </style>

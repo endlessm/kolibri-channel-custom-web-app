@@ -2,7 +2,10 @@
   <span>
     <GridPage :nodes="nodes.slice(0, itemsPerPage)" />
 
-    <b-collapse :id="'collapse-' + id" class="mt-2">
+    <b-collapse
+      :id="'collapse-' + id"
+      :class="{'mt-2': !isHighQualityMedia}"
+    >
       <GridPage :nodes="nodes.slice(itemsPerPage)" />
     </b-collapse>
 
@@ -18,6 +21,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
 
 export default {
   name: 'CollapsibleCardGrid',
@@ -28,6 +32,9 @@ export default {
       type: Number,
       default: 6,
     },
+  },
+  computed: {
+    ...mapState(['isHighQualityMedia']),
   },
 };
 </script>

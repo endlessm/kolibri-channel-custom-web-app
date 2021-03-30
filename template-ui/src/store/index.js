@@ -48,6 +48,13 @@ const initialState = {
     sectionBackgroundImage: 'section-background.jpg',
     footerImage: 'footer-background.jpg',
   },
+
+  // Layout:
+  cardColumns: {
+    cols: 6,
+    md: 4,
+  },
+  isHighQualityMedia: true,
 };
 
 const store = new Vuex.Store({
