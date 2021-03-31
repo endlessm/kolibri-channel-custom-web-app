@@ -38,7 +38,7 @@ export default {
     ...mapState(['filters']),
     ...mapGetters({
       name: 'filters/name',
-      filtering: 'filters/filtering',
+      isFiltering: 'filters/isFiltering',
       isSelected: 'filters/isSelected',
     }),
     availableFilters() {
@@ -46,7 +46,7 @@ export default {
         {
           ...f,
           prettyName: this.name(f),
-          variant: this.filtering(f) ? 'secondary' : 'outline-secondary',
+          variant: this.isFiltering(f) ? 'secondary' : 'outline-secondary',
         }
       ));
     },

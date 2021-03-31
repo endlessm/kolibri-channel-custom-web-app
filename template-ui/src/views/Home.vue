@@ -11,7 +11,7 @@
     />
 
     <CardGrid
-      v-for="section in mainSections"
+      v-for="section in filteredSections"
       :key="section.id"
       :nodes="section.children"
       :id="section.id"
@@ -31,7 +31,11 @@ export default {
   name: 'Home',
   computed: {
     ...mapState(['channel', 'nodes', 'section']),
-    ...mapGetters(['mainSections', 'getAssetURL']),
+    ...mapGetters({
+      mainSections: 'mainSections',
+      getAssetURL: 'getAssetURL',
+      filterNodes: 'filters/filterNodes',
+    }),
     backgroundImageURL() {
       return this.getAssetURL('homeBackgroundImage');
     },
@@ -40,6 +44,9 @@ export default {
         return null;
       }
       return this.section.children.filter((n) => n.kind !== 'topic') || null;
+    },
+    filteredSections() {
+      return this.filterNodes(this.mainSections);
     },
   },
 };

@@ -9,6 +9,20 @@ try {
   storeData = {};
 }
 
+// All the media types are defined in kolibri, this list is a subset of all the
+// possible content node kinds defined here:
+// https://github.com/learningequality/kolibri/blob/release-v0.14.x/kolibri/core/assets/src/constants.js#L17
+const ContentNodeKinds = [
+  'audio',
+  'document',
+  'video',
+  'exercise',
+  'html5',
+  'exam',
+  'lesson',
+  'slideshow',
+];
+
 // Filter taxonomy, that can be overriden
 const initialState = {
   // Object with all filters selected
@@ -18,13 +32,7 @@ const initialState = {
   metadata: [
     {
       name: 'Media Type',
-      options: [
-        'Video',
-        'Worksheet',
-        'Game',
-        'Simulation',
-        'Book',
-      ],
+      options: ContentNodeKinds,
     },
   ],
 };
@@ -33,12 +41,9 @@ export default {
   namespaced: true,
   state: { ...initialState, ...storeData },
   getters: {
-    getFilterOptions: (state) => (filter) => {
-      if (!state.query) {
-        return [];
-      }
-      return state.query[filter.name] || [];
-    },
+    getFilterOptions: (state) => (filter) => (
+      state.query[filter.name] || []
+    ),
     name: (state, getters) => (filter) => {
       const selectedFilters = getters.getFilterOptions(filter);
       if (selectedFilters.length === 1) {
@@ -46,12 +51,38 @@ export default {
       }
       return filter.name;
     },
-    filtering: (state, getters) => (filter) => (
+    isFiltering: (state, getters) => (filter) => (
       getters.getFilterOptions(filter).length > 0
     ),
     isSelected: (state, getters) => (filter, option) => {
       const selectedFilters = getters.getFilterOptions(filter);
       return selectedFilters.includes(option);
+    },
+    filterNodes: (state) => (nodes) => {
+      const { query } = state;
+      let filtered = nodes;
+
+      // Filter by media type
+      const mediaType = query['Media Type'];
+      if (mediaType && mediaType.length) {
+        const containsKind = (n, kind) => {
+          if (n.kind === kind) {
+            return true;
+          }
+
+          if (n.children) {
+            return n.children.some((leaf) => containsKind(leaf, kind));
+          }
+
+          return false;
+        };
+
+        filtered = filtered.filter((node) => (
+          mediaType.some((m) => containsKind(node, m))
+        ));
+      }
+
+      return filtered;
     },
   },
   mutations: {
