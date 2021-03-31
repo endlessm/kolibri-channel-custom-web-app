@@ -2,6 +2,7 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import { getNodesTree } from '@/utils';
 import dynamicRequireAsset from '@/dynamicRequireAsset';
+import filters from './modules/filters';
 
 let storeData;
 try {
@@ -54,6 +55,7 @@ const initialState = {
     cols: 6,
     md: 4,
   },
+
   isHighQualityMedia: true,
 };
 
@@ -99,6 +101,9 @@ const store = new Vuex.Store({
     },
     isInlineLevel: (state) => state.section.children.every((n) => n.kind === 'topic'),
     getLevel: () => (node) => node.ancestors.length,
+  },
+  modules: {
+    filters,
   },
 });
 
