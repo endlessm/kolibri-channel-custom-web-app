@@ -47,6 +47,7 @@ const initialState = {
     defaultThumbnail: 'default-card-thumbnail.svg',
     homeBackgroundImage: 'home-background.jpg',
     sectionBackgroundImage: 'section-background.jpg',
+    headerImage: 'header-background.jpg',
     footerImage: 'footer-background.jpg',
   },
 
