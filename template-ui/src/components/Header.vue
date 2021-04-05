@@ -19,6 +19,8 @@
         @hit="searchVisible = false"
       />
     </b-collapse>
+
+    <FilterContent></FilterContent>
   </b-container>
 </template>
 

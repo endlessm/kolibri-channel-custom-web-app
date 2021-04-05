@@ -10,9 +10,9 @@
 
   <div v-if="isInlineLevel">
   <CardGrid
-    v-for="subsection in section.children"
+    v-for="subsection in filteredSections(section)"
     :key="subsection.id"
-    :nodes="subsection.children"
+    :nodes="filteredSections(subsection)"
     :id="subsection.id"
   >
     <b-row>
@@ -23,7 +23,7 @@
   <div v-else>
   <CardGrid
     :key="section.id"
-    :nodes="section.children"
+    :nodes="filteredSections(section)"
     :id="section.id"
     variant="paginated"
     :itemsPerPage="6"
@@ -40,13 +40,20 @@ export default {
   name: 'Section',
   computed: {
     ...mapState(['section', 'parentSection']),
-    ...mapGetters(['isInlineLevel', 'getAssetURL']),
+    ...mapGetters({
+      isInlineLevel: 'isInlineLevel',
+      getAssetURL: 'getAssetURL',
+      filterNodes: 'filters/filterNodes',
+    }),
     backgroundImageURL() {
       return this.getAssetURL('sectionBackgroundImage');
     },
   },
   methods: {
     goToContent,
+    filteredSections(section) {
+      return this.filterNodes(section.children);
+    },
   },
 };
 </script>
