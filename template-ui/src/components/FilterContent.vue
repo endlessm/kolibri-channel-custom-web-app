@@ -15,23 +15,23 @@
         >
           <b-form-checkbox
             :checked="isSelected(filter, option)"
-            @change="onOptionClick(filter, option, ...arguments)"
+            @change="onOptionClick({filter, option, checked: arguments[0]})"
           >
             {{ option }}
           </b-form-checkbox>
         </b-dropdown-form>
         <b-dropdown-divider></b-dropdown-divider>
         <b-dropdown-form>
-          <b-button variant="link" @click="clearFilter(filter)">Clear</b-button>
+          <b-button variant="link" @click="clearFilter({filter})">Clear</b-button>
         </b-dropdown-form>
       </b-dropdown-group>
     </b-dropdown>
-    <b-button variant="link" @click="clearAllFilters">Clear Filters</b-button>
+    <b-button variant="link" @click="clearFilter({})">Clear Filters</b-button>
   </div>
 </template>
 
 <script>
-import { mapState, mapGetters } from 'vuex';
+import { mapState, mapGetters, mapMutations } from 'vuex';
 
 export default {
   computed: {
@@ -52,15 +52,10 @@ export default {
     },
   },
   methods: {
-    onOptionClick(filter, option, checked) {
-      this.$store.commit('filters/setFilterQuery', { filter, option, checked });
-    },
-    clearFilter(filter) {
-      this.$store.commit('filters/clearFilterQuery', { filter });
-    },
-    clearAllFilters() {
-      this.$store.commit('filters/clearFilterQuery', {});
-    },
+    ...mapMutations({
+      onOptionClick: 'filters/setFilterQuery',
+      clearFilter: 'filters/clearFilterQuery',
+    }),
   },
 };
 </script>
