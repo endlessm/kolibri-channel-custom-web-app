@@ -56,7 +56,7 @@ const initialState = {
     md: 4,
   },
 
-  isHighQualityMedia: true,
+  isHighQualityMedia: false,
 };
 
 const store = new Vuex.Store({
