@@ -4,6 +4,7 @@
 
     <component
       :is="displayVariant"
+      v-if="nodes"
       :nodes="nodes"
       :id="id"
       :itemsPerPage="itemsPerPage"

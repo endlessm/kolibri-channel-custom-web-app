@@ -63,9 +63,37 @@ export default {
         this.$store.commit('setSection', { section: this.tree[0], parentSection: {} });
       }
     },
+    filterQuery(value) {
+      if (process.env.VUE_APP_USE_MOCK_DATA === 'true') {
+        return;
+      }
+
+      askChannelInformation((data) => {
+        this.$store.commit('setChannelInformation', data);
+        let { section, parentSection } = this.$store.state;
+        // Keep the same section if it's setted
+        if (section.id) {
+          section = this.getNode(this.$store.state.section.id);
+          if (!section.children) {
+            section.children = [];
+          }
+          if (parentSection) {
+            parentSection = this.getNode(parentSection.id);
+          }
+          this.$store.commit('setSection', { section, parentSection });
+        } else {
+          // Default section
+          this.$store.commit('setSection', { section: this.tree[0], parentSection: {} });
+        }
+      }, { filters: value });
+    },
   },
   computed: {
-    ...mapGetters(['tree']),
+    ...mapGetters({
+      tree: 'tree',
+      getNode: 'getNode',
+      filterQuery: 'filters/query',
+    }),
   },
   methods: {
     gotChannelInformation(data) {
@@ -83,7 +111,9 @@ export default {
     if (process.env.VUE_APP_USE_MOCK_DATA === 'true') {
       this.gotChannelInformation(mockData);
     } else {
-      askChannelInformation(this.gotChannelInformation);
+      askChannelInformation(this.gotChannelInformation, {
+        filters: this.filterQuery,
+      });
     }
   },
 };

@@ -44,6 +44,7 @@ export default {
     getFilterOptions: (state) => (filter) => (
       state.query[filter.name] || []
     ),
+    query: (state) => state.query,
     name: (state, getters) => (filter) => {
       const selectedFilters = getters.getFilterOptions(filter);
       if (selectedFilters.length === 1) {
@@ -57,32 +58,6 @@ export default {
     isSelected: (state, getters) => (filter, option) => {
       const selectedFilters = getters.getFilterOptions(filter);
       return selectedFilters.includes(option);
-    },
-    filterNodes: (state) => (nodes) => {
-      const { query } = state;
-      let filtered = nodes;
-
-      // Filter by media type
-      const mediaType = query['Media Type'];
-      if (mediaType && mediaType.length) {
-        const containsKind = (n, kind) => {
-          if (n.kind === kind) {
-            return true;
-          }
-
-          if (n.children) {
-            return n.children.some((leaf) => containsKind(leaf, kind));
-          }
-
-          return false;
-        };
-
-        filtered = filtered.filter((node) => (
-          mediaType.some((m) => containsKind(node, m))
-        ));
-      }
-
-      return filtered;
     },
   },
   mutations: {

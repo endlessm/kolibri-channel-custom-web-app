@@ -36,18 +36,18 @@ export function goToContent(node) {
   window.parent.postMessage(message, '*');
 }
 
-export function askChannelInformation(callback) {
-  window.addEventListener('message', (event) => {
-    // console.log(event);
+export function askChannelInformation(callback, options = {}) {
+  window.addEventListener('message', function waitInformation(event) {
     if (event.data.event && event.data.nameSpace === 'hashi'
               && event.data.event === 'sendChannelInformation') {
+      window.removeEventListener('message', waitInformation, false);
       callback(event.data.data);
     }
-  });
+  }, false);
 
   const nameSpace = 'customChannelPresentation';
   const event = 'askChannelInformation';
-  const data = null;
+  const data = JSON.stringify(options);
   const message = {
     event,
     data,

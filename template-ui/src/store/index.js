@@ -77,13 +77,37 @@ const store = new Vuex.Store({
   },
   getters: {
     tree: (state) => getNodesTree(state.nodes),
+    getNode: (state, getters) => (id) => {
+      function findById(node) {
+        if (node.id === id) {
+          return node;
+        }
+        if (!node.children) {
+          return null;
+        }
+
+        let found = null;
+        node.children.every((n) => {
+          found = findById(n, id);
+          return !found;
+        });
+
+        return found;
+      }
+
+      return findById(getters.tree[0]);
+    },
     mainSections: (_, getters) => {
       if (getters.tree[0]) {
-        return getters.tree[0].children.filter((n) => n.kind === 'topic');
+        return getters.tree[0].children.filter((n) => n.kind === 'topic' && n.children);
       }
       return [];
     },
     getCardLabel: () => (node) => {
+      if (node.kind === 'topic' && !node.children) {
+        return `${node.title} - 0 ${defaultKindLabel}`;
+      }
+
       const leaves = getLeaves(node);
       const leavesKinds = leaves.map((leaf) => leaf.kind);
       const uniqueLeavesKinds = new Set(leavesKinds);
@@ -101,7 +125,9 @@ const store = new Vuex.Store({
       const asset = getters.getAsset(name);
       return asset ? `url(${asset})` : null;
     },
-    isInlineLevel: (state) => state.section.children.every((n) => n.kind === 'topic'),
+    isInlineLevel: (state) => (
+      state.section.children && state.section.children.every((n) => n.kind === 'topic')
+    ),
     getLevel: () => (node) => node.ancestors.length,
     isHighQualityMedia: (state) => state.mediaQuality === MediaQuality.HIGH,
   },
