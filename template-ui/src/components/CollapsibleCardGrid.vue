@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { mapGetters } from 'vuex';
 
 export default {
   name: 'CollapsibleCardGrid',
@@ -34,7 +34,7 @@ export default {
     },
   },
   computed: {
-    ...mapState(['isHighQualityMedia']),
+    ...mapGetters(['isHighQualityMedia']),
   },
 };
 </script>
