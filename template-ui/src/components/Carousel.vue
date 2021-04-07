@@ -7,10 +7,9 @@
     img-height="380"
   >
     <CarouselCard
-      v-for="info in carouselInfo"
-      :key="'item-' + info.item.id"
-      :node="info.item"
-      :section="info.section"
+      v-for="node in carouselNodes"
+      :key="'item-' + node.id"
+      :node="node"
     >
     </CarouselCard>
   </b-carousel>
@@ -30,29 +29,24 @@ export default {
   },
   computed: {
     ...mapState(['nodes', 'carouselNodeIds', 'carouselSlideNumber']),
-    carouselInfo() {
+    carouselNodes() {
       if (this.carouselNodeIds.length) {
-        return this.carouselInfoFixed(this.carouselNodeIds);
+        return this.carouselNodesFixed(this.carouselNodeIds);
       }
 
-      return this.carouselInfoRandom(this.carouselSlideNumber);
+      return this.carouselNodesRandom(this.carouselSlideNumber);
     },
   },
   methods: {
-    carouselInfoRandom(n) {
+    carouselNodesRandom(n) {
       // Get n random nodes that are not topic:
       const possibleNodes = this.nodes.filter((node) => node.kind !== 'topic');
-      return _.sample(possibleNodes, n).map((node) => this.createCarouselInfo(node));
+      return _.sample(possibleNodes, n);
     },
-    carouselInfoFixed(nodeIds) {
-      return nodeIds.map((n) => {
-        const node = this.nodes.find((m) => m.id === n.id);
-        return this.createCarouselInfo(node);
-      });
-    },
-    createCarouselInfo(node) {
-      const section = this.nodes.find((n) => n.id === node.parent);
-      return { section, item: node };
+    carouselNodesFixed(nodeIds) {
+      return nodeIds.map((n) => (
+        this.nodes.find((m) => m.id === n.id)
+      ));
     },
   },
 };

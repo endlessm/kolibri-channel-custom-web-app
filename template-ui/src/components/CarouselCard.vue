@@ -9,10 +9,17 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
 import cardMixin from '@/components/mixins/cardMixin';
 
 export default {
-  props: ['node', 'section'],
+  props: ['node'],
   mixins: [cardMixin],
+  computed: {
+    ...mapState(['nodes']),
+    section() {
+      return this.nodes.find((n) => n.id === this.node.parent);
+    },
+  },
 };
 </script>
