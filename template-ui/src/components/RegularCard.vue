@@ -1,10 +1,5 @@
 <template>
-  <b-link
-    v-on:click="isLeaf? goToContent(node) : false"
-    :to="isLeaf? '' : getTopicUrl(node)"
-    class="text-reset text-decoration-none"
-    v-b-hover="handleHover"
-  >
+  <BaseCard :node="node">
     <b-card
       :img-src="thumbnail"
       :img-alt="node.title"
@@ -15,7 +10,7 @@
     >
       <span class="font-weight-bold">{{ title }}</span>
     </b-card>
-  </b-link>
+  </BaseCard>
 </template>
 
 <script>

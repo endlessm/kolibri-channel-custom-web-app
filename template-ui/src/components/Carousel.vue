@@ -10,25 +10,31 @@
     :img-height="config.imgHeight"
     style="text-shadow: 1px 1px 2px #333;"
   >
-    <b-carousel-slide
+    <BaseCard
       v-for="info in carouselInfo"
       :key="'item-' + info.item.id"
-      :caption="info.section.title"
-      :text="info.item.title"
-      :img-height="config.imgHeight"
-      :img-src="getThumb(info.item)"
-    />
+      :node="info.item"
+      v-on:thumbLoaded="(thumb) => thumbLoaded(info.item.id, thumb)"
+    >
+      <b-carousel-slide
+        :caption="info.section.title"
+        :text="info.item.title"
+        :img-height="config.imgHeight"
+        :img-src="getThumb(info.item)"
+      />
+    </BaseCard>
   </b-carousel>
 </b-container>
 </template>
 
 <script>
-import { getThumbnail } from 'kolibri-api';
 import { mapState } from 'vuex';
 import defaultThumbnail from '@/assets/default-card-thumbnail.svg';
+import cardMixin from '@/components/mixins/cardMixin';
 
 export default {
   name: 'Carousel',
+  mixins: [cardMixin],
   data() {
     return {
       thumbnails: [],
@@ -51,26 +57,6 @@ export default {
     },
   },
   methods: {
-    async getThumbnails() {
-      await Promise.all(
-        this.carouselInfo.map(async ({ item }) => {
-          if (!item.thumbnail && process.env.VUE_APP_USE_MOCK_DATA === 'true') {
-            this.thumbnails = { ...this.thumbnails, [item.id]: defaultThumbnail };
-            return;
-          }
-          if (item.thumbnail) {
-            this.thumbnails = { ...this.thumbnails, [item.id]: item.thumbnail };
-            return;
-          }
-          const thumbnail = await getThumbnail(item);
-          if (thumbnail) {
-            this.thumbnails = { ...this.thumbnails, [item.id]: thumbnail };
-          } else {
-            this.thumbnails = { ...this.thumbnails, [item.id]: defaultThumbnail };
-          }
-        }),
-      );
-    },
     getThumb(item) {
       return this.thumbnails[item.id] || defaultThumbnail;
     },
@@ -95,9 +81,9 @@ export default {
       const section = this.nodes.find((n) => n.id === node.parent);
       return { section, item: node };
     },
-  },
-  created() {
-    this.getThumbnails();
+    thumbLoaded(id, thumb) {
+      this.thumbnails = { ...this.thumbnails, [id]: thumb };
+    },
   },
 };
 </script>
