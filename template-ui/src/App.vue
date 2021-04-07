@@ -97,18 +97,6 @@ body {
   height: 100%;
 }
 
-.btn-group {
-  display: initial !important;
-}
-
-.btn-toolbar img {
-  height: 2em;
-}
-
-.btn-group > a:hover {
-  color: $primary !important;
-}
-
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
