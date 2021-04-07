@@ -1,5 +1,5 @@
 <template>
-  <BaseCard :node="node">
+  <ContentLink :node="node">
     <b-card
       border-variant="light"
       :img-src="thumbnail"
@@ -8,7 +8,7 @@
     >
       <span class="font-weight-bold">{{ title }}</span>
     </b-card>
-  </BaseCard>
+  </ContentLink>
 </template>
 
 <script>

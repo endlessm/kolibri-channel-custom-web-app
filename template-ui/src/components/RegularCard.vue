@@ -1,5 +1,5 @@
 <template>
-  <BaseCard :node="node">
+  <ContentLink :node="node" @isHovered="(hovered) => isHovered = hovered">
     <b-card
       :img-src="thumbnail"
       :img-alt="node.title"
@@ -10,7 +10,7 @@
     >
       <span class="font-weight-bold">{{ title }}</span>
     </b-card>
-  </BaseCard>
+  </ContentLink>
 </template>
 
 <script>
@@ -19,6 +19,11 @@ import cardMixin from '@/components/mixins/cardMixin';
 export default {
   props: ['node'],
   mixins: [cardMixin],
+  data() {
+    return {
+      isHovered: false,
+    };
+  },
 };
 </script>
 

@@ -2,37 +2,28 @@
 <b-container id="carousel">
   <b-carousel
     v-model="slide"
-    interval="6000"
+    :interval="4000"
     img-width="1024"
     img-height="380"
   >
-    <BaseCard
+    <CarouselCard
       v-for="info in carouselInfo"
       :key="'item-' + info.item.id"
       :node="info.item"
-      v-on:thumbLoaded="(thumb) => thumbLoaded(info.item.id, thumb)"
+      :section="info.section"
     >
-      <b-carousel-slide
-        :caption="info.section.title"
-        :text="info.item.title"
-        :img-src="getThumb(info.item)"
-      />
-    </BaseCard>
+    </CarouselCard>
   </b-carousel>
 </b-container>
 </template>
 
 <script>
 import { mapState } from 'vuex';
-import defaultThumbnail from '@/assets/default-card-thumbnail.svg';
-import cardMixin from '@/components/mixins/cardMixin';
 
 export default {
   name: 'Carousel',
-  mixins: [cardMixin],
   data() {
     return {
-      thumbnails: [],
       slide: 0,
     };
   },
@@ -47,9 +38,6 @@ export default {
     },
   },
   methods: {
-    getThumb(item) {
-      return this.thumbnails[item.id] || defaultThumbnail;
-    },
     carouselInfoRandom(n) {
       const items = [];
       // Get n random nodes that are not topic:
@@ -70,9 +58,6 @@ export default {
     createCarouselInfo(node) {
       const section = this.nodes.find((n) => n.id === node.parent);
       return { section, item: node };
-    },
-    thumbLoaded(id, thumb) {
-      this.thumbnails = { ...this.thumbnails, [id]: thumb };
     },
   },
 };
