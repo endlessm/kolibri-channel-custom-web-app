@@ -19,6 +19,7 @@
 
 <script>
 import { mapState } from 'vuex';
+import _ from 'underscore';
 
 export default {
   name: 'Carousel',
@@ -39,15 +40,9 @@ export default {
   },
   methods: {
     carouselInfoRandom(n) {
-      const items = [];
       // Get n random nodes that are not topic:
       const possibleNodes = this.nodes.filter((node) => node.kind !== 'topic');
-      while (items.length < n && possibleNodes.length > 0) {
-        const index = Math.floor(Math.random() * possibleNodes.length);
-        const [item] = possibleNodes.splice(index, 1);
-        items.push(this.createCarouselInfo(item));
-      }
-      return items;
+      return _.sample(possibleNodes, n).map((node) => this.createCarouselInfo(node));
     },
     carouselInfoFixed(nodeIds) {
       return nodeIds.map((n) => {
