@@ -4,7 +4,7 @@
     :style="{ backgroundImage: backgroundImageURL }"
   >
 
-    <Carousel v-if="carousel.show" />
+    <Carousel />
 
     <CardGrid
       :nodes="contentNodes"

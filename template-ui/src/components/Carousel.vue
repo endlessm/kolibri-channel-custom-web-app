@@ -2,13 +2,9 @@
 <b-container id="carousel">
   <b-carousel
     v-model="slide"
-    :interval="config.interval"
-    :controls="config.controls"
-    :indicators="config.indicators"
-    :background="config.background"
-    :img-width="config.imgWidth"
-    :img-height="config.imgHeight"
-    style="text-shadow: 1px 1px 2px #333;"
+    interval="6000"
+    img-width="1024"
+    img-height="380"
   >
     <BaseCard
       v-for="info in carouselInfo"
@@ -19,7 +15,6 @@
       <b-carousel-slide
         :caption="info.section.title"
         :text="info.item.title"
-        :img-height="config.imgHeight"
         :img-src="getThumb(info.item)"
       />
     </BaseCard>
@@ -42,18 +37,13 @@ export default {
     };
   },
   computed: {
-    ...mapState({
-      config: 'carousel',
-      nodes: 'nodes',
-    }),
+    ...mapState(['nodes', 'carouselNodeIds', 'carouselSlideNumber']),
     carouselInfo() {
-      switch (this.config.method) {
-        case 'fixed':
-          return this.carouselInfoFixed(this.config.nodeIds);
-        case 'random':
-        default:
-          return this.carouselInfoRandom(this.config.slides);
+      if (this.carouselNodeIds.length) {
+        return this.carouselInfoFixed(this.carouselNodeIds);
       }
+
+      return this.carouselInfoRandom(this.carouselSlideNumber);
     },
   },
   methods: {

@@ -59,18 +59,8 @@ const initialState = {
   },
 
   // Carousel config:
-  carousel: {
-    show: true,
-    interval: 6000,
-    background: '#ababab',
-    controls: true,
-    indicators: true,
-    imgWidth: 1024,
-    imgHeight: 380,
-    method: 'random', // random | fixed
-    nodeIds: [], // only needed for fixed method
-    slides: 3, // only needed for random method
-  },
+  carouselNodeIds: [], // if empty we'll pick nodes randomly
+  carouselSlideNumber: 3, // Only used if picking randomly, defaults to 3
 
   mediaQuality: MediaQuality.LOW,
 };
