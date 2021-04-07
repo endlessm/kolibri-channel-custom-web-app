@@ -1,65 +1,53 @@
 <template>
-<b-container  id="carousel">
+<b-container id="carousel">
   <b-carousel
     v-model="slide"
     :interval="4000"
-    controls
-    indicators
-    background="#ababab"
-    img-width="100"
-    img-height="180"
-    style="text-shadow: 1px 1px 2px #333;"
+    img-width="1024"
+    img-height="380"
   >
-    <b-carousel-slide
-      v-for="info in carouselInfo"
-      :key="'item-' + info.section.id"
-      :caption="info.section.title"
-      :text="info.item.title"
-      :img-src="thumbnails[info.item.id]"
-    />
+    <CarouselCard
+      v-for="node in carouselNodes"
+      :key="'item-' + node.id"
+      :node="node"
+    >
+    </CarouselCard>
   </b-carousel>
 </b-container>
 </template>
 
 <script>
-import { getThumbnail } from 'kolibri-api';
-import defaultThumbnail from '@/assets/default-card-thumbnail.svg';
+import { mapState } from 'vuex';
+import _ from 'underscore';
 
 export default {
   name: 'Carousel',
-  props: ['carouselInfo'],
   data() {
     return {
-      thumbnails: [],
       slide: 0,
     };
   },
   computed: {
-  },
-  methods: {
-    async getThumbnails() {
-      await Promise.all(
-        this.carouselInfo.map(async ({ item }) => {
-          if (!item.thumbnail && process.env.VUE_APP_USE_MOCK_DATA === 'true') {
-            this.thumbnails[item.id] = defaultThumbnail;
-            return;
-          }
-          if (item.thumbnail) {
-            this.thumbnails[item.id] = item.thumbnail;
-            return;
-          }
-          const thumbnail = await getThumbnail(item);
-          if (thumbnail) {
-            this.thumbnails[item.id] = thumbnail;
-          } else {
-            this.thumbnails[item.id] = defaultThumbnail;
-          }
-        }),
-      );
+    ...mapState(['nodes', 'carouselNodeIds', 'carouselSlideNumber']),
+    carouselNodes() {
+      if (this.carouselNodeIds.length) {
+        return this.carouselNodesFixed(this.carouselNodeIds);
+      }
+
+      return this.carouselNodesRandom(this.carouselSlideNumber);
     },
   },
-  created() {
-    this.getThumbnails();
+  methods: {
+    carouselNodesRandom(n) {
+      // Get n random nodes that are not topic:
+      const possibleNodes = this.nodes.filter((node) => node.kind !== 'topic');
+      return _.sample(possibleNodes, n);
+    },
+    carouselNodesFixed(nodeIds) {
+      return nodeIds.map((n) => (
+        this.nodes.find((m) => m.id === n.id)
+      ));
+    },
   },
 };
 </script>
@@ -67,9 +55,6 @@ export default {
 <style lang="scss" scoped>
 @import '@/styles.scss';
 
-#carousel {
-  max-width: 50vw;
-}
 .carousel-item {
   background: $secondary !important;
 }

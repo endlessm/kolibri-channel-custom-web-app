@@ -58,6 +58,10 @@ const initialState = {
     md: 4,
   },
 
+  // Carousel config:
+  carouselNodeIds: [], // if empty we'll pick nodes randomly
+  carouselSlideNumber: 3, // Only used if picking randomly, defaults to 3
+
   mediaQuality: MediaQuality.LOW,
 };
 
