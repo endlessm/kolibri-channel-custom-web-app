@@ -4,6 +4,8 @@
     :style="{ backgroundImage: backgroundImageURL }"
   >
 
+    <Carousel v-if="carousel.show" />
+
     <CardGrid
       :nodes="contentNodes"
       id="content-nodes"
@@ -30,7 +32,7 @@ import { mapState, mapGetters } from 'vuex';
 export default {
   name: 'Home',
   computed: {
-    ...mapState(['channel', 'nodes', 'section']),
+    ...mapState(['channel', 'nodes', 'section', 'carousel']),
     ...mapGetters({
       mainSections: 'mainSections',
       getAssetURL: 'getAssetURL',

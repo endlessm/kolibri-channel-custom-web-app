@@ -58,6 +58,20 @@ const initialState = {
     md: 4,
   },
 
+  // Carousel config:
+  carousel: {
+    show: true,
+    interval: 6000,
+    background: '#ababab',
+    controls: true,
+    indicators: true,
+    imgWidth: 1024,
+    imgHeight: 380,
+    method: 'random', // random | fixed
+    nodeIds: [], // only needed for fixed method
+    slides: 3, // only needed for random method
+  },
+
   mediaQuality: MediaQuality.LOW,
 };
 
