@@ -3,8 +3,7 @@
   <b-carousel
     v-model="slide"
     :interval="4000"
-    img-width="1024"
-    img-height="380"
+    class="shadow-lg"
   >
     <CarouselCard
       v-for="node in carouselNodes"
@@ -57,5 +56,8 @@ export default {
 
 .carousel-item {
   background: $secondary !important;
+}
+.carousel {
+  border-radius: $border-radius-lg;
 }
 </style>
