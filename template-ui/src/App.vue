@@ -1,6 +1,7 @@
 <template>
   <div id="app" class="d-flex flex-column h-100">
     <Header />
+    <HeaderOld />
     <router-view />
     <Footer />
   </div>
@@ -95,18 +96,6 @@ export default {
 html,
 body {
   height: 100%;
-}
-
-.btn-group {
-  display: initial !important;
-}
-
-.btn-toolbar img {
-  height: 2em;
-}
-
-.btn-group > a:hover {
-  color: $primary !important;
 }
 
 #app {
