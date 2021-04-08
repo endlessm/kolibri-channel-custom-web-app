@@ -3,9 +3,10 @@
     <b-card
       :img-src="thumbnail"
       :img-alt="node.title"
-      class="my-2"
+      class="my-2 rounded-lg"
       :class="{
-        shadow: isHovered,
+        shadow: !isHovered,
+        'shadow-lg': isHovered,
       }"
     >
       <span class="font-weight-bold">{{ title }}</span>
@@ -35,6 +36,11 @@ export default {
   &:hover {
     color: $primary;
   }
+}
+
+.card-img {
+  border-top-left-radius: $border-radius-lg;
+  border-top-right-radius: $border-radius-lg;
 }
 
 </style>
