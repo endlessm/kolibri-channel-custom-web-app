@@ -1,5 +1,5 @@
 <template>
-  <b-jumbotron fluid :header="channel.title" :lead="channel.description"
+  <b-jumbotron fluid :header="section.title" :lead="headerDescription"
     :style="{ backgroundImage: headerImageURL }"
   >
     <b-button-toolbar key-nav aria-label="Sections">
@@ -25,9 +25,8 @@ import { getSlug } from '@/utils';
 
 export default {
   computed: {
-    ...mapState(['channel']),
-    ...mapState(['parentSection']),
-    ...mapGetters(['mainSections']),
+    ...mapState(['section', 'parentSection']),
+    ...mapGetters(['headerDescription', 'mainSections']),
     mainSectionsInDropdown() {
       return this.mainSections.length >= 5;
     },

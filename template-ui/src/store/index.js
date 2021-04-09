@@ -87,6 +87,12 @@ const store = new Vuex.Store({
       }
       return [];
     },
+    headerDescription: (state, getters) => {
+      if (state.section === getters.tree[0]) {
+        return state.channel.description;
+      }
+      return state.section.description;
+    },
     getTopicCardSubtitle: () => (node) => {
       const leaves = getLeaves(node);
       const leavesKinds = leaves.map((leaf) => leaf.kind);
