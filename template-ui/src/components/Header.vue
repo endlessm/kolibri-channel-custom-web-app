@@ -4,7 +4,7 @@
   >
     <b-button-toolbar key-nav aria-label="Sections">
       <b-button-group
-        class="mx-1"
+        class="mx-1 my-1"
         v-for="section in mainSections"
         :key="'menu-' + section.id"
       >
