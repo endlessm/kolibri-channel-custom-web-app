@@ -1,7 +1,17 @@
 <template>
-  <b-jumbotron fluid :header="section.title" :lead="headerDescription"
+  <b-jumbotron fluid :lead="headerDescription"
     :style="{ backgroundImage: headerImageURL }"
   >
+    <template v-slot:header>
+      <div class="d-flex justify-content-between align-items-start">
+      <div>{{ section.title }}</div>
+      <b-img
+        v-if="channel.thumbnail"
+        :src="channel.thumbnail"
+        :alt="channel.title"
+      />
+      </div>
+    </template>
     <b-button-toolbar key-nav aria-label="Sections">
       <b-button-group
         class="mx-1 my-1"
@@ -25,7 +35,7 @@ import { getSlug } from '@/utils';
 
 export default {
   computed: {
-    ...mapState(['section', 'parentSection']),
+    ...mapState(['channel', 'section', 'parentSection']),
     ...mapGetters(['headerDescription', 'mainSections']),
     mainSectionsInDropdown() {
       return this.mainSections.length >= 5;
@@ -54,6 +64,9 @@ export default {
 @include media-breakpoint-up(lg) {
   .lead {
     width: 50%;
+  }
+  .img {
+    width: $header-logo-width;
   }
 }
 </style>
