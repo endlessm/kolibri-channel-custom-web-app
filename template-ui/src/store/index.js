@@ -87,7 +87,7 @@ const store = new Vuex.Store({
       }
       return [];
     },
-    getCardLabel: () => (node) => {
+    getTopicCardSubtitle: () => (node) => {
       const leaves = getLeaves(node);
       const leavesKinds = leaves.map((leaf) => leaf.kind);
       const uniqueLeavesKinds = new Set(leavesKinds);
@@ -98,7 +98,7 @@ const store = new Vuex.Store({
         const kind = uniqueLeavesKinds.values().next().value;
         kindsLabel = labelPerKind[kind] || defaultKindLabel;
       }
-      return `${node.title} - ${leaves.length} ${kindsLabel}`;
+      return `${leaves.length} ${kindsLabel}`;
     },
     getAsset: (state) => (name) => dynamicRequireAsset(state.assetFilenames[name]),
     getAssetURL: (_, getters) => (name) => {

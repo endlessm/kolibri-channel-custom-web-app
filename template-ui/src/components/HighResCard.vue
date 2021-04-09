@@ -8,7 +8,9 @@
       }"
       overlay
     >
-      <span class="font-weight-bold">{{ title }}</span>
+      <div class="body-wrapper">
+        <CardBody :node="node" />
+      </div>
     </b-card>
   </ContentLink>
 </template>
@@ -47,7 +49,7 @@ export default {
   &:hover {
     color: $primary;
   }
-  span {
+  .body-wrapper {
     background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.7) 15%);
     width: 100%;
     padding: $card-img-overlay-padding;
