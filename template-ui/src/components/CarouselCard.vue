@@ -33,7 +33,7 @@
 
 <script>
 import VClamp from 'vue-clamp';
-import { mapState, mapGetters } from 'vuex';
+import { mapGetters } from 'vuex';
 import cardMixin from '@/components/mixins/cardMixin';
 
 export default {
@@ -43,11 +43,7 @@ export default {
     VClamp,
   },
   computed: {
-    ...mapState(['nodes']),
     ...mapGetters(['getCardSubtitle']),
-    section() {
-      return this.nodes.find((n) => n.id === this.node.parent);
-    },
     backgroundStyle() {
       return {
         backgroundImage: `url("${this.thumbnail}")`,
