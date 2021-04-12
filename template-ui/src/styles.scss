@@ -1,6 +1,7 @@
 $primary: #F15A22;
 
 $border-radius-lg: 1rem;
+$carousel-min-height: 300px;
 
 @import '@/overrides/styles.scss';
 @import '../node_modules/bootstrap/scss/bootstrap';
