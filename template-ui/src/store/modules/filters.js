@@ -41,6 +41,13 @@ export default {
   namespaced: true,
   state: { ...initialState, ...storeData },
   getters: {
+    isEmpty: (state) => {
+      if (Object.keys(state.query).length === 0) {
+        return true;
+      }
+
+      return !Object.keys(state.query).some((k) => state.query[k].length > 0);
+    },
     getFilterOptions: (state) => (filter) => (
       state.query[filter.name] || []
     ),

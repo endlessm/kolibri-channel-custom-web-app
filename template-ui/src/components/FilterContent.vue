@@ -1,5 +1,6 @@
 <template>
   <div class="my-2">
+    <span class="mr-4">Filter By</span>
     <b-dropdown
       class="mr-2"
       v-for="filter in availableFilters"
@@ -26,7 +27,13 @@
         </b-dropdown-form>
       </b-dropdown-group>
     </b-dropdown>
-    <b-button variant="link" @click="clearFilter({})">Clear Filters</b-button>
+    <b-button
+      variant="link"
+      @click="clearFilter({})"
+      v-if="!isEmpty"
+    >
+      clear filters
+    </b-button>
   </div>
 </template>
 
@@ -39,6 +46,7 @@ export default {
     ...mapGetters({
       name: 'filters/name',
       isFiltering: 'filters/isFiltering',
+      isEmpty: 'filters/isEmpty',
       isSelected: 'filters/isSelected',
     }),
     availableFilters() {
@@ -46,7 +54,7 @@ export default {
         {
           ...f,
           prettyName: this.name(f),
-          variant: this.isFiltering(f) ? 'secondary' : 'outline-secondary',
+          variant: this.isFiltering(f) ? 'primary' : 'outline-secondary',
         }
       ));
     },
@@ -59,3 +67,13 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+@import '@/styles.scss';
+
+.b-dropdown {
+  ::v-deep .dropdown-toggle {
+    border-radius: $rounded-pill;
+  }
+}
+</style>
