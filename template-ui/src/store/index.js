@@ -63,6 +63,7 @@ const initialState = {
   carouselSlideNumber: 3, // Only used if picking randomly, defaults to 3
 
   mediaQuality: MediaQuality.REGULAR,
+  displayLogoInHeader: true,
 };
 
 const store = new Vuex.Store({

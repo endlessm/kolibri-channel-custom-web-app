@@ -6,7 +6,7 @@
       <div class="d-flex justify-content-between align-items-start">
       <div>{{ section.title }}</div>
       <b-img
-        v-if="channel.thumbnail"
+        v-if="displayLogoInHeader && channel.thumbnail"
         :src="channel.thumbnail"
         :alt="channel.title"
       />
@@ -35,7 +35,7 @@ import { getSlug } from '@/utils';
 
 export default {
   computed: {
-    ...mapState(['channel', 'section', 'parentSection']),
+    ...mapState(['channel', 'section', 'parentSection', 'displayLogoInHeader']),
     ...mapGetters(['headerDescription', 'mainSections']),
     mainSectionsInDropdown() {
       return this.mainSections.length >= 5;
