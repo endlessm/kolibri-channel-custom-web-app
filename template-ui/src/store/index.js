@@ -100,6 +100,13 @@ const store = new Vuex.Store({
       }
       return `${leaves.length} ${kindsLabel}`;
     },
+    getCardSubtitle: (state, getters) => (node) => {
+      if (node.kind === 'topic') {
+        return getters.getTopicCardSubtitle(node);
+      }
+      const byLine = node.author || node.license_owner || state.channel.title;
+      return `by ${byLine}`;
+    },
     getAsset: (state) => (name) => dynamicRequireAsset(state.assetFilenames[name]),
     getAssetURL: (_, getters) => (name) => {
       const asset = getters.getAsset(name);

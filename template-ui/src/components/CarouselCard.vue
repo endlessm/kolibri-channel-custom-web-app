@@ -6,7 +6,7 @@
           <template>
             <div class="img" :style="backgroundStyle"></div>
             <b-card-text>
-              <p>by {{ node.author || node.license_owner }}</p>
+              <p>{{ getCardSubtitle(node) }}</p>
               <p class="text-muted">
                 <v-clamp
                   autoresize
@@ -33,7 +33,7 @@
 
 <script>
 import VClamp from 'vue-clamp';
-import { mapState } from 'vuex';
+import { mapState, mapGetters } from 'vuex';
 import cardMixin from '@/components/mixins/cardMixin';
 
 export default {
@@ -44,6 +44,7 @@ export default {
   },
   computed: {
     ...mapState(['nodes']),
+    ...mapGetters(['getCardSubtitle']),
     section() {
       return this.nodes.find((n) => n.id === this.node.parent);
     },
