@@ -5,6 +5,7 @@
   >
 
     <Carousel />
+    <FilterContent />
 
     <CardGrid
       :nodes="contentNodes"
