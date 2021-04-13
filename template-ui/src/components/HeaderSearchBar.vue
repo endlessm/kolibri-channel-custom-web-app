@@ -1,14 +1,22 @@
 <template>
   <b-row>
-    <b-col md="12">
+    <b-col md="6" sm="12">
       <vue-bootstrap-typeahead
         ref="search"
         v-model="query"
-        placeholder="Search"
+        inputClass="rounded-pill"
+        placeholder="What do you want to learn about?"
         :serializer="searchLabel"
         :data="searchNodes"
         v-on:hit="goToContent"
-      />
+      >
+        <template #prepend>
+          <span class="input-group-text">
+            <b-icon-search />
+          </span>
+        </template>
+      </vue-bootstrap-typeahead>
+
     </b-col>
   </b-row>
 </template>
@@ -39,20 +47,12 @@ export default {
     },
     goToContent(node) {
       this.$emit('hit');
+      this.$refs.search.inputValue = '';
       if (node.kind === 'topic') {
         this.$router.push(`/${node.id}`);
       } else {
         goToContent(node);
       }
-    },
-    searchShown() {
-      this.$nextTick(() => {
-        this.$refs.search.$refs.input.focus();
-      });
-    },
-    searchHidden() {
-      // Empty search input on hide
-      this.$refs.search.inputValue = '';
     },
     search(q) {
       const re = new RegExp(`(.{1,10})?${q}(.{1,10})?`, 'ig');
@@ -75,3 +75,22 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+@import '@/styles.scss';
+
+::v-deep .input-group {
+  > input {
+    padding-left: add($input-padding-x * 2, 1em);
+  }
+}
+.input-group-text {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 4;
+  background-color: transparent;
+  border: none;
+}
+</style>
