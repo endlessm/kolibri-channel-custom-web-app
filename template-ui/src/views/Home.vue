@@ -1,6 +1,5 @@
 <template>
   <div
-    id="home"
     :style="{ backgroundImage: backgroundImageURL }"
   >
 
@@ -9,7 +8,6 @@
 
     <CardGrid
       :nodes="contentNodes"
-      id="content-nodes"
       v-if="contentNodes"
     />
 
