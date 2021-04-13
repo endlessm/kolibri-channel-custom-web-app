@@ -1,5 +1,5 @@
 <template>
-  <b-container>
+  <b-container v-if="availableFilters.length">
     <span class="mr-4">Filter By</span>
     <b-dropdown
       class="mr-2"
@@ -48,6 +48,7 @@ export default {
       isFiltering: 'filters/isFiltering',
       isEmpty: 'filters/isEmpty',
       isSelected: 'filters/isSelected',
+      possibleOptions: 'filters/possibleOptions',
     }),
     availableFilters() {
       return this.filters.metadata.map((f) => (
@@ -55,8 +56,9 @@ export default {
           ...f,
           prettyName: this.name(f),
           variant: this.isFiltering(f) ? 'primary' : 'outline-secondary',
+          options: this.possibleOptions(f, this.$store.state.section),
         }
-      ));
+      )).filter((f) => f.options.length > 1);
     },
   },
   methods: {

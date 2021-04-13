@@ -1,3 +1,5 @@
+import { recursiveExistsNodes } from '@/utils';
+
 let storeData;
 try {
   // eslint-disable-next-line global-require, import/no-unresolved
@@ -72,24 +74,20 @@ export default {
       // Filter by media type
       const mediaType = query['Media Type'];
       if (mediaType && mediaType.length) {
-        const containsKind = (n, kind) => {
-          if (n.kind === kind) {
-            return true;
-          }
-
-          if (n.children) {
-            return n.children.some((leaf) => containsKind(leaf, kind));
-          }
-
-          return false;
-        };
-
         filtered = filtered.filter((node) => (
-          mediaType.some((m) => containsKind(node, m))
+          mediaType.some((m) => recursiveExistsNodes(node, (n) => n.kind === m))
         ));
       }
 
       return filtered;
+    },
+    possibleOptions: () => (filter, root) => {
+      // Filter by media type
+      if (filter.name === 'Media Type') {
+        return filter.options.filter((m) => recursiveExistsNodes(root, (n) => n.kind === m));
+      }
+
+      return filter.options;
     },
   },
   mutations: {
