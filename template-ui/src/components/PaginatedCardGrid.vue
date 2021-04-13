@@ -21,7 +21,7 @@ export default {
     id: String,
     itemsPerPage: {
       type: Number,
-      default: 6,
+      default: 8,
     },
   },
   data() {

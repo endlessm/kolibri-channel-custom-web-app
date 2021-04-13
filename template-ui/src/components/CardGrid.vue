@@ -28,7 +28,7 @@ export default {
     },
     itemsPerPage: {
       type: Number,
-      default: 6,
+      default: 8,
     },
   },
   computed: {
