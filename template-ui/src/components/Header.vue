@@ -1,16 +1,24 @@
 <template>
-  <b-jumbotron fluid :lead="headerDescription"
+  <b-jumbotron fluid
     :style="{ backgroundImage: headerImageURL }"
   >
     <template v-slot:header>
       <div class="d-flex justify-content-between align-items-start">
       <div>{{ section.title }}</div>
       <b-img
+        class="rounded-lg"
+        :width="headerLogoWidth"
         v-if="displayLogoInHeader && channel.thumbnail"
         :src="channel.thumbnail"
-        :alt="channel.title"
       />
       </div>
+    </template>
+    <template v-slot:lead>
+      <b-row>
+        <b-col md="6" sm="12">
+          <div>{{ headerDescription }}</div>
+        </b-col>
+      </b-row>
     </template>
     <HeaderSearchBar />
   </b-jumbotron>
@@ -18,8 +26,14 @@
 
 <script>
 import { mapState, mapGetters } from 'vuex';
+import { headerLogoWidth } from '@/styles.scss';
 
 export default {
+  data() {
+    return {
+      headerLogoWidth,
+    };
+  },
   computed: {
     ...mapState(['channel', 'section', 'displayLogoInHeader']),
     ...mapGetters(['headerDescription', 'getAssetURL']),
@@ -38,12 +52,4 @@ export default {
   background-size: cover;
 }
 
-@include media-breakpoint-up(lg) {
-  .lead {
-    width: 50%;
-  }
-  .img {
-    width: $header-logo-width;
-  }
-}
 </style>
