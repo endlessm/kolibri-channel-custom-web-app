@@ -30,10 +30,6 @@ export default {
     };
   },
   computed: {
-    pages() {
-      const n = Math.ceil(this.nodes.length / this.itemsPerPage);
-      return [...Array(n).keys()];
-    },
     pageNodes() {
       const { currentPage, itemsPerPage, nodes } = this;
       const start = (currentPage - 1) * itemsPerPage;
