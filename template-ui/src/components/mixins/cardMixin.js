@@ -8,13 +8,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(['getCardLabel', 'getAsset']),
-    title() {
-      if (this.node.kind === 'topic') {
-        return this.getCardLabel(this.node);
-      }
-      return this.node.title;
-    },
+    ...mapGetters(['getAsset']),
   },
   methods: {
     async getThumbnail() {

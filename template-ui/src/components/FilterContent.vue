@@ -1,5 +1,5 @@
 <template>
-  <div class="my-2">
+  <b-container>
     <span class="mr-4">Filter By</span>
     <b-dropdown
       class="mr-2"
@@ -34,7 +34,7 @@
     >
       clear filters
     </b-button>
-  </div>
+  </b-container>
 </template>
 
 <script>

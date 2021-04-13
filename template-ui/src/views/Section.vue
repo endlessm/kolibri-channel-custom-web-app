@@ -1,13 +1,8 @@
 <template>
   <div
-    id="section"
     :style="{ backgroundImage: backgroundImageURL }"
   >
-
-  <b-container class="my-5">
-      <SectionHeader :node="section" />
-  </b-container>
-
+  <FilterContent />
   <div v-if="isInlineLevel">
   <CardGrid
     v-for="subsection in filteredSections(section)"

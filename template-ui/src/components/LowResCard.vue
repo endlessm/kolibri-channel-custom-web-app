@@ -6,7 +6,7 @@
       :img-alt="node.title"
       class="my-2"
     >
-      <span class="font-weight-bold">{{ title }}</span>
+      <CardBody :node="node" />
     </b-card>
   </ContentLink>
 </template>

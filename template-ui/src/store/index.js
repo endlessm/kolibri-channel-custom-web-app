@@ -63,6 +63,7 @@ const initialState = {
   carouselSlideNumber: 3, // Only used if picking randomly, defaults to 3
 
   mediaQuality: MediaQuality.REGULAR,
+  displayLogoInHeader: true,
 };
 
 const store = new Vuex.Store({
@@ -87,7 +88,13 @@ const store = new Vuex.Store({
       }
       return [];
     },
-    getCardLabel: () => (node) => {
+    headerDescription: (state, getters) => {
+      if (state.section === getters.tree[0]) {
+        return state.channel.description;
+      }
+      return state.section.description;
+    },
+    getTopicCardSubtitle: () => (node) => {
       const leaves = getLeaves(node);
       const leavesKinds = leaves.map((leaf) => leaf.kind);
       const uniqueLeavesKinds = new Set(leavesKinds);
@@ -98,7 +105,14 @@ const store = new Vuex.Store({
         const kind = uniqueLeavesKinds.values().next().value;
         kindsLabel = labelPerKind[kind] || defaultKindLabel;
       }
-      return `${node.title} - ${leaves.length} ${kindsLabel}`;
+      return `${leaves.length} ${kindsLabel}`;
+    },
+    getCardSubtitle: (state, getters) => (node) => {
+      if (node.kind === 'topic') {
+        return getters.getTopicCardSubtitle(node);
+      }
+      const byLine = node.author || node.license_owner || state.channel.title;
+      return `by ${byLine}`;
     },
     getAsset: (state) => (name) => dynamicRequireAsset(state.assetFilenames[name]),
     getAssetURL: (_, getters) => (name) => {

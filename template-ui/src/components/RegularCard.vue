@@ -9,7 +9,7 @@
         'shadow-lg': isHovered,
       }"
     >
-      <span class="font-weight-bold">{{ title }}</span>
+      <CardBody :node="node" />
     </b-card>
   </ContentLink>
 </template>
