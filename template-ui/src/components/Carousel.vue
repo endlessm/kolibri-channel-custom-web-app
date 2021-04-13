@@ -1,5 +1,5 @@
 <template>
-<b-container id="carousel">
+<b-container class="mb-4">
   <b-carousel
     v-model="slide"
     :interval="4000"
