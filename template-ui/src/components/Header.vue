@@ -12,7 +12,7 @@
       />
       </div>
     </template>
-    <!-- FIXME move search bar here -->
+    <HeaderSearchBar />
   </b-jumbotron>
 </template>
 
