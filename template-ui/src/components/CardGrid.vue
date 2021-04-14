@@ -20,10 +20,10 @@ export default {
     id: String,
     variant: {
       type: String,
-      default: 'collapsible',
+      default: 'slidable',
       validator(value) {
         // The value must match one of these strings
-        return ['paginated', 'collapsible'].includes(value);
+        return ['paginated', 'collapsible', 'slidable'].includes(value);
       },
     },
     itemsPerPage: {
@@ -36,8 +36,11 @@ export default {
       switch (this.variant) {
         case 'paginated':
           return 'PaginatedCardGrid';
-        default:
+        case 'collapsible':
           return 'CollapsibleCardGrid';
+        case 'slidable':
+        default:
+          return 'SlidableCardGrid';
       }
     },
   },
