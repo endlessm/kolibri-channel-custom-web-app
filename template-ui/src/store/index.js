@@ -55,7 +55,7 @@ const initialState = {
   // Layout:
   cardColumns: {
     cols: 6,
-    md: 4,
+    md: 3,
   },
 
   // Carousel config:

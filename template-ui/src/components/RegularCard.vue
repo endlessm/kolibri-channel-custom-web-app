@@ -1,17 +1,21 @@
 <template>
-  <ContentLink :node="node" @isHovered="(hovered) => isHovered = hovered">
     <b-card
-      :img-src="thumbnail"
-      :img-alt="node.title"
       class="my-2 rounded-lg"
       :class="{
         shadow: !isHovered,
         'shadow-lg': isHovered,
       }"
     >
-      <CardBody :node="node" />
-    </b-card>
+  <ContentLink :node="node" @isHovered="(hovered) => isHovered = hovered">
+      <b-card-img
+        :src="thumbnail"
+        :alt="node.title"
+      />
+      <b-card-text>
+        <CardBody :node="node" />
+      </b-card-text>
   </ContentLink>
+    </b-card>
 </template>
 
 <script>
@@ -36,6 +40,14 @@ export default {
   &:hover {
     color: $primary;
   }
+}
+
+// Move padding from card body to the single card text:
+.card-body {
+  padding: 0;
+}
+.card-text {
+  padding: $card-spacer-x;
 }
 
 .card-img {

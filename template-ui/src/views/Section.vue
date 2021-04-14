@@ -21,7 +21,6 @@
     :nodes="filteredSections(section)"
     :id="section.id"
     variant="paginated"
-    :itemsPerPage="6"
   />
   </div>
   </div>

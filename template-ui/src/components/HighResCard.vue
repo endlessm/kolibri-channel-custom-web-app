@@ -1,18 +1,20 @@
 <template>
-  <ContentLink :node="node" @isHovered="(hovered) => isHovered = hovered">
-    <b-card
-      :img-src="thumbnail"
-      :img-alt="node.title"
-      :class="{
-        shadow: isHovered,
-      }"
-      overlay
-    >
-      <div class="body-wrapper">
-        <CardBody :node="node" />
-      </div>
-    </b-card>
-  </ContentLink>
+  <b-card
+    :img-src="thumbnail"
+    :img-alt="node.title"
+    :class="{
+      shadow: isHovered,
+    }"
+    overlay
+  >
+    <ContentLink :node="node" @isHovered="(hovered) => isHovered = hovered">
+      <b-card-text class="card-img-overlay">
+        <div class="body-wrapper">
+          <CardBody :node="node" />
+        </div>
+      </b-card-text>
+    </ContentLink>
+  </b-card>
 </template>
 
 <script>
