@@ -1,14 +1,18 @@
 <template>
-  <ContentLink :node="node">
-    <b-card
-      border-variant="light"
-      :img-src="thumbnail"
-      :img-alt="node.title"
-      class="my-2"
-    >
-      <CardBody :node="node" />
-    </b-card>
-  </ContentLink>
+  <b-card
+    border-variant="light"
+    class="my-2"
+  >
+    <ContentLink :node="node">
+      <b-card-img
+        :src="thumbnail"
+        :alt="node.title"
+      />
+      <b-card-text>
+        <CardBody :node="node" />
+      </b-card-text>
+    </ContentLink>
+  </b-card>
 </template>
 
 <script>
@@ -30,8 +34,12 @@ export default {
   }
 }
 
+// Move padding from card body to the single card text:
 .card-body {
-  padding-left: 0;
+  padding: 0;
+}
+.card-text {
+  padding: $card-spacer-x 0;
 }
 
 </style>
