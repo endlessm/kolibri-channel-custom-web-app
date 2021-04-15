@@ -1,5 +1,18 @@
 import { recursiveExistsNodes } from '@/utils';
 
+// Get all the tags present in the root node and children
+function getAllTags(root) {
+  let tags = [...(root.tags || [])];
+  if (root.children) {
+    root.children.forEach((leaf) => {
+      tags = [...tags, ...getAllTags(leaf)];
+    });
+  }
+  // Remove duplicates
+  tags = tags.sort().filter((t, index, array) => t !== array[index - 1]);
+  return tags;
+}
+
 let storeData;
 try {
   // eslint-disable-next-line global-require, import/no-unresolved
@@ -35,6 +48,10 @@ const initialState = {
     {
       name: 'Media Type',
       options: ContentNodeKinds,
+    },
+    {
+      name: 'Common Keywords',
+      options: [],
     },
   ],
 };
@@ -78,16 +95,27 @@ export default {
           mediaType.some((m) => recursiveExistsNodes(node, (n) => n.kind === m))
         ));
       }
+      // Filter by tag
+      const tags = query['Common Keywords'];
+      if (tags && tags.length) {
+        filtered = filtered.filter((node) => (
+          tags.some((t) => recursiveExistsNodes(node, (n) => n.tags && n.tags.includes(t)))
+        ));
+      }
 
       return filtered;
     },
     possibleOptions: () => (filter, root) => {
+      switch (filter.name) {
       // Filter by media type
-      if (filter.name === 'Media Type') {
-        return filter.options.filter((m) => recursiveExistsNodes(root, (n) => n.kind === m));
+        case 'Media Type':
+          return filter.options.filter((m) => recursiveExistsNodes(root, (n) => n.kind === m));
+        case 'Common Keywords': {
+          return getAllTags(root);
+        }
+        default:
+          return filter.options;
       }
-
-      return filter.options;
     },
   },
   mutations: {
