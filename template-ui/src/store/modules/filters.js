@@ -1,16 +1,35 @@
 import { recursiveExistsNodes } from '@/utils';
 
-// Get all the tags present in the root node and children
-function getAllTags(root) {
-  let tags = [...(root.tags || [])];
-  if (root.children) {
-    root.children.forEach((leaf) => {
-      tags = [...tags, ...getAllTags(leaf)];
+// Get all the tags present in the root node and children as an Object with
+// tags as key and the weight as value
+function getWeightedTags(root) {
+  // The key is the tag name and the value is the number of content with that tag
+  const weightedTags = {};
+
+  if (root.tags) {
+    root.tags.forEach((t) => {
+      const count = weightedTags[t] || 0;
+      weightedTags[t] = count + 1;
     });
   }
-  // Remove duplicates
-  tags = tags.sort().filter((t, index, array) => t !== array[index - 1]);
-  return tags;
+  if (root.children) {
+    root.children.forEach((leaf) => {
+      // Add tag count for every child
+      const childrenWeightedTags = getWeightedTags(leaf);
+      Object.keys(childrenWeightedTags).forEach((k) => {
+        const count = weightedTags[k] || 0;
+        const childCount = childrenWeightedTags[k];
+        weightedTags[k] = count + childCount;
+      });
+    });
+  }
+  return weightedTags;
+}
+
+// Get all the tags present in the root node and children, sorted by most used
+function getAllTags(root) {
+  const tags = getWeightedTags(root);
+  return Object.keys(tags).sort((a, b) => tags[a] - tags[b]).reverse();
 }
 
 let storeData;
@@ -38,6 +57,8 @@ const ContentNodeKinds = [
   'slideshow',
 ];
 
+const TagFilterName = 'Common Keywords';
+
 // Filter taxonomy, that can be overriden
 const initialState = {
   // Object with all filters selected
@@ -50,7 +71,7 @@ const initialState = {
       options: ContentNodeKinds,
     },
     {
-      name: 'Common Keywords',
+      name: TagFilterName,
       options: [],
     },
   ],
@@ -96,7 +117,7 @@ export default {
         ));
       }
       // Filter by tag
-      const tags = query['Common Keywords'];
+      const tags = query[TagFilterName];
       if (tags && tags.length) {
         filtered = filtered.filter((node) => (
           tags.some((t) => recursiveExistsNodes(node, (n) => n.tags && n.tags.includes(t)))
@@ -110,7 +131,7 @@ export default {
       // Filter by media type
         case 'Media Type':
           return filter.options.filter((m) => recursiveExistsNodes(root, (n) => n.kind === m));
-        case 'Common Keywords': {
+        case TagFilterName: {
           return getAllTags(root);
         }
         default:
