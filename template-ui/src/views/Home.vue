@@ -14,7 +14,7 @@
     <CardGrid
       v-for="section in filteredSections"
       :key="section.id"
-      :nodes="section.children"
+      :nodes="filterNodes(section.children)"
       :id="section.id"
     >
       <b-row>
@@ -44,7 +44,8 @@ export default {
       if (!this.section || !this.section.children) {
         return null;
       }
-      return this.section.children.filter((n) => n.kind !== 'topic') || null;
+      const childs = this.section.children.filter((n) => n.kind !== 'topic') || null;
+      return this.filterNodes(childs);
     },
     filteredSections() {
       return this.filterNodes(this.mainSections);
