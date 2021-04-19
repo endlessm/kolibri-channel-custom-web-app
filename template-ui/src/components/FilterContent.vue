@@ -42,7 +42,7 @@ import { mapState, mapGetters, mapMutations } from 'vuex';
 
 export default {
   computed: {
-    ...mapState(['filters']),
+    ...mapState(['filters', 'section']),
     ...mapGetters({
       name: 'filters/name',
       isFiltering: 'filters/isFiltering',
@@ -56,7 +56,7 @@ export default {
           ...f,
           prettyName: this.name(f),
           variant: this.isFiltering(f) ? 'primary' : 'outline-secondary',
-          options: this.possibleOptions(f, this.$store.state.section),
+          options: this.possibleOptions(f, this.section),
         }
       )).filter((f) => f.options.length > 1);
     },
