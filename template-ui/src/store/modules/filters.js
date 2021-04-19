@@ -94,17 +94,17 @@ export default {
     getFilterOptions: (state) => (filter) => (
       state.query[filter.name] || []
     ),
-    name: (state, getters) => (filter) => {
+    name: (_state, getters) => (filter) => {
       const selectedFilters = getters.getFilterOptions(filter);
       if (selectedFilters.length === 1) {
         return selectedFilters[0];
       }
       return filter.name;
     },
-    isFiltering: (state, getters) => (filter) => (
+    isFiltering: (_state, getters) => (filter) => (
       getters.getFilterOptions(filter).length > 0
     ),
-    isSelected: (state, getters) => (filter, option) => {
+    isSelected: (_state, getters) => (filter, option) => {
       const selectedFilters = getters.getFilterOptions(filter);
       return selectedFilters.includes(option);
     },
