@@ -26,7 +26,9 @@
 
 <script>
 import { mapState, mapGetters } from 'vuex';
+import dynamicRequireAsset from '@/dynamicRequireAsset';
 import { headerLogoWidth } from '@/styles.scss';
+import { getSlug } from '@/utils';
 
 export default {
   data() {
@@ -37,9 +39,24 @@ export default {
   computed: {
     ...mapState(['channel', 'section', 'displayLogoInHeader']),
     ...mapGetters(['headerDescription', 'getAssetURL']),
-    headerImageURL() {
-      return this.getAssetURL('headerImage');
+    sectionImageURL() {
+      if (!this.section || !this.section.title) {
+        return null;
+      }
+      const sectionSlug = this.getSlug(this.section.title);
+      const headerSectionFilename = `header-${sectionSlug}.jpg`;
+      const headerSectionAsset = dynamicRequireAsset(headerSectionFilename);
+      if (headerSectionAsset) {
+        return `url(${headerSectionAsset})`;
+      }
+      return null;
     },
+    headerImageURL() {
+      return this.sectionImageURL || this.getAssetURL('headerImage');
+    },
+  },
+  methods: {
+    getSlug,
   },
 };
 </script>
