@@ -11,6 +11,7 @@
 
 <script>
 import { goToContent } from 'kolibri-api';
+import { mapGetters } from 'vuex';
 
 export default {
   props: ['node'],
@@ -21,15 +22,13 @@ export default {
     };
   },
   computed: {
+    ...mapGetters(['getTopicUrl']),
     isLeaf() {
       return this.node.kind !== 'topic';
     },
   },
   methods: {
     goToContent,
-    getTopicUrl(node) {
-      return `/${node.id}`;
-    },
     handleHover(hovered) {
       this.$emit('isHovered', hovered);
     },

@@ -94,6 +94,7 @@ const store = new Vuex.Store({
       }
       return state.section.description;
     },
+    getTopicUrl: () => (node) => `/${node.id}`,
     getTopicCardSubtitle: () => (node) => {
       const leaves = getLeaves(node);
       const leavesKinds = leaves.map((leaf) => leaf.kind);
