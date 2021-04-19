@@ -7,7 +7,7 @@
         :key="'menu-' + section.id"
       >
       <b-button pill variant="primary"
-        :to="getSectionUrl(section)"
+        :to="getTopicUrl(section)"
         :active="section === parentSection"
       >
         {{ section.title }}
@@ -19,17 +19,11 @@
 
 <script>
 import { mapState, mapGetters } from 'vuex';
-import { getSlug } from '@/utils';
 
 export default {
   computed: {
     ...mapState(['section', 'parentSection']),
-    ...mapGetters(['mainSections']),
-  },
-  methods: {
-    getSectionUrl(section) {
-      return `/#${getSlug(section.title)}`;
-    },
+    ...mapGetters(['mainSections', 'getTopicUrl']),
   },
 };
 </script>
