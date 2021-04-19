@@ -72,7 +72,6 @@ const initialState = {
     },
     {
       name: TagFilterName,
-      options: [],
       maxTags: 10,
     },
   ],
@@ -133,11 +132,7 @@ export default {
         case 'Media Type':
           return filter.options.filter((m) => recursiveExistsNodes(root, (n) => n.kind === m));
         case TagFilterName: {
-          const { maxTags, options } = filter;
-          if (options.length) {
-            return options;
-          }
-
+          const { maxTags } = filter;
           return getAllTags(root)
             .slice(0, maxTags);
         }
