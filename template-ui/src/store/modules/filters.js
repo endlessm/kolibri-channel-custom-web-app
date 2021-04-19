@@ -57,6 +57,7 @@ const ContentNodeKinds = [
   'slideshow',
 ];
 
+const MediaFilterName = 'Media Type';
 const TagFilterName = 'Common Keywords';
 
 // Filter taxonomy, that can be overriden
@@ -67,7 +68,7 @@ const initialState = {
   query: {},
   metadata: [
     {
-      name: 'Media Type',
+      name: MediaFilterName,
       options: ContentNodeKinds,
     },
     {
@@ -112,7 +113,7 @@ export default {
       let filtered = nodes;
 
       // Filter by media type
-      const mediaType = query['Media Type'];
+      const mediaType = query[MediaFilterName];
       if (mediaType && mediaType.length) {
         filtered = filtered.filter((node) => (
           mediaType.some((m) => recursiveExistsNodes(node, (n) => n.kind === m))
@@ -130,8 +131,7 @@ export default {
     },
     possibleOptions: () => (filter, root) => {
       switch (filter.name) {
-      // Filter by media type
-        case 'Media Type':
+        case MediaFilterName:
           return filter.options.filter((m) => recursiveExistsNodes(root, (n) => n.kind === m));
         case TagFilterName: {
           const { maxTags, options, exclude } = filter;
