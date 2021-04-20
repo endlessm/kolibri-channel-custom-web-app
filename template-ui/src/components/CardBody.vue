@@ -5,7 +5,7 @@
     <b-badge
       pill variant="primary"
       class="mr-1 mb-1"
-      v-for="tag in node.tags"
+      v-for="tag in topicTags"
       :key="tag"
     >
       {{ tag }}
@@ -15,11 +15,16 @@
 
 <script>
 import { mapGetters } from 'vuex';
+import { StructuredTags } from '@/constants';
 
 export default {
   props: ['node'],
   computed: {
     ...mapGetters(['getCardSubtitle']),
+    ...mapGetters({ getStructuredTags: 'filters/getStructuredTags' }),
+    topicTags() {
+      return this.getStructuredTags(this.node, StructuredTags.TOPIC);
+    },
   },
 };
 </script>
