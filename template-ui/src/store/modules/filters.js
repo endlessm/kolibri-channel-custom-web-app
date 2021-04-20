@@ -150,6 +150,14 @@ export default {
           return filter.options;
       }
     },
+    getStructuredTags: () => (node, matchKey) => {
+      const tagValues = node.tags
+        .filter((t) => t.match(StructuredTagsRegExp))
+        .map((t) => t.match(StructuredTagsRegExp))
+        .filter(([, key]) => key === matchKey)
+        .map(([,, value]) => value);
+      return tagValues;
+    },
   },
   mutations: {
     setFilterQuery(state, payload) {
