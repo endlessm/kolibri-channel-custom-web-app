@@ -1,41 +1,26 @@
-import { recursiveExistsNodes } from '@/utils';
+import { recursiveExistsNodes, flattenNodes } from '@/utils';
 
 const StructuredTagsRegExp = new RegExp('(.*)=(.*)');
 
-// Get all the tags present in the root node and children as an Object with
-// tags as key and the weight as value
-function getWeightedTags(root) {
-  // The key is the tag name and the value is the number of content with that tag
-  const weightedTags = {};
-
-  if (root.tags) {
-    root.tags
-      .filter((t) => !t.match(StructuredTagsRegExp))
-      .forEach((t) => {
-        const count = weightedTags[t] || 0;
-        weightedTags[t] = count + 1;
-      });
-  }
-  if (root.children) {
-    root.children.forEach((leaf) => {
-      // Add tag count for every child
-      const childrenWeightedTags = getWeightedTags(leaf);
-      Object.keys(childrenWeightedTags)
-        .filter((k) => !k.match(StructuredTagsRegExp))
-        .forEach((k) => {
-          const count = weightedTags[k] || 0;
-          const childCount = childrenWeightedTags[k];
-          weightedTags[k] = count + childCount;
-        });
-    });
-  }
-  return weightedTags;
+// ['foo', 'foo', 'bar'] => { 'foo': 2, 'bar': 1 }
+function weightOptions(options) {
+  return options.reduce((weighted, option) => ({
+    ...weighted,
+    [option]: (weighted[option] || 0) + 1,
+  }), {});
 }
 
-// Get all the tags present in the root node and children, sorted by most used
-function getAllTags(root) {
-  const tags = getWeightedTags(root);
-  return Object.keys(tags).sort((a, b) => tags[b] - tags[a]);
+function sortOptionsByWeight(root, getOptionsFunc) {
+  const weightedOptions = weightOptions(getOptionsFunc(root));
+  return Object.keys(weightedOptions).sort((a, b) => weightedOptions[b] - weightedOptions[a]);
+}
+
+function getTagOptions(node) {
+  console.log(node);
+  return flattenNodes(node)
+    .flatMap((n) => (n.tags ? n.tags : []))
+    .filter((t) => t !== '')
+    .filter((t) => !t.match(StructuredTagsRegExp));
 }
 
 let storeData;
@@ -139,7 +124,7 @@ export default {
           return filter.options.filter((m) => recursiveExistsNodes(root, (n) => n.kind === m));
         case TagFilterName: {
           const { maxTags } = filter;
-          return getAllTags(root)
+          return sortOptionsByWeight(root, getTagOptions)
             .slice(0, maxTags);
         }
         default:
