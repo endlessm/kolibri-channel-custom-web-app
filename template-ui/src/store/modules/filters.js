@@ -35,7 +35,7 @@ function getWeightedTags(root) {
 // Get all the tags present in the root node and children, sorted by most used
 function getAllTags(root) {
   const tags = getWeightedTags(root);
-  return Object.keys(tags).sort((a, b) => tags[a] - tags[b]).reverse();
+  return Object.keys(tags).sort((a, b) => tags[b] - tags[a]);
 }
 
 let storeData;
