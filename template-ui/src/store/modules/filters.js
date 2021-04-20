@@ -22,7 +22,6 @@ function getAuthorOptions(node) {
 }
 
 function getTagOptions(node) {
-  console.log(node);
   return flattenNodes(node)
     .flatMap((n) => (n.tags ? n.tags : []))
     .filter((t) => t !== '')
