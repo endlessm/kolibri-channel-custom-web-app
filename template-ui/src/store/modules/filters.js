@@ -15,6 +15,12 @@ function sortOptionsByWeight(root, getOptionsFunc) {
   return Object.keys(weightedOptions).sort((a, b) => weightedOptions[b] - weightedOptions[a]);
 }
 
+function getAuthorOptions(node) {
+  return flattenNodes(node)
+    .map((n) => n.author)
+    .filter((n) => n !== '');
+}
+
 function getTagOptions(node) {
   console.log(node);
   return flattenNodes(node)
@@ -49,6 +55,7 @@ const ContentNodeKinds = [
 ];
 
 const MediaFilterName = 'Media Type';
+const AuthorFilterName = 'Author';
 const TagFilterName = 'Common Keywords';
 
 // Filter taxonomy, that can be overriden
@@ -61,6 +68,9 @@ const initialState = {
     {
       name: MediaFilterName,
       options: ContentNodeKinds,
+    },
+    {
+      name: AuthorFilterName,
     },
     {
       name: TagFilterName,
@@ -108,6 +118,13 @@ export default {
           mediaType.some((m) => recursiveExistsNodes(node, (n) => n.kind === m))
         ));
       }
+      // Filter by author
+      const authors = query[AuthorFilterName];
+      if (authors && authors.length) {
+        filtered = filtered.filter((node) => (
+          authors.some((a) => recursiveExistsNodes(node, (n) => n.author === a))
+        ));
+      }
       // Filter by tag
       const tags = query[TagFilterName];
       if (tags && tags.length) {
@@ -122,6 +139,8 @@ export default {
       switch (filter.name) {
         case MediaFilterName:
           return filter.options.filter((m) => recursiveExistsNodes(root, (n) => n.kind === m));
+        case AuthorFilterName:
+          return sortOptionsByWeight(root, getAuthorOptions);
         case TagFilterName: {
           const { maxTags } = filter;
           return sortOptionsByWeight(root, getTagOptions)
