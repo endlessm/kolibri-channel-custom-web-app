@@ -1,5 +1,7 @@
 import { recursiveExistsNodes } from '@/utils';
 
+const StructuredTagsRegExp = new RegExp('(.*)=(.*)');
+
 // Get all the tags present in the root node and children as an Object with
 // tags as key and the weight as value
 function getWeightedTags(root) {
@@ -7,20 +9,24 @@ function getWeightedTags(root) {
   const weightedTags = {};
 
   if (root.tags) {
-    root.tags.forEach((t) => {
-      const count = weightedTags[t] || 0;
-      weightedTags[t] = count + 1;
-    });
+    root.tags
+      .filter((t) => !t.match(StructuredTagsRegExp))
+      .forEach((t) => {
+        const count = weightedTags[t] || 0;
+        weightedTags[t] = count + 1;
+      });
   }
   if (root.children) {
     root.children.forEach((leaf) => {
       // Add tag count for every child
       const childrenWeightedTags = getWeightedTags(leaf);
-      Object.keys(childrenWeightedTags).forEach((k) => {
-        const count = weightedTags[k] || 0;
-        const childCount = childrenWeightedTags[k];
-        weightedTags[k] = count + childCount;
-      });
+      Object.keys(childrenWeightedTags)
+        .filter((k) => !k.match(StructuredTagsRegExp))
+        .forEach((k) => {
+          const count = weightedTags[k] || 0;
+          const childCount = childrenWeightedTags[k];
+          weightedTags[k] = count + childCount;
+        });
     });
   }
   return weightedTags;
