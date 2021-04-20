@@ -1,5 +1,7 @@
 import { recursiveExistsNodes } from '@/utils';
 
+const StructuredTagsRegExp = new RegExp('(.*)=(.*)');
+
 // Get all the tags present in the root node and children as an Object with
 // tags as key and the weight as value
 function getWeightedTags(root) {
@@ -7,20 +9,24 @@ function getWeightedTags(root) {
   const weightedTags = {};
 
   if (root.tags) {
-    root.tags.forEach((t) => {
-      const count = weightedTags[t] || 0;
-      weightedTags[t] = count + 1;
-    });
+    root.tags
+      .filter((t) => !t.match(StructuredTagsRegExp))
+      .forEach((t) => {
+        const count = weightedTags[t] || 0;
+        weightedTags[t] = count + 1;
+      });
   }
   if (root.children) {
     root.children.forEach((leaf) => {
       // Add tag count for every child
       const childrenWeightedTags = getWeightedTags(leaf);
-      Object.keys(childrenWeightedTags).forEach((k) => {
-        const count = weightedTags[k] || 0;
-        const childCount = childrenWeightedTags[k];
-        weightedTags[k] = count + childCount;
-      });
+      Object.keys(childrenWeightedTags)
+        .filter((k) => !k.match(StructuredTagsRegExp))
+        .forEach((k) => {
+          const count = weightedTags[k] || 0;
+          const childCount = childrenWeightedTags[k];
+          weightedTags[k] = count + childCount;
+        });
     });
   }
   return weightedTags;
@@ -57,6 +63,7 @@ const ContentNodeKinds = [
   'slideshow',
 ];
 
+const MediaFilterName = 'Media Type';
 const TagFilterName = 'Common Keywords';
 
 // Filter taxonomy, that can be overriden
@@ -67,7 +74,7 @@ const initialState = {
   query: {},
   metadata: [
     {
-      name: 'Media Type',
+      name: MediaFilterName,
       options: ContentNodeKinds,
     },
     {
@@ -91,17 +98,17 @@ export default {
     getFilterOptions: (state) => (filter) => (
       state.query[filter.name] || []
     ),
-    name: (state, getters) => (filter) => {
+    name: (_state, getters) => (filter) => {
       const selectedFilters = getters.getFilterOptions(filter);
       if (selectedFilters.length === 1) {
         return selectedFilters[0];
       }
       return filter.name;
     },
-    isFiltering: (state, getters) => (filter) => (
+    isFiltering: (_state, getters) => (filter) => (
       getters.getFilterOptions(filter).length > 0
     ),
-    isSelected: (state, getters) => (filter, option) => {
+    isSelected: (_state, getters) => (filter, option) => {
       const selectedFilters = getters.getFilterOptions(filter);
       return selectedFilters.includes(option);
     },
@@ -110,7 +117,7 @@ export default {
       let filtered = nodes;
 
       // Filter by media type
-      const mediaType = query['Media Type'];
+      const mediaType = query[MediaFilterName];
       if (mediaType && mediaType.length) {
         filtered = filtered.filter((node) => (
           mediaType.some((m) => recursiveExistsNodes(node, (n) => n.kind === m))
@@ -128,8 +135,7 @@ export default {
     },
     possibleOptions: () => (filter, root) => {
       switch (filter.name) {
-      // Filter by media type
-        case 'Media Type':
+        case MediaFilterName:
           return filter.options.filter((m) => recursiveExistsNodes(root, (n) => n.kind === m));
         case TagFilterName: {
           const { maxTags } = filter;

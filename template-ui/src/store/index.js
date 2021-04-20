@@ -82,7 +82,7 @@ const store = new Vuex.Store({
   },
   getters: {
     tree: (state) => getNodesTree(state.nodes),
-    mainSections: (_, getters) => {
+    mainSections: (_state, getters) => {
       if (getters.tree[0]) {
         return getters.tree[0].children.filter((n) => n.kind === 'topic');
       }
@@ -116,7 +116,7 @@ const store = new Vuex.Store({
       return `by ${byLine}`;
     },
     getAsset: (state) => (name) => dynamicRequireAsset(state.assetFilenames[name]),
-    getAssetURL: (_, getters) => (name) => {
+    getAssetURL: (_state, getters) => (name) => {
       const asset = getters.getAsset(name);
       return asset ? `url(${asset})` : null;
     },
