@@ -1,41 +1,50 @@
-import { recursiveExistsNodes } from '@/utils';
+import { recursiveExistsNodes, flattenNodes } from '@/utils';
+import { StructuredTags } from '@/constants';
+import _ from 'underscore';
 
 const StructuredTagsRegExp = new RegExp('(.*)=(.*)');
 
-// Get all the tags present in the root node and children as an Object with
-// tags as key and the weight as value
-function getWeightedTags(root) {
-  // The key is the tag name and the value is the number of content with that tag
-  const weightedTags = {};
-
-  if (root.tags) {
-    root.tags
-      .filter((t) => !t.match(StructuredTagsRegExp))
-      .forEach((t) => {
-        const count = weightedTags[t] || 0;
-        weightedTags[t] = count + 1;
-      });
-  }
-  if (root.children) {
-    root.children.forEach((leaf) => {
-      // Add tag count for every child
-      const childrenWeightedTags = getWeightedTags(leaf);
-      Object.keys(childrenWeightedTags)
-        .filter((k) => !k.match(StructuredTagsRegExp))
-        .forEach((k) => {
-          const count = weightedTags[k] || 0;
-          const childCount = childrenWeightedTags[k];
-          weightedTags[k] = count + childCount;
-        });
-    });
-  }
-  return weightedTags;
+// ['foo', 'foo', 'bar'] => { 'foo': 2, 'bar': 1 }
+function weightOptions(options) {
+  return options.reduce((weighted, option) => ({
+    ...weighted,
+    [option]: (weighted[option] || 0) + 1,
+  }), {});
 }
 
-// Get all the tags present in the root node and children, sorted by most used
-function getAllTags(root) {
-  const tags = getWeightedTags(root);
-  return Object.keys(tags).sort((a, b) => tags[a] - tags[b]).reverse();
+function sortOptionsByWeight(root, getOptionsFunc) {
+  const weightedOptions = weightOptions(getOptionsFunc(root));
+  return Object.keys(weightedOptions).sort((a, b) => weightedOptions[b] - weightedOptions[a]);
+}
+
+function getAuthorOptions(node) {
+  return flattenNodes(node)
+    .map((n) => n.author)
+    .filter((n) => n !== '');
+}
+
+function getTagOptions(node) {
+  return flattenNodes(node)
+    .flatMap((n) => (n.tags ? n.tags : []))
+    .filter((t) => t !== '')
+    .filter((t) => !t.match(StructuredTagsRegExp));
+}
+
+function getStructuredTags(node, matchKey) {
+  if (!node.tags) {
+    return [];
+  }
+  const tagValues = node.tags
+    .filter((t) => t.match(StructuredTagsRegExp))
+    .map((t) => t.match(StructuredTagsRegExp))
+    .filter(([, key]) => key === matchKey)
+    .map(([,, value]) => value);
+  return tagValues;
+}
+
+function getStructuredTagOptions(node, matchKey) {
+  return flattenNodes(node)
+    .flatMap((n) => getStructuredTags(n, matchKey));
 }
 
 let storeData;
@@ -64,7 +73,11 @@ const ContentNodeKinds = [
 ];
 
 const MediaFilterName = 'Media Type';
+const AuthorFilterName = 'Author';
 const TagFilterName = 'Common Keywords';
+
+const structuredTagsMetadata = Object.values(StructuredTags)
+  .map((t) => ({ name: t }));
 
 // Filter taxonomy, that can be overriden
 const initialState = {
@@ -78,9 +91,13 @@ const initialState = {
       options: ContentNodeKinds,
     },
     {
+      name: AuthorFilterName,
+    },
+    {
       name: TagFilterName,
       maxTags: 10,
     },
+    ...structuredTagsMetadata,
   ],
 };
 
@@ -123,6 +140,13 @@ export default {
           mediaType.some((m) => recursiveExistsNodes(node, (n) => n.kind === m))
         ));
       }
+      // Filter by author
+      const authors = query[AuthorFilterName];
+      if (authors && authors.length) {
+        filtered = filtered.filter((node) => (
+          authors.some((a) => recursiveExistsNodes(node, (n) => n.author === a))
+        ));
+      }
       // Filter by tag
       const tags = query[TagFilterName];
       if (tags && tags.length) {
@@ -130,22 +154,39 @@ export default {
           tags.some((t) => recursiveExistsNodes(node, (n) => n.tags && n.tags.includes(t)))
         ));
       }
+      // Filter by structured tags
+      Object.values(StructuredTags).forEach((matchKey) => {
+        const options = query[matchKey];
+        if (options && options.length) {
+          filtered = filtered.filter((node) => (
+            options.some((o) => recursiveExistsNodes(node,
+              (n) => getStructuredTags(n, matchKey).includes(o)))
+          ));
+        }
+      });
 
       return filtered;
     },
     possibleOptions: () => (filter, root) => {
+      if (Object.values(StructuredTags).includes(filter.name)) {
+        const getOptionsFunc = _.partial(getStructuredTagOptions, _, filter.name);
+        return sortOptionsByWeight(root, getOptionsFunc);
+      }
       switch (filter.name) {
         case MediaFilterName:
           return filter.options.filter((m) => recursiveExistsNodes(root, (n) => n.kind === m));
+        case AuthorFilterName:
+          return sortOptionsByWeight(root, getAuthorOptions);
         case TagFilterName: {
           const { maxTags } = filter;
-          return getAllTags(root)
+          return sortOptionsByWeight(root, getTagOptions)
             .slice(0, maxTags);
         }
         default:
           return filter.options;
       }
     },
+    getStructuredTags: () => (node, matchKey) => (getStructuredTags(node, matchKey)),
   },
   mutations: {
     setFilterQuery(state, payload) {

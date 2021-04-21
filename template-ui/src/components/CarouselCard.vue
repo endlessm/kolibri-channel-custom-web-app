@@ -18,7 +18,7 @@
               <b-badge
                 pill variant="primary"
                 class="mr-1 mb-1"
-                v-for="tag in node.tags"
+                v-for="tag in topicTags"
                 :key="tag"
               >
                 {{ tag }}
@@ -35,6 +35,7 @@
 import VClamp from 'vue-clamp';
 import { mapGetters } from 'vuex';
 import cardMixin from '@/components/mixins/cardMixin';
+import { StructuredTags } from '@/constants';
 
 export default {
   props: ['node'],
@@ -44,10 +45,14 @@ export default {
   },
   computed: {
     ...mapGetters(['getCardSubtitle']),
+    ...mapGetters({ getStructuredTags: 'filters/getStructuredTags' }),
     backgroundStyle() {
       return {
         backgroundImage: `url("${this.thumbnail}")`,
       };
+    },
+    topicTags() {
+      return this.getStructuredTags(this.node, StructuredTags.TOPIC);
     },
   },
 };

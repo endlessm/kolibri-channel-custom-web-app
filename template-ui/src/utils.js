@@ -20,3 +20,12 @@ export function recursiveExistsNodes(node, fn) {
 
   return false;
 }
+
+// Return the node and its children as a flatten array.
+export function flattenNodes(node) {
+  if (!node.children) {
+    return [node];
+  }
+  const childrenNodes = node.children.flatMap(flattenNodes);
+  return [node, ...childrenNodes];
+}
