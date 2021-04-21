@@ -72,9 +72,9 @@ const ContentNodeKinds = [
   'slideshow',
 ];
 
-const MediaFilterName = 'Media Type';
-const AuthorFilterName = 'Author';
-const TagFilterName = 'Common Keywords';
+const MediaFilterName = 'media type';
+const AuthorFilterName = 'author';
+const TagFilterName = 'common keywords';
 
 const structuredTagsMetadata = Object.values(StructuredTags)
   .map((t) => ({ name: t }));
