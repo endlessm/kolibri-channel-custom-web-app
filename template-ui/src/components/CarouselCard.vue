@@ -18,7 +18,7 @@
               <b-badge
                 pill variant="primary"
                 class="mr-1 mb-1"
-                v-for="tag in topicTags"
+                v-for="tag in subjectTags"
                 :key="tag"
               >
                 {{ tag }}
@@ -51,8 +51,8 @@ export default {
         backgroundImage: `url("${this.thumbnail}")`,
       };
     },
-    topicTags() {
-      return this.getStructuredTags(this.node, StructuredTags.TOPIC);
+    subjectTags() {
+      return this.getStructuredTags(this.node, StructuredTags.SUBJECT);
     },
   },
 };
