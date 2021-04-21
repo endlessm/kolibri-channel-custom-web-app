@@ -6,4 +6,6 @@ export const MediaQuality = {
 
 export const StructuredTags = {
   TOPIC: 'topic',
+  LEVEL: 'level',
+  TYPE: 'type',
 };
