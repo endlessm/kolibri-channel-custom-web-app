@@ -86,18 +86,18 @@ const initialState = {
   // value -> array with all the selected options
   query: {},
   metadata: [
+    ...structuredTagsMetadata,
+    {
+      name: AuthorFilterName,
+    },
     {
       name: MediaFilterName,
       options: ContentNodeKinds,
     },
     {
-      name: AuthorFilterName,
-    },
-    {
       name: TagFilterName,
       maxTags: 10,
     },
-    ...structuredTagsMetadata,
   ],
 };
 
