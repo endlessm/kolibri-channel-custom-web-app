@@ -3,6 +3,13 @@
     :style="{ backgroundImage: backgroundImageURL }"
   >
   <FilterContent />
+
+  <div v-if="isFilterResultEmpty">
+    <EmptyResultsMessage />
+  </div>
+
+  <template v-else>
+
   <div v-if="isInlineLevel">
   <CardGrid
     v-for="subsection in filteredSections(section)"
@@ -23,6 +30,9 @@
     variant="paginated"
   />
   </div>
+
+  </template>
+
   </div>
 </template>
 
@@ -41,6 +51,12 @@ export default {
     }),
     backgroundImageURL() {
       return this.getAssetURL('sectionBackgroundImage');
+    },
+    isFilterResultEmpty() {
+      if (!this.section) {
+        return true;
+      }
+      return this.filteredSections(this.section).length;
     },
   },
   methods: {

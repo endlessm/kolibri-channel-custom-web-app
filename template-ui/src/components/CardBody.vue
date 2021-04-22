@@ -5,7 +5,7 @@
     <b-badge
       pill variant="primary"
       class="mr-1 mb-1"
-      v-for="tag in topicTags"
+      v-for="tag in subjectTags"
       :key="tag"
     >
       {{ tag }}
@@ -22,8 +22,8 @@ export default {
   computed: {
     ...mapGetters(['getCardSubtitle']),
     ...mapGetters({ getStructuredTags: 'filters/getStructuredTags' }),
-    topicTags() {
-      return this.getStructuredTags(this.node, StructuredTags.TOPIC);
+    subjectTags() {
+      return this.getStructuredTags(this.node, StructuredTags.SUBJECT);
     },
   },
 };
