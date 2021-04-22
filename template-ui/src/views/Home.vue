@@ -53,8 +53,8 @@ export default {
       if (!this.section || !this.section.children) {
         return null;
       }
-      const childs = this.section.children.filter((n) => n.kind !== 'topic') || null;
-      return this.filterNodes(childs);
+      const children = this.section.children.filter((n) => n.kind !== 'topic') || null;
+      return this.filterNodes(children);
     },
     filteredSections() {
       return this.filterNodes(this.mainSections);
