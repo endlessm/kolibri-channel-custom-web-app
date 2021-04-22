@@ -56,7 +56,7 @@ export default {
       if (!this.section) {
         return true;
       }
-      return this.filteredSections(this.section).length;
+      return this.filteredSections(this.section).length === 0;
     },
   },
   methods: {
