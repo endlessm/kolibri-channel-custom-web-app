@@ -1,8 +1,9 @@
 <template>
   <div id="app" class="d-flex flex-column h-100">
-    <Header />
-    <MainSections />
-    <router-view />
+    <router-view>
+      <Header />
+      <MainSections />
+    </router-view>
     <Footer />
   </div>
 </template>

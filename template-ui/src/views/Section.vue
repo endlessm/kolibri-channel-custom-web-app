@@ -2,6 +2,7 @@
   <div
     :style="{ backgroundImage: backgroundImageURL }"
   >
+  <slot />
   <FilterContent />
 
   <div v-if="isFilterResultEmpty">
