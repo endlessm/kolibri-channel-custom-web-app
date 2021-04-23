@@ -1,7 +1,7 @@
 <template>
   <b-link
     v-on:click="isLeaf? goToContent(node) : false"
-    :to="isLeaf? '' : getTopicUrl(node)"
+    :to="isLeaf? '' : getNodeUrl(node)"
     class="text-reset text-decoration-none"
     v-b-hover="handleHover"
   >
@@ -22,7 +22,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(['getTopicUrl']),
+    ...mapGetters(['getNodeUrl']),
     isLeaf() {
       return this.node.kind !== 'topic';
     },
