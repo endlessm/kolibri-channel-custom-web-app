@@ -24,6 +24,21 @@ function getLeaves(node) {
     .reduce((accumulator, currentValue) => accumulator.concat(currentValue), []);
 }
 
+function findNodeById(node, nodeId) {
+  if (node.id === nodeId) {
+    return node;
+  }
+  if (!node.children) {
+    return null;
+  }
+  let result = null;
+  node.children.some((n) => {
+    result = findNodeById(n, nodeId);
+    return result;
+  });
+  return result;
+}
+
 const defaultKindLabel = 'items';
 
 // See https://github.com/learningequality/le-utils/blob/master/le_utils/constants/content_kinds.py
@@ -38,8 +53,10 @@ const initialState = {
   // Channel and nodes, as they come from kolibri:
   channel: {},
   nodes: [],
+  tree: {},
 
   // Navigation state:
+  content: {},
   section: {},
   mainSection: {},
 
@@ -72,24 +89,38 @@ const store = new Vuex.Store({
     setChannelInformation(state, payload) {
       state.channel = payload.channel;
       state.nodes = payload.nodes;
+      state.tree = getNodesTree(payload.nodes);
     },
-    setSection(state, payload) {
-      state.section = payload.section;
-      if ('mainSection' in payload) {
-        state.mainSection = payload.mainSection;
+    setContentNavigation(state, payload) {
+      state.content = state.nodes.find((n) => n.id === payload.contentId);
+      state.section = state.content.ancestors[state.content.ancestors.length - 1];
+      [, state.mainSection] = state.content.ancestors;
+    },
+    setSectionNavigation(state, payload) {
+      const section = findNodeById(state.tree[0], payload.topicId);
+      state.content = {};
+      state.section = section;
+      if (section.ancestors.length === 1) {
+        state.mainSection = section;
+      } else {
+        [, state.mainSection] = section.ancestors;
       }
+    },
+    setHomeNavigation(state) {
+      state.content = {};
+      [state.section] = state.tree;
+      state.mainSection = {};
     },
   },
   getters: {
-    tree: (state) => getNodesTree(state.nodes),
-    mainSections: (_state, getters) => {
-      if (getters.tree[0]) {
-        return getters.tree[0].children.filter((n) => n.kind === 'topic');
+    mainSections: (state) => {
+      if (state.tree[0]) {
+        return state.tree[0].children.filter((n) => n.kind === 'topic');
       }
       return [];
     },
-    headerDescription: (state, getters) => {
-      if (state.section === getters.tree[0]) {
+    headerDescription: (state) => {
+      if (state.section === state.tree[0]) {
         return state.channel.description;
       }
       return state.section.description;
