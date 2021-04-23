@@ -39,12 +39,11 @@
 
 <script>
 import { mapState, mapGetters } from 'vuex';
-import { goToContent } from 'kolibri-api';
 
 export default {
   name: 'Section',
   computed: {
-    ...mapState(['section', 'mainSection']),
+    ...mapState(['section']),
     ...mapGetters({
       isInlineLevel: 'isInlineLevel',
       getAssetURL: 'getAssetURL',
@@ -61,7 +60,6 @@ export default {
     },
   },
   methods: {
-    goToContent,
     filteredSections(section) {
       return this.filterNodes(section.children);
     },
