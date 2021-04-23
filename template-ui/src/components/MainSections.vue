@@ -8,7 +8,7 @@
       >
       <b-button pill variant="primary"
         :to="getNodeUrl(section)"
-        :active="section === mainSection"
+        :active="section.id === mainSection.id"
       >
         {{ section.title }}
       </b-button>
