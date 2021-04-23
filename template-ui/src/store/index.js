@@ -41,7 +41,7 @@ const initialState = {
 
   // Navigation state:
   section: {},
-  parentSection: {},
+  mainSection: {},
 
   // Asset filenames that can be overriden:
   assetFilenames: {
@@ -75,8 +75,8 @@ const store = new Vuex.Store({
     },
     setSection(state, payload) {
       state.section = payload.section;
-      if ('parentSection' in payload) {
-        state.parentSection = payload.parentSection;
+      if ('mainSection' in payload) {
+        state.mainSection = payload.mainSection;
       }
     },
   },

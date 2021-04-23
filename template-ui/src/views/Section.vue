@@ -43,7 +43,7 @@ import { goToContent } from 'kolibri-api';
 export default {
   name: 'Section',
   computed: {
-    ...mapState(['section', 'parentSection']),
+    ...mapState(['section', 'mainSection']),
     ...mapGetters({
       isInlineLevel: 'isInlineLevel',
       getAssetURL: 'getAssetURL',

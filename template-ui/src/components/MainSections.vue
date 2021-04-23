@@ -8,7 +8,7 @@
       >
       <b-button pill variant="primary"
         :to="getNodeUrl(section)"
-        :active="section === parentSection"
+        :active="section === mainSection"
       >
         {{ section.title }}
       </b-button>
@@ -22,7 +22,7 @@ import { mapState, mapGetters } from 'vuex';
 
 export default {
   computed: {
-    ...mapState(['section', 'parentSection']),
+    ...mapState(['section', 'mainSection']),
     ...mapGetters(['mainSections', 'getNodeUrl']),
   },
 };

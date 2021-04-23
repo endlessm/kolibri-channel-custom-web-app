@@ -23,7 +23,7 @@ export default {
   watch: {
     $route(to) {
       if (to.name !== 'Section') {
-        this.$store.commit('setSection', { section: this.tree[0], parentSection: {} });
+        this.$store.commit('setSection', { section: this.tree[0], mainSection: {} });
         return;
       }
 
@@ -58,10 +58,10 @@ export default {
         this.$store.commit('setSection',
           {
             section: path[path.length - 1],
-            parentSection: path[1],
+            mainSection: path[1],
           });
       } else {
-        this.$store.commit('setSection', { section: this.tree[0], parentSection: {} });
+        this.$store.commit('setSection', { section: this.tree[0], mainSection: {} });
       }
     },
   },
@@ -71,7 +71,7 @@ export default {
   methods: {
     gotChannelInformation(data) {
       this.$store.commit('setChannelInformation', data);
-      this.$store.commit('setSection', { section: this.tree[0], parentSection: {} });
+      this.$store.commit('setSection', { section: this.tree[0], mainSection: {} });
       const uri = window.location.search.substring(1);
       const params = new URLSearchParams(uri);
       const topicId = params.get('topicId');
