@@ -94,7 +94,15 @@ const store = new Vuex.Store({
       }
       return state.section.description;
     },
-    getNodeUrl: () => (node) => `/${node.id}`,
+    getNodeUrl: (state) => (node) => {
+      if (node.id === state.channel.id) {
+        return '/';
+      }
+      if (node.kind === 'topic') {
+        return `/t/${node.id}`;
+      }
+      return `/c/${node.id}`;
+    },
     getTopicCardSubtitle: () => (node) => {
       const leaves = getLeaves(node);
       const leavesKinds = leaves.map((leaf) => leaf.kind);

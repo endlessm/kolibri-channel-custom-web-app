@@ -2,6 +2,7 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 import Home from '@/views/Home.vue';
 import Section from '@/views/Section.vue';
+import Content from '@/views/Content.vue';
 
 Vue.use(VueRouter);
 
@@ -12,9 +13,14 @@ const routes = [
     component: Home,
   },
   {
-    path: '/:topicId',
+    path: '/t/:topicId',
     name: 'Section',
     component: Section,
+  },
+  {
+    path: '/c/:contentId',
+    name: 'Content',
+    component: Content,
   },
 ];
 
