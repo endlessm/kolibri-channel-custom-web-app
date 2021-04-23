@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+import _ from 'underscore';
 import { getNodesTree } from '@/utils';
 import dynamicRequireAsset from '@/dynamicRequireAsset';
 import { MediaQuality } from '@/constants';
@@ -161,6 +162,23 @@ const store = new Vuex.Store({
     },
     isInlineLevel: (state) => state.section.children.every((n) => n.kind === 'topic'),
     getLevel: () => (node) => node.ancestors.length,
+    getParentNode: (state) => (node) => {
+      if (node.ancestors.length) {
+        const parentId = node.ancestors[node.ancestors.length - 1].id;
+        return findNodeById(state.tree[0], parentId);
+      }
+      return null;
+    },
+    getParentNodeUrl: (state, getters) => (node) => {
+      if (_.isEmpty(node)) {
+        return '';
+      }
+      const parentNode = getters.getParentNode(node);
+      if (parentNode) {
+        return getters.getNodeUrl(parentNode);
+      }
+      return '';
+    },
     isHighQualityMedia: (state) => state.mediaQuality === MediaQuality.HIGH,
   },
   modules: {
