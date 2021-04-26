@@ -2,7 +2,7 @@
   <div
     :style="{ backgroundImage: backgroundImageURL }"
   >
-
+    <slot />
     <Carousel />
     <FilterContent />
 

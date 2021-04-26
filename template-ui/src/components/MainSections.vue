@@ -7,8 +7,8 @@
         :key="'menu-' + section.id"
       >
       <b-button pill variant="primary"
-        :to="getTopicUrl(section)"
-        :active="section === parentSection"
+        :to="getNodeUrl(section)"
+        :active="section.id === mainSection.id"
       >
         {{ section.title }}
       </b-button>
@@ -22,8 +22,8 @@ import { mapState, mapGetters } from 'vuex';
 
 export default {
   computed: {
-    ...mapState(['section', 'parentSection']),
-    ...mapGetters(['mainSections', 'getTopicUrl']),
+    ...mapState(['section', 'mainSection']),
+    ...mapGetters(['mainSections', 'getNodeUrl']),
   },
 };
 </script>

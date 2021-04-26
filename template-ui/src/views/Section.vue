@@ -2,6 +2,7 @@
   <div
     :style="{ backgroundImage: backgroundImageURL }"
   >
+  <slot />
   <FilterContent />
 
   <div v-if="isFilterResultEmpty">
@@ -38,12 +39,11 @@
 
 <script>
 import { mapState, mapGetters } from 'vuex';
-import { goToContent } from 'kolibri-api';
 
 export default {
   name: 'Section',
   computed: {
-    ...mapState(['section', 'parentSection']),
+    ...mapState(['section']),
     ...mapGetters({
       isInlineLevel: 'isInlineLevel',
       getAssetURL: 'getAssetURL',
@@ -60,7 +60,6 @@ export default {
     },
   },
   methods: {
-    goToContent,
     filteredSections(section) {
       return this.filterNodes(section.children);
     },

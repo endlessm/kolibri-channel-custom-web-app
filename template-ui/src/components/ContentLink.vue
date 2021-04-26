@@ -1,7 +1,6 @@
 <template>
   <b-link
-    v-on:click="isLeaf? goToContent(node) : false"
-    :to="isLeaf? '' : getTopicUrl(node)"
+    :to="getNodeUrl(node)"
     class="text-reset text-decoration-none"
     v-b-hover="handleHover"
   >
@@ -10,7 +9,6 @@
 </template>
 
 <script>
-import { goToContent } from 'kolibri-api';
 import { mapGetters } from 'vuex';
 
 export default {
@@ -22,13 +20,9 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(['getTopicUrl']),
-    isLeaf() {
-      return this.node.kind !== 'topic';
-    },
+    ...mapGetters(['getNodeUrl']),
   },
   methods: {
-    goToContent,
     handleHover(hovered) {
       this.$emit('isHovered', hovered);
     },

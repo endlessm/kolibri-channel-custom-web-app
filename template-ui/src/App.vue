@@ -1,16 +1,16 @@
 <template>
   <div id="app" class="d-flex flex-column h-100">
-    <Header />
-    <MainSections />
-    <router-view />
+    <router-view>
+      <Header />
+      <MainSections />
+    </router-view>
     <Footer />
   </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
 import { askChannelInformation } from 'kolibri-api';
-import _ from 'underscore';
+import { mapMutations } from 'vuex';
 
 let mockData;
 if (process.env.VUE_APP_USE_MOCK_DATA === 'true') {
@@ -22,56 +22,29 @@ export default {
   name: 'App',
   watch: {
     $route(to) {
-      if (to.name !== 'Section') {
-        this.$store.commit('setSection', { section: this.tree[0], parentSection: {} });
-        return;
-      }
-
-      let path;
-      function hasPath(node, matchId) {
-        path.push(node);
-
-        // match!
-        if (node.id === matchId) {
-          return true;
-        }
-
-        // is a leaf?
-        if (!node.children) {
-          path.pop();
-          return false;
-        }
-
-        // what about children? do recursion:
-        const f = _.partial(hasPath, _, matchId);
-        if (node.children.some(f)) {
-          return true;
-        }
-
-        // not found in children:
-        path.pop();
-        return false;
-      }
-
-      path = [];
-      if (hasPath(this.tree[0], to.params.topicId)) {
-        this.$store.commit('setSection',
-          {
-            section: path[path.length - 1],
-            parentSection: path[1],
+      // Watch the router "to" parameter, and set the navigation state accordingly.
+      switch (to.name) {
+        case 'Content':
+          this.setContentNavigation({
+            contentId: this.$route.params.contentId,
           });
-      } else {
-        this.$store.commit('setSection', { section: this.tree[0], parentSection: {} });
+          return;
+        case 'Section':
+          this.setSectionNavigation({
+            topicId: this.$route.params.topicId,
+          });
+          return;
+        case 'Home':
+        default:
+          this.setHomeNavigation();
       }
     },
   },
-  computed: {
-    ...mapGetters(['tree']),
-  },
   methods: {
+    ...mapMutations(['setContentNavigation', 'setSectionNavigation', 'setHomeNavigation']),
     gotChannelInformation(data) {
       this.$store.commit('setChannelInformation', data);
-      this.$store.commit('setSection', { section: this.tree[0], parentSection: {} });
+      this.$store.commit('setHomeNavigation');
       const uri = window.location.search.substring(1);
       const params = new URLSearchParams(uri);
       const topicId = params.get('topicId');

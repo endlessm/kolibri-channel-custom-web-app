@@ -2,50 +2,55 @@
   <b-jumbotron fluid
     :style="{ backgroundImage: headerImageURL }"
   >
-    <template v-slot:header>
+    <template v-slot:default>
       <b-button
-        :to="getParentNodeUrl(section)"
+        :to="getParentNodeUrl(content)"
         variant="primary" class="rounded-pill"
         :disabled="isBackButtonDisabled"
       >
         <b-icon-arrow-left aria-label="Back" />
       </b-button>
-      <div class="d-flex justify-content-between align-items-start">
-      <div>{{ section.title }}</div>
-      <b-img
-        class="rounded-lg"
-        :width="headerLogoWidth"
-        v-if="displayLogoInHeader && channel.thumbnail"
-        :src="channel.thumbnail"
-      />
-      </div>
-    </template>
-    <template v-slot:lead>
-      <b-row>
+      <b-row class="mt-3">
         <b-col md="6" sm="12">
-          <div>{{ headerDescription }}</div>
+          <h3>{{ content.title }}</h3>
+          <p class="mb-2">{{ getCardSubtitle(content) }}</p>
+          <div class="mb-2" v-html="content.description" />
+          <b-badge
+            pill variant="primary"
+            class="mr-1 mb-1"
+            v-for="tag in subjectTags"
+            :key="tag"
+          >
+            {{ tag }}
+          </b-badge>
+        </b-col>
+        <b-col md="6" sm="12">
+          <b-link
+            v-on:click="goToContent(content)"
+          >
+            <ContentImage :node="content" />
+          </b-link>
         </b-col>
       </b-row>
     </template>
-    <HeaderSearchBar />
   </b-jumbotron>
 </template>
 
 <script>
 import { mapState, mapGetters } from 'vuex';
+import { goToContent } from 'kolibri-api';
 import dynamicRequireAsset from '@/dynamicRequireAsset';
-import { headerLogoWidth } from '@/styles.scss';
 import { getSlug } from '@/utils';
+import { StructuredTags } from '@/constants';
 
 export default {
-  data() {
-    return {
-      headerLogoWidth,
-    };
-  },
   computed: {
-    ...mapState(['channel', 'section', 'displayLogoInHeader']),
-    ...mapGetters(['headerDescription', 'getAssetURL', 'getParentNodeUrl']),
+    ...mapState(['content', 'section']),
+    ...mapGetters(['headerDescription', 'getAssetURL', 'getParentNodeUrl', 'getCardSubtitle']),
+    ...mapGetters({ getStructuredTags: 'filters/getStructuredTags' }),
+    subjectTags() {
+      return this.getStructuredTags(this.content, StructuredTags.SUBJECT);
+    },
     sectionImageURL() {
       if (!this.section || !this.section.title) {
         return null;
@@ -62,11 +67,12 @@ export default {
       return this.sectionImageURL || this.getAssetURL('headerImage');
     },
     isBackButtonDisabled() {
-      return this.section.parent === null;
+      return this.content.parent === null;
     },
   },
   methods: {
     getSlug,
+    goToContent,
   },
 };
 </script>

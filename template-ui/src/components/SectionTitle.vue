@@ -1,7 +1,7 @@
 <template>
 <b-container>
   <b-link
-    :to="getTopicUrl(section)"
+    :to="getNodeUrl(section)"
     class="text-reset text-decoration-none"
   >
     <h3>
@@ -20,7 +20,7 @@ export default {
     section: Object,
   },
   computed: {
-    ...mapGetters(['getTopicUrl']),
+    ...mapGetters(['getNodeUrl']),
   },
 };
 </script>
