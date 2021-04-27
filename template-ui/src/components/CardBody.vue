@@ -5,7 +5,14 @@
       <span v-if="typeTag && gradeOrLevelTag"> • </span>
       <span v-if="gradeOrLevelTag">{{ gradeOrLevelTag }}</span>
     </p>
-    <p class="mb-0 font-weight-bold">{{ node.title }}</p>
+    <h5 class="mb-1">
+      <v-clamp
+        autoresize
+        :max-lines="3"
+      >
+        {{ node.title }}
+      </v-clamp>
+    </h5>
     <p class="mb-0">{{ getCardSubtitle(node) }}</p>
     <b-badge
       pill variant="primary"
@@ -19,11 +26,15 @@
 </template>
 
 <script>
+import VClamp from 'vue-clamp';
 import { mapGetters } from 'vuex';
 import { StructuredTags } from '@/constants';
 
 export default {
   props: ['node'],
+  components: {
+    VClamp,
+  },
   computed: {
     ...mapGetters(['getCardSubtitle']),
     ...mapGetters({
