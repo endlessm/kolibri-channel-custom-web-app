@@ -13,7 +13,7 @@
         {{ node.title }}
       </v-clamp>
     </h5>
-    <p class="mb-0">{{ getCardSubtitle(node) }}</p>
+    <p class="text-muted mb-1">{{ getCardSubtitle(node) }}</p>
     <b-badge
       pill variant="primary"
       class="mr-1 mb-1"
