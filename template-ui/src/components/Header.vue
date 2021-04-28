@@ -6,7 +6,7 @@
       <b-button
         :to="getParentNodeUrl(section)"
         variant="primary" class="rounded-pill"
-        :disabled="isBackButtonDisabled"
+        v-if="!isBackButtonDisabled"
       >
         <b-icon-arrow-left aria-label="Back" />
       </b-button>
