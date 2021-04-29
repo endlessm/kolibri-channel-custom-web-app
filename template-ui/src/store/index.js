@@ -1,6 +1,5 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import _ from 'underscore';
 import { getNodesTree } from '@/utils';
 import dynamicRequireAsset from '@/dynamicRequireAsset';
 import { MediaQuality } from '@/constants';
@@ -168,16 +167,6 @@ const store = new Vuex.Store({
         return findNodeById(state.tree[0], parentId);
       }
       return null;
-    },
-    getParentNodeUrl: (state, getters) => (node) => {
-      if (_.isEmpty(node)) {
-        return '';
-      }
-      const parentNode = getters.getParentNode(node);
-      if (parentNode) {
-        return getters.getNodeUrl(parentNode);
-      }
-      return '';
     },
     isHighQualityMedia: (state) => state.mediaQuality === MediaQuality.HIGH,
   },
