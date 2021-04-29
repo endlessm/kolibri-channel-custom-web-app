@@ -3,13 +3,7 @@
     :style="{ backgroundImage: headerImageURL }"
   >
     <template v-slot:default>
-      <b-button
-        :to="getParentNodeUrl(content)"
-        variant="primary" class="rounded-pill"
-        :disabled="isBackButtonDisabled"
-      >
-        <b-icon-arrow-left aria-label="Back" />
-      </b-button>
+      <Breadcrumb :node="content" />
       <b-row class="mt-3">
         <b-col md="6" sm="12">
           <h3>{{ content.title }}</h3>
@@ -46,7 +40,7 @@ import { StructuredTags } from '@/constants';
 export default {
   computed: {
     ...mapState(['content', 'section']),
-    ...mapGetters(['headerDescription', 'getAssetURL', 'getParentNodeUrl', 'getCardSubtitle']),
+    ...mapGetters(['headerDescription', 'getAssetURL', 'getCardSubtitle']),
     ...mapGetters({ getStructuredTags: 'filters/getStructuredTags' }),
     subjectTags() {
       return this.getStructuredTags(this.content, StructuredTags.SUBJECT);
@@ -65,9 +59,6 @@ export default {
     },
     headerImageURL() {
       return this.sectionImageURL || this.getAssetURL('headerImage');
-    },
-    isBackButtonDisabled() {
-      return this.content.parent === null;
     },
   },
   methods: {
