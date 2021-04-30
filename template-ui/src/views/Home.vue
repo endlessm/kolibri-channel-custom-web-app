@@ -3,6 +3,7 @@
     :style="{ backgroundImage: backgroundImageURL }"
   >
     <slot />
+    <MainSections />
     <Carousel />
     <FilterContent />
 
