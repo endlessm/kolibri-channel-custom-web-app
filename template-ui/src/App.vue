@@ -13,8 +13,9 @@ import { mapMutations } from 'vuex';
 
 let mockData;
 if (process.env.VUE_APP_USE_MOCK_DATA === 'true') {
-  // eslint-disable-next-line global-require
-  mockData = require('@/nodes.json');
+  const mockDataFilename = 'nodes';
+  // eslint-disable-next-line global-require, import/no-dynamic-require
+  mockData = require(`@/${mockDataFilename}.json`);
 }
 
 export default {
