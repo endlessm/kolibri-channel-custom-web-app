@@ -187,6 +187,13 @@ export default {
       }
     },
     getStructuredTags: () => (node, matchKey) => (getStructuredTags(node, matchKey)),
+    getFirstStructuredTag: (_state, getters) => (node, matchKey) => {
+      const tags = getters.getStructuredTags(node, matchKey);
+      if (!tags.length) {
+        return null;
+      }
+      return tags[0];
+    },
   },
   mutations: {
     setFilterQuery(state, payload) {
