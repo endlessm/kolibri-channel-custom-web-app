@@ -74,12 +74,28 @@ flake8 scripts/
 
 ### Create mock nodes
 
-There is a script to create a randomized `nodes.json` file, for
-development:
+Ideally you should be developing this app live with real content coming
+from Kolibri. See [the Explore plugin README](https://github.com/endlessm/kolibri-explore-plugin#kolibri-explore-plugin) for how to do that.
+
+But there might be cases where you want to develop by testing a
+specific node structure, or without Kolibri running. For such cases
+there is a way to mock the content adding a `nodes.json` file to the
+`src/` folder.
+
+There is a script to create a randomized `nodes.json` file:
 
 ```
 ./scripts/create_mock_nodes.py > template-ui/src/nodes.json
 ```
+
+To tell the app to use the mock file, you should pass an environment
+variable:
+
+```
+VUE_APP_USE_MOCK_DATA=true yarn serve
+```
+
+And you can persist that setting in a `.env.development.local` file.
 
 ### Upgrading the vue CLI
 ```
