@@ -2,16 +2,10 @@
   <b-jumbotron fluid
     :style="{ backgroundImage: headerImageURL }"
   >
-    <template v-slot:header>
-      <b-button
-        :to="getParentNodeUrl(section)"
-        variant="primary" class="rounded-pill"
-        v-if="!isBackButtonDisabled"
-      >
-        <b-icon-arrow-left aria-label="Back" />
-      </b-button>
-      <div class="d-flex justify-content-between align-items-start">
-      <div>{{ section.title }}</div>
+    <template v-slot:default>
+      <Breadcrumb :node="section" />
+      <div class="d-flex justify-content-between align-items-start mt-3">
+      <h1>{{ section.title }}</h1>
       <b-img
         class="rounded-lg"
         :width="headerLogoWidth"
@@ -19,15 +13,13 @@
         :src="channel.thumbnail"
       />
       </div>
-    </template>
-    <template v-slot:lead>
       <b-row>
         <b-col md="6" sm="12">
-          <div>{{ headerDescription }}</div>
+          <div class="lead mb-2">{{ headerDescription }}</div>
         </b-col>
       </b-row>
+      <HeaderSearchBar />
     </template>
-    <HeaderSearchBar />
   </b-jumbotron>
 </template>
 
@@ -45,7 +37,7 @@ export default {
   },
   computed: {
     ...mapState(['channel', 'section', 'displayLogoInHeader']),
-    ...mapGetters(['headerDescription', 'getAssetURL', 'getParentNodeUrl']),
+    ...mapGetters(['headerDescription', 'getAssetURL']),
     sectionImageURL() {
       if (!this.section || !this.section.title) {
         return null;
@@ -60,9 +52,6 @@ export default {
     },
     headerImageURL() {
       return this.sectionImageURL || this.getAssetURL('headerImage');
-    },
-    isBackButtonDisabled() {
-      return this.section.parent === null;
     },
   },
   methods: {
