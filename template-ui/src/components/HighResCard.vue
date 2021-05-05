@@ -7,6 +7,7 @@
     }"
     overlay
   >
+    <CardMediaType :node="node" />
     <ContentLink :node="node" @isHovered="(hovered) => isHovered = hovered">
       <b-card-text class="card-img-overlay">
         <div class="body-wrapper">
