@@ -4,7 +4,9 @@
       <template #img>
         <b-card>
           <template>
-            <div class="img" :style="backgroundStyle"></div>
+            <div class="img" :style="backgroundStyle">
+              <CardMediaType :node="node" />
+            </div>
             <b-card-text>
               <p class="text-uppercase text-info mb-1">
                 <span v-if="typeTag">{{ typeTag }}</span>

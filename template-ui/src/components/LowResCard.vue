@@ -8,6 +8,7 @@
         :src="thumbnail"
         :alt="node.title"
       />
+      <CardMediaType :node="node" />
       <b-card-text>
         <CardBody :node="node" />
       </b-card-text>
