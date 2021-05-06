@@ -11,3 +11,5 @@ export const StructuredTags = {
   GRADE: 'grade',
   TYPE: 'type',
 };
+
+export const SEARCH_MAX_RESULTS = 64;

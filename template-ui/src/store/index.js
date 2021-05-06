@@ -2,7 +2,7 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import { getNodesTree } from '@/utils';
 import dynamicRequireAsset from '@/dynamicRequireAsset';
-import { MediaQuality } from '@/constants';
+import { MediaQuality, SEARCH_MAX_RESULTS } from '@/constants';
 import filters from './modules/filters';
 
 let storeData;
@@ -169,6 +169,41 @@ const store = new Vuex.Store({
       return null;
     },
     isHighQualityMedia: (state) => state.mediaQuality === MediaQuality.HIGH,
+    searchNodes: (state) => (query) => {
+      // Trim whitespace and ignore case:
+      const regexp = new RegExp(query.trim(), 'i');
+      return state.nodes
+        // Discard the channel node:
+        .filter((node) => node.id !== state.channel.id)
+        // Score the nodes according to how much their metadata matches the query:
+        .map((node) => {
+          let score = 0;
+          if (regexp.test(node.title)) {
+            score += 10;
+          }
+          if (regexp.test(node.author)) {
+            score += 5;
+          }
+          if (regexp.test(node.description)) {
+            score += 1;
+          }
+          return [node, score];
+        })
+        // Remove non matching nodes:
+        .filter(([, score]) => score !== 0)
+        // Sort by score:
+        .sort(([, scoreA], [, scoreB]) => scoreB - scoreA)
+        // At most N results:
+        .slice(0, SEARCH_MAX_RESULTS)
+        .map(([node]) => node)
+        // Map topics to tree nodes, otherwise they won't have children:
+        .map((node) => {
+          if (node.kind !== 'topic') {
+            return node;
+          }
+          return findNodeById(state.tree[0], node.id);
+        });
+    },
   },
   modules: {
     filters,
