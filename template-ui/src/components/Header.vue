@@ -1,6 +1,7 @@
 <template>
   <b-jumbotron fluid
     :style="{ backgroundImage: headerImageURL }"
+    class="mb-0"
   >
     <template v-slot:default>
       <Breadcrumb :node="section" />
