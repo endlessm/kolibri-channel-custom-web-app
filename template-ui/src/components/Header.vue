@@ -19,7 +19,6 @@
           <div class="lead mb-2">{{ headerDescription }}</div>
         </b-col>
       </b-row>
-      <HeaderSearchBar />
     </template>
   </b-jumbotron>
 </template>
