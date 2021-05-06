@@ -35,6 +35,7 @@ export default {
           });
           return;
         case 'Home':
+        case 'Search':
         default:
           this.setHomeNavigation();
       }
