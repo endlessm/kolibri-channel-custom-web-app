@@ -1,6 +1,7 @@
 <template>
   <component
     :is="cardVariant"
+    :minHeight="minHeight"
     :node="node"
   />
 </template>
@@ -10,7 +11,7 @@ import { mapState } from 'vuex';
 import { MediaQuality } from '@/constants';
 
 export default {
-  props: ['node'],
+  props: ['node', 'minHeight'],
   computed: {
     ...mapState(['mediaQuality']),
     cardVariant() {

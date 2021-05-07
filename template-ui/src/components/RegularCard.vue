@@ -5,6 +5,7 @@
         shadow: !isHovered,
         'shadow-lg': isHovered,
       }"
+      :style="cardStyles"
     >
   <ContentLink :node="node" @isHovered="(hovered) => isHovered = hovered">
       <b-card-img
@@ -23,7 +24,7 @@
 import cardMixin from '@/components/mixins/cardMixin';
 
 export default {
-  props: ['node'],
+  props: ['node', 'minHeight'],
   mixins: [cardMixin],
   data() {
     return {

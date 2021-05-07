@@ -6,8 +6,11 @@ import router from '@/router';
 import store from '@/store';
 import dynamicLoadComponents from '@/dynamicLoadComponents';
 
+import resize from 'vue-element-resize-detector';
+
 Vue.use(BootstrapVue);
 Vue.use(IconsPlugin);
+Vue.use(resize);
 
 Vue.config.productionTip = false;
 

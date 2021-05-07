@@ -58,7 +58,11 @@ export default {
       return this.filterNodes(children);
     },
     filteredSections() {
-      return this.filterNodes(this.mainSections);
+      const f = this.filterNodes(this.mainSections);
+      if (f && f.length) {
+        return [f[0]];
+      }
+      return f;
     },
     isFilterResultEmpty() {
       const isContentNodeEmpty = this.contentNodes === null || this.contentNodes.length === 0;

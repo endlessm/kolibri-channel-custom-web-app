@@ -6,6 +6,7 @@
       shadow: isHovered,
     }"
     overlay
+    :style="cardStyles"
   >
     <CardMediaType :node="node" />
     <ContentLink :node="node" @isHovered="(hovered) => isHovered = hovered">
@@ -22,7 +23,7 @@
 import cardMixin from '@/components/mixins/cardMixin';
 
 export default {
-  props: ['node'],
+  props: ['node', 'minHeight'],
   mixins: [cardMixin],
   data() {
     return {

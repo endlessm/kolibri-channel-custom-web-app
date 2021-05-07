@@ -2,6 +2,7 @@
   <b-card
     border-variant="light"
     class="my-2"
+    :style="cardStyles"
   >
     <ContentLink :node="node">
       <b-card-img
@@ -20,7 +21,7 @@
 import cardMixin from '@/components/mixins/cardMixin';
 
 export default {
-  props: ['node'],
+  props: ['node', 'minHeight'],
   mixins: [cardMixin],
 };
 </script>

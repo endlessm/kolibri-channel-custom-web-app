@@ -30,6 +30,7 @@
     >
       <b-carousel-slide
         v-for="(slideNodes, index) in slides"
+        ref="slides"
         :key="'slide-' + index"
       >
         <template #img>
@@ -39,6 +40,7 @@
             <Card
               v-for="node in slideNodes"
               :key="node.id"
+              :minHeight="maxCardHeight"
               :node="node"
             />
             <!-- eslint-disable vue/no-use-v-if-with-v-for -->
@@ -71,6 +73,7 @@ export default {
   data() {
     return {
       slide: 0,
+      maxCardHeight: 0,
     };
   },
   computed: {
@@ -102,6 +105,37 @@ export default {
     next() {
       this.$refs.carousel.next();
     },
+    calculateMaxHeight(cards) {
+      const heights = cards.map((c) => c.clientHeight);
+      console.log(heights);
+      const maxHeights = Math.max(...heights);
+      return maxHeights;
+    },
+    resizeCards() {
+      const { slides } = this.$refs;
+      if (!slides) {
+        return;
+      }
+      let maxHeights = this.maxCardHeight;
+      for (let i = 0; i < slides.length; i += 1) {
+        const slide = slides[i];
+        const { display } = getComputedStyle(slide.$el);
+        if (display === 'none') {
+          // Setting display block to force height calculation
+          slide.$el.style.display = 'block';
+        }
+        const cards = Array.from(slide.$el.querySelectorAll('.card'))
+          .filter((c) => !c.classList.contains('invisible'));
+        maxHeights = Math.max(maxHeights, this.calculateMaxHeight(cards));
+        slide.$el.style.display = '';
+      }
+
+      this.maxCardHeight = maxHeights;
+      console.log(this.maxCardHeight);
+    },
+  },
+  mounted() {
+    this.resizeCards();
   },
 };
 </script>

@@ -9,6 +9,12 @@ export default {
   },
   computed: {
     ...mapGetters(['getAsset']),
+    cardStyles() {
+      if (this.minHeight) {
+        return `min-height: ${this.minHeight}px`;
+      }
+      return '';
+    },
   },
   methods: {
     async getThumbnail() {
