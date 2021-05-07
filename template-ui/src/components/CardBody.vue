@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <p class="text-uppercase text-info mb-1">
+  <div class="card-content">
+    <p class="text-uppercase text-info mb-1 text-truncate">
       <span v-if="typeTag">{{ typeTag }}</span>
       <span v-if="typeTag && gradeOrLevelTag"> • </span>
       <span v-if="gradeOrLevelTag">{{ gradeOrLevelTag }}</span>
@@ -13,7 +13,9 @@
         {{ node.title }}
       </v-clamp>
     </h5>
-    <p class="text-muted mb-1">{{ getCardSubtitle(node) }}</p>
+    <p class="text-muted mb-1 text-truncate">
+      {{ getCardSubtitle(node) }}
+    </p>
     <b-badge
       pill variant="primary"
       class="mr-1 mb-1"
@@ -56,3 +58,23 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+@import '@/styles.scss';
+
+$type-line-height: $font-size-base * $line-height-base;
+$title-line-height: 3 * ($h5-font-size * $headings-line-height);
+$subtitle-line-height: $font-size-base * $line-height-base;
+$tags-line-height: $font-size-base * $line-height-base;
+
+$margins: map-get($spacers, 1) * 4;
+
+$total-card-height: ($type-line-height + $title-line-height +
+                     $subtitle-line-height + $tags-line-height +
+                     $margins);
+
+.card-content {
+  min-height: $total-card-height;
+}
+
+</style>
