@@ -5,7 +5,7 @@
       <span v-if="typeTag && gradeOrLevelTag"> • </span>
       <span v-if="gradeOrLevelTag">{{ gradeOrLevelTag }}</span>
     </p>
-    <h5 class="mb-1">
+    <h5 class="title mb-1">
       <v-clamp
         autoresize
         :max-lines="3"
@@ -13,17 +13,19 @@
         {{ node.title }}
       </v-clamp>
     </h5>
-    <p class="text-muted mb-1 text-truncate">
+    <p class="subtitle text-muted mb-1 text-truncate">
       {{ getCardSubtitle(node) }}
     </p>
-    <b-badge
-      pill variant="primary"
-      class="mr-1 mb-1"
-      v-for="tag in subjectTags"
-      :key="tag"
-    >
-      {{ tag }}
-    </b-badge>
+    <div class="tags">
+      <b-badge
+        pill variant="primary"
+        class="mr-1 mb-1"
+        v-for="tag in subjectTags"
+        :key="tag"
+      >
+        {{ tag }}
+      </b-badge>
+    </div>
   </div>
 </template>
 
@@ -75,6 +77,13 @@ $total-card-height: ($type-line-height + $title-line-height +
 
 .card-content {
   min-height: $total-card-height;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.subtitle {
+  flex-grow: 3;
 }
 
 </style>
