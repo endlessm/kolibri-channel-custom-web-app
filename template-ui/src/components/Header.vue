@@ -1,6 +1,7 @@
 <template>
   <b-jumbotron fluid
     :style="{ backgroundImage: headerImageURL }"
+    class="mb-0"
   >
     <template v-slot:default>
       <Breadcrumb :node="section" />
@@ -18,7 +19,6 @@
           <div class="lead mb-2">{{ headerDescription }}</div>
         </b-col>
       </b-row>
-      <HeaderSearchBar />
     </template>
   </b-jumbotron>
 </template>

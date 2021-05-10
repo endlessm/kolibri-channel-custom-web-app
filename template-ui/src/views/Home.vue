@@ -3,7 +3,7 @@
     :style="{ backgroundImage: backgroundImageURL }"
   >
     <slot />
-    <MainSections />
+    <SectionsSearchRow />
     <Carousel />
     <FilterContent />
 
@@ -41,7 +41,7 @@ import { mapState, mapGetters } from 'vuex';
 export default {
   name: 'Home',
   computed: {
-    ...mapState(['channel', 'nodes', 'section', 'carousel']),
+    ...mapState(['channel', 'nodes', 'section']),
     ...mapGetters({
       mainSections: 'mainSections',
       getAssetURL: 'getAssetURL',

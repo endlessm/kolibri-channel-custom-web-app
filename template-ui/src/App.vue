@@ -35,6 +35,7 @@ export default {
           });
           return;
         case 'Home':
+        case 'Search':
         default:
           this.setHomeNavigation();
       }
@@ -69,6 +70,11 @@ export default {
 html,
 body {
   height: 100%;
+}
+
+/* Always show the vertical scrollbar */
+body {
+  overflow-y: scroll;
 }
 
 #app {
