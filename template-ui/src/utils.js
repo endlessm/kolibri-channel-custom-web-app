@@ -1,3 +1,7 @@
+// Import unorm to add normalize polyfill, to make it work on IE11, needed by
+// slugify.
+import 'unorm';
+
 import slugify from 'slugify';
 import arrayToTree from 'array-to-tree';
 
