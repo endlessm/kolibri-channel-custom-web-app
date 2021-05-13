@@ -1,16 +1,19 @@
 <template>
-  <b-badge pill variant="dark" class="card-media-type m-2">
+  <b-button pill variant="dark" class="card-media-type m-2"
+    v-on:click="goToContent(node)"
+  >
     <span class="icon align-middle">
       <b-icon :icon="icon" aria-hidden="true" />
     </span>
     <span class="align-middle">
       {{ mediaInfo }}
     </span>
-  </b-badge>
+  </b-button>
 </template>
 
 <script>
 import { mapGetters } from 'vuex';
+import { goToContent } from 'kolibri-api';
 
 export default {
   props: ['node'],
@@ -63,6 +66,9 @@ export default {
           return this.node.kind;
       }
     },
+  },
+  methods: {
+    goToContent,
   },
 };
 </script>
