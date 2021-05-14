@@ -1,12 +1,15 @@
-// Import unorm to add normalize polyfill, to make it work on IE11, needed by
-// slugify.
-import 'unorm';
-
-import slugify from 'slugify';
 import arrayToTree from 'array-to-tree';
 
 export function getSlug(title) {
-  return slugify(title, { lower: true });
+  return title
+    .toLowerCase()
+    .replace(/&/g, 'and')
+    // Remove invalid characters
+    .replace(/[^a-z0-9 -]/g, '')
+    // Replace whitespace by -
+    .replace(/\s+/g, '-')
+    // Collapse dashes
+    .replace(/-+/g, '-');
 }
 
 export function getNodesTree(nodes) {
