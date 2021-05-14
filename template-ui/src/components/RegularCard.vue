@@ -7,10 +7,9 @@
       }"
     >
   <ContentLink :node="node" @isHovered="(hovered) => isHovered = hovered">
-      <b-card-img
-        :src="thumbnail"
-        :alt="node.title"
-      />
+      <div class="card-img" :style="cardStyle">
+        <span class="sr-only">{{ node.title }}</span>
+      </div>
       <CardMediaType :node="node" />
       <b-card-text>
         <CardBody :node="node" />
@@ -29,6 +28,13 @@ export default {
     return {
       isHovered: false,
     };
+  },
+  computed: {
+    cardStyle() {
+      return {
+        backgroundImage: `url("${this.thumbnail}")`,
+      };
+    },
   },
 };
 </script>
@@ -51,9 +57,14 @@ export default {
   padding: $card-spacer-x;
 }
 
+$card-image-ar: 9 / 16;
+
 .card-img {
   border-top-left-radius: $border-radius-lg;
   border-top-right-radius: $border-radius-lg;
+  background-size: cover;
+  background-position: center;
+  padding-top: percentage($card-image-ar);
 }
 
 </style>
