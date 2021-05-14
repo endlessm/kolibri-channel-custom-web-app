@@ -16,7 +16,7 @@
       </div>
       <b-row>
         <b-col md="6" sm="12">
-          <div class="lead mb-2">{{ headerDescription }}</div>
+          <div class="lead text-muted mb-2">{{ headerDescription }}</div>
         </b-col>
       </b-row>
     </template>
@@ -63,9 +63,17 @@ export default {
 <style lang="scss" scoped>
 @import '@/styles.scss';
 
+// FIXME this will be the secondary color instead of a custom color derived from the success color.
+// Waiting for the change in Figma.
+$header-color: rgba($success, 0.5);
+
 .jumbotron {
-  background-color: $body-bg;
+  background-color: $header-color;
   background-size: cover;
+}
+
+img {
+  box-shadow: $toast-box-shadow;
 }
 
 </style>
