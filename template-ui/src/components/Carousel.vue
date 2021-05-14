@@ -1,8 +1,9 @@
 <template>
 <b-container class="mb-4">
   <b-carousel
+    fade
     v-model="slide"
-    :interval="4000"
+    :interval="CAROUSEL_INTERVAL"
     class="shadow-lg"
   >
     <CarouselCard
@@ -16,6 +17,7 @@
 </template>
 
 <script>
+import { CAROUSEL_INTERVAL } from '@/constants';
 import { mapState } from 'vuex';
 import _ from 'underscore';
 
@@ -24,6 +26,7 @@ export default {
   data() {
     return {
       slide: 0,
+      CAROUSEL_INTERVAL,
     };
   },
   computed: {
