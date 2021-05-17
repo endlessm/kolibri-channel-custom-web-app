@@ -3,23 +3,23 @@
     <b-button
       v-if="hasMultipleSlides"
       @click="previous()"
-      variant="primary"
+      variant="outline-primary"
       class="previous rounded-circle"
       :class="{invisible: isFirstSlide}"
       aria-controls="carousel"
     >
-      <span aria-hidden="true"><b-icon-arrow-left /></span>
+      <span aria-hidden="true"><b-icon-chevron-left /></span>
       <span class="sr-only">Previous slide</span>
     </b-button>
     <b-button
       v-if="hasMultipleSlides"
       @click="next()"
-      variant="primary"
+      variant="outline-primary"
       class="next rounded-circle"
       :class="{invisible: isLastSlide}"
       aria-controls="carousel"
     >
-      <span aria-hidden="true"><b-icon-arrow-right /></span>
+      <span aria-hidden="true"><b-icon-chevron-right /></span>
       <span class="sr-only">Next slide</span>
     </b-button>
     <b-carousel
@@ -122,11 +122,11 @@ $button-size: 3rem;
 }
 
 .btn.previous {
-  left: -$button-size / 2;
+  left: -($button-size + $spacer);
 }
 
 .btn.next {
-  right: -$button-size / 2;
+  right: -($button-size + $spacer);
 }
 
 </style>
