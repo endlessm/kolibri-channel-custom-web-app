@@ -3,7 +3,6 @@ $primary: #F15A22;
 $border-radius-lg: 1rem;
 
 // Template variables:
-$carousel-min-height: 300px;
 $header-logo-width: 128;
 
 :export {
@@ -14,3 +13,15 @@ $header-logo-width: 128;
 @import '../node_modules/bootstrap/scss/bootstrap';
 @import '../node_modules/bootstrap-vue/src/index.scss';
 
+@function card-body-height($title-lines) {
+  $type-line-height: $font-size-base * $line-height-base;
+  $title-line-height: $title-lines * ($h5-font-size * $headings-line-height);
+  $subtitle-line-height: $font-size-base * $line-height-base;
+  $tags-line-height: $font-size-base * $line-height-base;
+
+  $margins: map-get($spacers, 1) * 4;
+
+  @return ($type-line-height + $title-line-height +
+           $subtitle-line-height + $tags-line-height +
+           $margins);
+}
