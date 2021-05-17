@@ -67,6 +67,9 @@ export default {
       clearFilter: 'filters/clearFilterQuery',
     }),
   },
+  mounted() {
+    this.clearFilter({});
+  },
 };
 </script>
 
