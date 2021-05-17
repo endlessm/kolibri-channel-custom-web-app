@@ -8,7 +8,7 @@
     <h5 class="title mb-1">
       <v-clamp
         autoresize
-        :max-lines="3"
+        :max-lines="titleLines"
       >
         {{ node.title }}
       </v-clamp>
@@ -35,7 +35,13 @@ import { mapGetters } from 'vuex';
 import { StructuredTags } from '@/constants';
 
 export default {
-  props: ['node'],
+  props: {
+    node: Object,
+    titleLines: {
+      type: Number,
+      default: 3,
+    },
+  },
   components: {
     VClamp,
   },
@@ -64,19 +70,8 @@ export default {
 <style lang="scss" scoped>
 @import '@/styles.scss';
 
-$type-line-height: $font-size-base * $line-height-base;
-$title-line-height: 3 * ($h5-font-size * $headings-line-height);
-$subtitle-line-height: $font-size-base * $line-height-base;
-$tags-line-height: $font-size-base * $line-height-base;
-
-$margins: map-get($spacers, 1) * 4;
-
-$total-card-height: ($type-line-height + $title-line-height +
-                     $subtitle-line-height + $tags-line-height +
-                     $margins);
-
 .card-content {
-  min-height: $total-card-height;
+  min-height: card-body-height(3);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -85,5 +80,4 @@ $total-card-height: ($type-line-height + $title-line-height +
 .subtitle {
   flex-grow: 3;
 }
-
 </style>
