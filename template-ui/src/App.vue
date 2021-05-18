@@ -1,8 +1,11 @@
 <template>
   <div id="app" class="d-flex flex-column h-100">
-    <router-view>
-      <Header />
-    </router-view>
+    <!-- Wrapper needed to fix flexbox footer positioning on IE11 -->
+    <div class="flex-shrink-0">
+      <router-view>
+        <Header />
+      </router-view>
+    </div>
     <Footer />
   </div>
 </template>
